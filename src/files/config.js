@@ -1,0 +1,2 @@
+sheetID = "";
+document.title = "Strecklista";
