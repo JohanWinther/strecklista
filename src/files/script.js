@@ -32,6 +32,7 @@ $(function() {
         }
     }
 
+    // Skapa strecklista
     function createTable(data) {
         var html = '';
         var group = data.groups;
