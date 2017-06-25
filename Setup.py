@@ -34,13 +34,13 @@ def main():
         print("Vad vill du göra?")
         print("Välj någon av dessa:")
         print("- Lägga till en Google Sheet (sheet)")
-        print("- Lägga till logga (logga)")
         print("- Byt namn på strecklista (namn)")
+        print("- Lägga till logga (logga)")
 
         while True:
             svar = ""
             while svar != "sheet" and svar != "logga" and svar != "namn" and svar != "exit":
-                svar = input("Välj ett kommando (sheet/logga/namn/exit): ").lower()
+                svar = input("Välj ett kommando (sheet/namn/logga/exit): ").lower()
             if svar == "sheet":
                 addSheet()
             elif svar == "logga":
