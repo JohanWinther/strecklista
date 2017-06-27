@@ -1,2 +1,2 @@
-sheetID = "";
-document.title = "Strecklista";
+var macroURL = "";
+var sheetURL = "";
