@@ -1,5 +1,10 @@
 // Sätt globala variabler (dessa hamnar under window)
-var url = "https://script.google.com/macros/s/AKfycbyDpQHQEKC8tSNVhGdn5aaZNo2LklBmh7q7nGf5cD_C/dev";
+
+/*  Länk till Google skript/makro som sköter all kommunikation mellan strecklista (webbsida) och spreadsheets (Google)
+    Skriptet är bundet till spreadsheetmallen men är publicerad som en webbapp vilket gör det möjligt att skicka
+    POST och GET-requests till den. Skickar man med SheetID så kan skriptet manipulera
+*/
+var url = "https://script.google.com/macros/s/AKfycbx-xiO4_S26o-S_O9_ID2mBPaBRlNxhQcRloIGMf8NIzZSZ4yup/exec"
 
 var state = {};
 var email_str = "";
