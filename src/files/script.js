@@ -1,10 +1,5 @@
 // Sätt globala variabler (dessa hamnar under window)
 
-/*  Länk till Google skript/makro som sköter all kommunikation mellan strecklista (webbsida) och spreadsheets (Google)
-    Skriptet är bundet till spreadsheetmallen men är publicerad som en webbapp vilket gör det möjligt att skicka
-    POST och GET-requests till den. Skickar man med SheetID så kan skriptet manipulera
-*/
-var url = "https://script.google.com/macros/s/AKfycbx-xiO4_S26o-S_O9_ID2mBPaBRlNxhQcRloIGMf8NIzZSZ4yup/exec"
 
 var state = {};
 var email_str = "";
@@ -14,10 +9,9 @@ $(function() {
     // Detta körs när sidan är klar för att manipuleras
 
     // Kolla om Sheet ID från config.js har laddats
-    if (sheetID=="") {
+    if (macroURL=="") {
         $("#loadMsg").html("Till admin: kör Setup.py innan du använder webbsidan!");
     } else {
-        window.sheetURL = 'https://docs.google.com/spreadsheets/d/'+sheetID+'/';
         pageName = document.location.href.match(/[^\/]+$/);
         if (pageName == null){
             pageName = "index.html";
@@ -25,78 +19,92 @@ $(function() {
             pageName = pageName[0];
         }
         if (pageName=="admin.html") {
+
+            $.getJSON(macroURL+"?prefix=getTable&callback=?")
+            .done(function(data) {
+                window.title = data.title;
+            })
+            .fail(function(data) {
+                $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
+
             // Ändra länken på adminsidan
             $("#sheetLink").attr("href",sheetURL);
         } else {
             // Ladda strecklistan om nuvarande sida är index.html (på en webbserver kanske inte index.html syns så därför används bara else)
             // getJSON skickar en JSONP request med vissa parameterar och kör sedan funktionen i .done() med 'data' som objekt
-            $.getJSON(url+"?sheetID="+sheetID+"&prefix=createTable&callback=?")
+            $.getJSON(macroURL+"?prefix=getTable&callback=?")
             .done(function(data) {
+                window.title = data.title;
                 $('.list').html(createTable(data));
+            })
+            .fail(function(data) {
+                $("#loadMsg").html("Kunde inte ansluta till strecklistan, var vänlig <a href=\"index.html\">försök igen</a>!");
             });
         }
     }
-
-    // Skapa strecklista
-    function createTable(data) {
-        var html = '';
-        var group = data.groups;
-        var members = data.members;
-        var buttons = data.buttons;
-        // Skapa table
-        html += '<table class="tg">';
-        html += '<tbody id="tableBody">';
-
-        // Loopa igenom varje grupp
-        for (g in group) {
-            html += '<tr>';
-            html += '<th colspan='+(buttons.length+2)+'>';
-            html += group[g];
-            html += '</th>';
-            // Loopa igenom varje person
-            for (m in members[g]) {
-                html += '<tr>';
-                html += '<td>';
-                member = members[g][m].split(";");
-                cid = member[0];
-                name = member[1];
-                html += name;
-                html += '</td>';
-                for (b in buttons) {
-                    html += '<td class="table-button">';
-                    html += '<div class="round-button-circle">';
-                    html += '<a onclick="pay.call(this,\'';
-                    html += cid
-                    html += '\',';
-                    html += "'"+buttons[b]+"'";
-                    html += ')" class="round-button">';
-                    html += buttons[b];
-                    html += '</a></div></td>';
-                }
-                html += '<td>'
-                html += '<input type="number" class="num-input"></input>';
-                html += '<div class="round-button-circle round-left">';
-                html += '<a onclick="payVal.call(this,\'';
-                html += cid
-                html += '\')" class="round-button">';
-                html += "&#x25ba";
-                html += '</a></div></td>';
-                html += '</tr>';
-            }
-        }
-        html += '</tbody>';
-        html += '</table>';
-
-        // Returnera tabell som html
-        return html;
-    }
 });
+
+/* Skapa strecklistan som en HTML-table med:
+    groups = lista med alla grupper
+    members = lista med listor för alla medlemmar i respektive grupper
+    buttons = lista med knappar
+*/
+function createTable(groups,members,buttons) {
+
+    // Skapa table
+    var html = '';
+    html += '<table class="tg">';
+    html += '<tbody id="tableBody">';
+
+    // Loopa igenom varje grupp
+    for (g in group) {
+        html += '<tr>';
+        html += '<th colspan='+(buttons.length+2)+'>';
+        html += group[g];
+        html += '</th>';
+        // Loopa igenom varje person
+        for (m in members[g]) {
+            html += '<tr>';
+            html += '<td>';
+            member = members[g][m].split(";");
+            cid = member[0];
+            name = member[1];
+            html += name;
+            html += '</td>';
+            for (b in buttons) {
+                html += '<td class="table-button">';
+                html += '<div class="round-button-circle">';
+                html += '<a onclick="pay.call(this,\'';
+                html += cid
+                html += '\',';
+                html += "'"+buttons[b]+"'";
+                html += ')" class="round-button">';
+                html += buttons[b];
+                html += '</a></div></td>';
+            }
+            html += '<td>'
+            html += '<input type="number" class="num-input"></input>';
+            html += '<div class="round-button-circle round-left">';
+            html += '<a onclick="payVal.call(this,\'';
+            html += cid
+            html += '\')" class="round-button">';
+            html += "&#x25ba";
+            html += '</a></div></td>';
+            html += '</tr>';
+        }
+    }
+    html += '</tbody>';
+    html += '</table>';
+
+    // Returnera tabell som html
+    return html;
+}
 
 function adminLogin() {
     $("#loginErr").html("Loggar in..");
     $("#loginBtn").removeAttr("onclick");
     $("#loginBtn").prop('disabled', true);
-    $.getJSON(url+"?sheetID="+sheetID+"&prefix=adminLogin&callback=?",
+    $.getJSON(macroURL+"?prefix=adminLogin&callback=?",
     function(data) {
         if ($('#password').val()==data.password) {
             $('.list').html(createAdminPage(data.mail_pw));
@@ -106,37 +114,37 @@ function adminLogin() {
             $("#loginBtn").prop('disabled', false);
         }
     });
+}
 
-    function createAdminPage(mail_pw) {
-        var html = '';
-        html += '<div class="settings">';
-        html += '<h1>Administration</h1>';
-        html += '<p><a href="';
-        html += sheetURL;
-        html += '" target="_blank">Avancerade inställningar (Google sheet)</a></p>';
-        html += '<h2>Streckmail</h2>';
-        html += '<h3>Användaruppgifter för mailkonto</h3>';
-        html += 'Användarnamn: <br><span class="info">ftek-streckning@outlook.com</span><br>Lösenord:<br><span class="info">'+mail_pw+'</span>';
-        html += '<p><a href="https://outlook.live.com/" target="_blank" >Logga in i Outlook</a><p>';
-        html += '<h3>Skicka streckmail</h3>'
-        html += '<input type="submit" id="fileBtn" onclick="createFile()" value="Skapa streckmailsfil" />';
-        html += '<p><a href="#" id="fileLink" download="emails.txt" target="_blank" ="Högerklicka och Spara som..."></a></p>';
-        html += '<input type="submit" id="sendBtn" onclick="sendEmails()" value="Skicka streckmail nu" /><span> (via ftek-streckning@outlook.com)</span>';
-        html += '<p id="sendMessage"></p>';
-        html += '<ol id="emailList"></ol>';
-        html += '</div>';
-        return html;
-    }
+function createAdminPage(mail_pw) {
+    var html = '';
+    html += '<div class="settings">';
+    html += '<h1>Administration</h1>';
+    html += '<p><a href="';
+    html += sheetURL;
+    html += '" target="_blank">Avancerade inställningar (Google sheet)</a></p>';
+    html += '<h2>Streckmail</h2>';
+    html += '<h3>Användaruppgifter för mailkonto</h3>';
+    html += 'Användarnamn: <br><span class="info">ftek-streckning@outlook.com</span><br>Lösenord:<br><span class="info">'+mail_pw+'</span>';
+    html += '<p><a href="https://outlook.live.com/" target="_blank" >Logga in i Outlook</a><p>';
+    html += '<h3>Skicka streckmail</h3>'
+    html += '<input type="submit" id="fileBtn" onclick="createFile()" value="Skapa streckmailsfil" />';
+    html += '<p><a href="#" id="fileLink" download="emails.txt" target="_blank" ="Högerklicka och Spara som..."></a></p>';
+    html += '<input type="submit" id="sendBtn" onclick="sendEmails()" value="Skicka streckmail nu" /><span> (via ftek-streckning@outlook.com)</span>';
+    html += '<p id="sendMessage"></p>';
+    html += '<ol id="emailList"></ol>';
+    html += '</div>';
+    return html;
 }
 
 function createFile() {
     $("#fileBtn").attr("value","Skapar fil...");
     $("#fileBtn").removeAttr("onclick");
     $("#fileBtn").prop('disabled', true);
-    $.getJSON(url+"?"+"sheetID="+sheetID+"&prefix=sendEmail&callback=?",
+    $.getJSON(macroURL+"?prefix=getEmails&callback=?",
     function (data) {
         var str = JSON.stringify(data);
-        var dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(str);
+        var dataUri = 'data:text/plain;charset=utf-8,'+ encodeURIComponent(str);
         var link = document.getElementById('fileLink').href = dataUri;
         $("#fileLink").html("emails.txt");
         $("#fileBtn").attr("onclick","createFile()");
@@ -182,7 +190,7 @@ function sendEmails() {
     $("#emailList").html("");
     $("#sendBtn").removeAttr("onclick");
     $("#sendBtn").prop('disabled', true);
-    $.getJSON(url+"?"+"sheetID="+sheetID+"&prefix=sendEmail&callback=?",
+    $.getJSON(macroURL+"?prefix=getEmails&callback=?",
     function (data) {
         email_str = ""
         emailIdx = 0;
@@ -292,7 +300,7 @@ var payVal = function(cid,plus) {
 }
 
 function sendPayment(cid,change,category,comment,self) {
-    $.getJSON(url+"?"+"cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&sheetID="+sheetID+"&prefix=postPayment&callback=?",
+    $.getJSON(macroURL+"?"+"cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?",
     function (data) {
         self.parent().removeClass("round-loading");
         success = data.success;
