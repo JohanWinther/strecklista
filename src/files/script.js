@@ -20,37 +20,92 @@ $(function() {
         }
         if (pageName=="admin.html") {
 
-            $.getJSON(macroURL+"?prefix=getTitle&callback=?")
+            $.getJSON(macroURL+"?prefix=getTable&callback=?")
             .done(function(data) {
                 window.title = data.title;
             })
             .fail(function(data) {
                 $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
-            });
 
             // Ändra länken på adminsidan
             $("#sheetLink").attr("href",sheetURL);
-        } else { // if pageName == index.html
+        } else {
             // Ladda strecklistan om nuvarande sida är index.html (på en webbserver kanske inte index.html syns så därför används bara else)
             // getJSON skickar en JSONP request med vissa parameterar och kör sedan funktionen i .done() med 'data' som objekt
             $.getJSON(macroURL+"?prefix=getTable&callback=?")
             .done(function(data) {
                 window.title = data.title;
-                $('.list').html(createTable(data.groups, data.members, data.buttons));
+                $('.list').html(createTable(data));
             })
             .fail(function(data) {
-                $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
+                $("#loadMsg").html("Kunde inte ansluta till strecklistan, var vänlig <a href=\"index.html\">försök igen</a>!");
             });
         }
     }
 });
 
+/* Skapa strecklistan som en HTML-table med:
+    groups = lista med alla grupper
+    members = lista med listor för alla medlemmar i respektive grupper
+    buttons = lista med knappar
+*/
+function createTable(groups,members,buttons) {
+
+    // Skapa table
+    var html = '';
+    html += '<table class="tg">';
+    html += '<tbody id="tableBody">';
+
+    // Loopa igenom varje grupp
+    for (g in group) {
+        html += '<tr>';
+        html += '<th colspan='+(buttons.length+2)+'>';
+        html += group[g];
+        html += '</th>';
+        // Loopa igenom varje person
+        for (m in members[g]) {
+            html += '<tr>';
+            html += '<td>';
+            member = members[g][m].split(";");
+            cid = member[0];
+            name = member[1];
+            html += name;
+            html += '</td>';
+            for (b in buttons) {
+                html += '<td class="table-button">';
+                html += '<div class="round-button-circle">';
+                html += '<a onclick="pay.call(this,\'';
+                html += cid
+                html += '\',';
+                html += "'"+buttons[b]+"'";
+                html += ')" class="round-button">';
+                html += buttons[b];
+                html += '</a></div></td>';
+            }
+            html += '<td>'
+            html += '<input type="number" class="num-input"></input>';
+            html += '<div class="round-button-circle round-left">';
+            html += '<a onclick="payVal.call(this,\'';
+            html += cid
+            html += '\')" class="round-button">';
+            html += "&#x25ba";
+            html += '</a></div></td>';
+            html += '</tr>';
+        }
+    }
+    html += '</tbody>';
+    html += '</table>';
+
+    // Returnera tabell som html
+    return html;
+}
+
 function adminLogin() {
     $("#loginErr").html("Loggar in..");
     $("#loginBtn").removeAttr("onclick");
     $("#loginBtn").prop('disabled', true);
-    $.getJSON(macroURL+"?prefix=adminLogin&callback=?")
-    .done(function(data) {
+    $.getJSON(macroURL+"?prefix=adminLogin&callback=?",
+    function(data) {
         if ($('#password').val()==data.password) {
             $('.list').html(createAdminPage(data.mail_pw));
         } else {
@@ -58,36 +113,113 @@ function adminLogin() {
             $("#loginBtn").attr("onclick","adminLogin()");
             $("#loginBtn").prop('disabled', false);
         }
-    })
-    .fail(function(data) {
-        $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
     });
 }
 
+function createAdminPage(mail_pw) {
+    var html = '';
+    html += '<div class="settings">';
+    html += '<h1>Administration</h1>';
+    html += '<p><a href="';
+    html += sheetURL;
+    html += '" target="_blank">Avancerade inställningar (Google sheet)</a></p>';
+    html += '<h2>Streckmail</h2>';
+    html += '<h3>Användaruppgifter för mailkonto</h3>';
+    html += 'Användarnamn: <br><span class="info">ftek-streckning@outlook.com</span><br>Lösenord:<br><span class="info">'+mail_pw+'</span>';
+    html += '<p><a href="https://outlook.live.com/" target="_blank" >Logga in i Outlook</a><p>';
+    html += '<h3>Skicka streckmail</h3>'
+    html += '<input type="submit" id="fileBtn" onclick="createFile()" value="Skapa streckmailsfil" />';
+    html += '<p><a href="#" id="fileLink" download="emails.txt" target="_blank" ="Högerklicka och Spara som..."></a></p>';
+    html += '<input type="submit" id="sendBtn" onclick="sendEmails()" value="Skicka streckmail nu" /><span> (via ftek-streckning@outlook.com)</span>';
+    html += '<p id="sendMessage"></p>';
+    html += '<ol id="emailList"></ol>';
+    html += '</div>';
+    return html;
+}
 
-
-function createEmailFile() {
+function createFile() {
     $("#fileBtn").attr("value","Skapar fil...");
     $("#fileBtn").removeAttr("onclick");
     $("#fileBtn").prop('disabled', true);
-    $.getJSON(macroURL+"?prefix=getEmails&callback=?")
-    .done(function (data) {
+    $.getJSON(macroURL+"?prefix=getEmails&callback=?",
+    function (data) {
         var str = JSON.stringify(data);
         var dataUri = 'data:text/plain;charset=utf-8,'+ encodeURIComponent(str);
         var link = document.getElementById('fileLink').href = dataUri;
         $("#fileLink").html("emails.txt");
-        $("#fileBtn").attr("onclick","createEmailFile()");
+        $("#fileBtn").attr("onclick","createFile()");
         $("#fileBtn").prop('disabled', false);
         $("#fileBtn").attr("value","Skapa streckmailsfil");
-    })
-    .fail(function (data) {
-        $("#fileBtn").attr("onclick","createEmailFile()");
-        $("#fileBtn").prop('disabled', false);
-        $("#fileBtn").attr("value","Kunde inte skapa fil. Försök igen!");
     });
 }
 
 
+function sendEmails() {
+    // Definiera mailfunktionen
+    function sendEmail(mail_from,to,subject,message,mail_pw,emailID) {
+        var h = Math.floor(1e6 * Math.random() + 1)
+        var i = "https://smtpjs.com/smtp.aspx?";
+        i += "From=" + mail_from,
+        i += "&to=" + to,
+        i += "&Subject=" + encodeURIComponent(subject),
+        i += "&Body=" + encodeURIComponent(message),
+
+        i += "&Host=" + "smtp-mail.outlook.com",
+        i += "&Username=" + encodeURIComponent("ftek-streckning@outlook.com"),
+        i += "&Password=" + encodeURIComponent(mail_pw),
+        i += "&Action=Send",
+        i += "&cachebuster=" + h,
+        $.get(i)
+        .fail(function(data) {
+            console.log("Request error (missing values in parameters?)");
+            console.log(data);
+            $("#"+emailID).html("- Fel... kolla JavaScript-logg");
+        })
+        .done(function(data) {
+            console.log(data);
+            if (data=="OK") {
+                $("#"+emailID).html("- Klar!");
+            } else {
+                $("#"+emailID).html("- Försöker igen...");
+                sendEmail(mail_from,to,subject,message,mail_pw,emailID)
+            }
+        });
+    }
+
+    $("#sendMessage").html("Skickar mail..");
+    $("#emailList").html("");
+    $("#sendBtn").removeAttr("onclick");
+    $("#sendBtn").prop('disabled', true);
+    $.getJSON(macroURL+"?prefix=getEmails&callback=?",
+    function (data) {
+        email_str = ""
+        emailIdx = 0;
+        mail_from = data.mail_from // Definieras utanför loopen
+        mail_pw = data.mail_pw // Definieras utanför loopen
+        for (e in data.emails) {
+            if (data.emails[e].email!="") {
+                console.log(data.emails[e].email);
+                $("#sendMessage").html("Skickar mail..");
+                emailID = "email"+emailIdx;
+                email_str += '<li><a href="mailto:'+data.emails[e].email+'" target="_blank">'+data.emails[e].email+'</a> <span id="'+emailID+'"> - Skickar...</span></li>';
+                sendEmail(mail_from,data.emails[e].email,data.emails[e].subject,data.emails[e].message,mail_pw,emailID);
+                emailIdx++;
+            }
+        }
+        if (email_str=="") {
+            $("#sendMessage").html("Inga mail skickade.");
+        } else {
+            $("#emailList").html(email_str);
+        }
+    });
+    $(document).ajaxStop(function() {
+        if (email_str!="") {
+            $("#sendMessage").html("Skickade till följande:<br><a href=\"#\" id='hideLink' onclick='hideEmailList()' >Göm</a>");
+        }
+        $("#sendBtn").attr("onclick","sendEmails()");
+        $("#sendBtn").prop('disabled', false);
+    });
+}
 
 function hideEmailList() {
     if ($("#hideLink").html()=="Göm") {
@@ -118,9 +250,20 @@ var payVal = function(cid,plus) {
     function askForComment() {
         a.parent().parent().children()[0].value = round(parseFloat(a.parent().parent().children()[0].value),2);
         name = a.parent().parent().siblings().first().html();
+        html = '';
+        html += '<tr id="plus-box"><td colspan="'+$("#tableBody").children()[0].cells[0].colSpan+'" class="commentRow">';
+        html += '<div class="left-box-plus"><p><select id="selectionBox"><option value="Makulering">Ångra </option>';
+        html += '<option value="Plussning">Plussa </option></select> ';
+        html += '<input type="number" name="amount" id="plus-amount" min="1" value="'+Math.abs(parseFloat(a.parent().parent().children()[0].value))+'" /> kr på '+name+'.</p>';
+        html += '<p>Kommentar:<br><input type="text" name="comment" id="comment" /></p></div>';
+        html += '<div class="confirmBox">';
+        html += '<div class="round-button-circle cross" id="currentCheck"><a onclick="payVal.call(this,\''+cid+'\',1)" class="round-button">+</a></div>';
+        html += '<div class="round-button-circle cross" id="currentCross"><a onclick="closeCommentBox.call(this);';
+        html += '" class="round-button">&times;</a></div>';
+        html += '</div></td></tr>';
         a.parent().attr('id', 'currentPlus');
         a.parent().css("display","none");
-        a.parent().parent().parent().after(createPlussningsBox(name));
+        a.parent().parent().parent().after(html);
     }
 
     a = $(this);
