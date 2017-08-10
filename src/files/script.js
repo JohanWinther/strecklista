@@ -1,102 +1,108 @@
 // Sätt globala variabler (dessa hamnar under window)
-
-
 var state = {};
-var email_str = "";
-var emailIdx = 0;
+var enterCode = "";
+var tries = 0;
 
 $(function() {
     // Detta körs när sidan är klar för att manipuleras
 
-    // Kolla om Sheet ID från config.js har laddats
-    if (macroURL=="") {
-        $("#loadMsg").html("Till admin: kör Setup.py innan du använder webbsidan!");
-    } else {
-        pageName = document.location.href.match(/[^\/]+$/);
-        if (pageName == null){
-            pageName = "index.html";
-        } else {
-            pageName = pageName[0];
-        }
-        if (pageName=="admin.html") {
+    if (macroURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
+    //if(readCookie("sessionID")!=null) getData(sessionID);
 
-            $.getJSON(macroURL+"?prefix=getTitle&callback=?")
-            .done(function(data) {
-                window.title = data.title;
-            })
-            .fail(function(data) {
-                $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
-            });
-
-            // Ändra länken på adminsidan
-            $("#sheetLink").attr("href",sheetURL);
-        } else { // if pageName == index.html
-            // Ladda strecklistan om nuvarande sida är index.html (på en webbserver kanske inte index.html syns så därför används bara else)
-            // getJSON skickar en JSONP request med vissa parameterar och kör sedan funktionen i .done() med 'data' som objekt
-            $.getJSON(macroURL+"?prefix=getTable&callback=?")
-            .done(function(data) {
-                window.title = data.title;
-                $('.list').html(createTable(data.groups, data.members, data.buttons));
-            })
-            .fail(function(data) {
-                $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
-            });
+    $("#numbers").on("click", "button", function() {
+        var lengthCode = parseInt(enterCode.length);
+        if (lengthCode < 4) {
+            $("#message").removeClass("show");
+            var clickedNumber = $(this).text().toString();
+            enterCode = enterCode + clickedNumber;
+            lengthCode = parseInt(enterCode.length);
+            lengthCode--;
+            $("#fields .numberfield:eq(" + lengthCode + ")").addClass("active");
+            if (lengthCode == 3) {
+                // Check the PIN
+                $("#numbers").addClass("load");
+                $("#fields .numberfield").removeClass("active");
+                $("#fields .numberfield").addClass("load");
+                tries++;
+                if (tries<6) {
+                    $("#status").addClass("load");
+                    sendPIN();
+                } else {
+                    $("#message").html("För många felaktiga försök!").addClass("show");
+                }
+            }
         }
-    }
+    });
 });
 
-function adminLogin() {
-    $("#loginErr").html("Loggar in..");
-    $("#loginBtn").removeAttr("onclick");
-    $("#loginBtn").prop('disabled', true);
-    $.getJSON(macroURL+"?prefix=adminLogin&callback=?")
+function sendPIN() {
+    $.getJSON(macroURL+"?prefix=sendPIN&pin="+enterCode+"&callback=?")
     .done(function(data) {
-        if ($('#password').val()==data.password) {
-            $('.list').html(createAdminPage(data.mail_pw));
+        if (data.OTP==""){
+            // Wrong PIN
+            enterCode = "";
+            $("#numbers").removeClass("load");
+            $("#fields .numberfield").removeClass("load");
+            $("#status").removeClass("load");
+            $("#message").html("Fel PIN-kod. "+(6-tries)+" försök kvar.").addClass("show");
         } else {
-            $('#loginErr').html("Fel lösenord.")
-            $("#loginBtn").attr("onclick","adminLogin()");
-            $("#loginBtn").prop('disabled', false);
+            $("#message").html("Laddar lista..").addClass("show");
+            getData(data.OTP);
         }
     })
     .fail(function(data) {
-        $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
+        enterCode = "";
+        $("#numbers").removeClass("load");
+        $("#fields .numberfield").removeClass("load");
+        $("#status").removeClass("load");
+        $("#message").html("Kunde inte ansluta till servern.").addClass("show");
     });
 }
 
+function getData(OTP) {
 
-
-function createEmailFile() {
-    $("#fileBtn").attr("value","Skapar fil...");
-    $("#fileBtn").removeAttr("onclick");
-    $("#fileBtn").prop('disabled', true);
-    $.getJSON(macroURL+"?prefix=getEmails&callback=?")
-    .done(function (data) {
-        var str = JSON.stringify(data);
-        var dataUri = 'data:text/plain;charset=utf-8,'+ encodeURIComponent(str);
-        var link = document.getElementById('fileLink').href = dataUri;
-        $("#fileLink").html("emails.txt");
-        $("#fileBtn").attr("onclick","createEmailFile()");
-        $("#fileBtn").prop('disabled', false);
-        $("#fileBtn").attr("value","Skapa streckmailsfil");
+    $.getJSON(macroURL+"?prefix=getTable&OTP="+OTP+"&callback=?")
+    .done(function(data) {
+        if (data!="") {
+            window.title = data.title;
+            $('section.list').hide();
+            $('section.list').html(createTable(data.groups, data.members, data.buttons)).slideDown(1000);
+            $("section.activity ul").hide();
+            updateActivity();
+            $("section.activity").delay(1200).slideDown(500);
+        }
+        enterCode = "";
+        $("#numbers").removeClass("load");
+        $("#fields .numberfield").removeClass("load");
+        $("#status").removeClass("load");
     })
-    .fail(function (data) {
-        $("#fileBtn").attr("onclick","createEmailFile()");
-        $("#fileBtn").prop('disabled', false);
-        $("#fileBtn").attr("value","Kunde inte skapa fil. Försök igen!");
+    .fail(function(data) {
+        enterCode = "";
+        $("#numbers").removeClass("load");
+        $("#fields .numberfield").removeClass("load");
+        $("#status").removeClass("load");
+        $("#message").html("Kunde inte ansluta till servern.").addClass("show");
     });
 }
 
+function runActivityFun() {
+    setTimeout(function() {
+       updateActivity();
+       runActivityFun();
+   }, 10000);
+}
 
-
-function hideEmailList() {
-    if ($("#hideLink").html()=="Göm") {
-        $("#hideLink").html("Visa");
-        $("#emailList").css("display","none");
-    } else {
-        $("#hideLink").html("Göm");
-        $("#emailList").removeAttr("style");
-    }
+function updateActivity() {
+    $.getJSON(macroURL+"?prefix=getActivity&callback=?")
+    .done(function(data) {
+        if (data.list!="") {
+            var html = '';
+            for (li in data.list) {
+                html += '<li><span class="time">'+data.list[li].time+'</span><span>'+data.list[li].name+'</span> '+data.list[li].type+' <span>'+data.list[li].amount+'</span> kr.</li>';
+            }
+            $("section.activity ul").html(html);
+        }
+    });
 }
 
 var pay = function(cid,amount) {

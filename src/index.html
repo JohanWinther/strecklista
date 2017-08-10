@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="files/styles.css">
     <script src="files/config.js"></script>
+    <script src="files/utils.js"></script>
     <script src="files/script.js"></script>
     <script src="files/dynamic.js"></script>
     <!--[if lt IE 9]>
@@ -24,21 +25,56 @@
 <body>
     <nav>
         <ul>
-            <li><a href="index.html" id="current">Strecklista</a></li>
-            <li><a href="admin.html">Admin</a></li>
+
         </ul>
     </nav>
-    <div class="list">
+    <section class="activity">
+        <ul>
+            <li><span class="time">20:02:02</span><span>Wello</span> streckade <span>90</span> kr.</li>
+            <li><span class="time">20:02:02</span><span>Schillschill</span> streckade <span>90</span> kr.</li>
+            <li><span class="time">20:02:02</span><span>Wello</span> streckade <span>90</span> kr.</li>
+        </ul>
+    </section>
+    <section class="list">
+        <div class="cell">
+            <div id="status">
+            </div>
+            <div id="message">
+            </div>
+            <div id="fields">
+                <div class="grid">
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                </div>
+            </div>
+            <div id="numbers">
+                <div class="grid">
+                    <div class="grid__col grid__col--1-of-3"><button>1</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>2</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>3</button></div>
+
+                    <div class="grid__col grid__col--1-of-3"><button>4</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>5</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>6</button></div>
+
+                    <div class="grid__col grid__col--1-of-3"><button>7</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>8</button></div>
+                    <div class="grid__col grid__col--1-of-3"><button>9</button></div>
+
+                    <div class="grid__col grid__col--1-of-3"></div>
+                    <div class="grid__col grid__col--1-of-3"><button>0</button></div>
+                    <div class="grid__col grid__col--1-of-3"></div>
+                </div>
+            </div>
+        </div>
         <div class="round-button-circle round-loading"></div>
-        <p id="loadMsg" style="text-align:center">Om inte strecklistan laddar inom 5 sekunder, <a href="index.html">ladda om sidan</a>!</p>
-        <div style="height:300px;"></div>
-    </div>
+        <div></div>
+    </section>
 
     <footer>
-        <ul>
-            <li>Skapad av: Johan "Wello" Winther (PR F6 15/16)</li>
-            <li>Kontakt: <a href="mailto:johan.winther@outlook.com">johan.winther@outlook.com</a></li>
-        </ul>
+
     </footer>
 </body>
 </html>

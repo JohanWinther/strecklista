@@ -3,8 +3,51 @@
     members = lista med listor för alla medlemmar i respektive grupper
     buttons = lista med knappar
 */
+
 function createTable(group,members,buttons) {
-    console.log(group)
+    // Skapa table
+    var html = '';
+    // Loopa igenom varje grupp
+    for (g in group) {
+        html += '<h1>'+group[g]+'</h1>';
+        html += '<ul>';
+        // Loopa igenom varje person
+        for (m in members[g]) {
+            html += '<li>';
+            member = members[g][m].split(";");
+            cid = member[0];
+            name = member[1];
+            html += name;
+            /*html += '</td>';
+            for (b in buttons) {
+                html += '<td class="table-button">';
+                html += '<div class="round-button-circle">';
+                html += '<a onclick="pay.call(this,\'';
+                html += cid
+                html += '\',';
+                html += "'"+buttons[b]+"'";
+                html += ')" class="round-button">';
+                html += buttons[b];
+                html += '</a></div></td>';
+            }
+            html += '<td>'
+            html += '<input type="number" class="num-input"></input>';
+            html += '<div class="round-button-circle round-left">';
+            html += '<a onclick="payVal.call(this,\'';
+            html += cid
+            html += '\')" class="round-button">';
+            html += "&#x25ba";
+            html += '</a></div></td>';*/
+            html += '</li>';
+        }
+        html += '</ul>';
+    }
+
+    // Returnera tabell som html
+    return html;
+}
+/*
+function createTable(group,members,buttons) {
     // Skapa table
     var html = '';
     html += '<table class="tg">';
@@ -52,7 +95,7 @@ function createTable(group,members,buttons) {
 
     // Returnera tabell som html
     return html;
-}
+}*/
 
 function createPlussningsBox(name) {
 html = '';

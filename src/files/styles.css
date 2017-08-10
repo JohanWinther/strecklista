@@ -2,28 +2,37 @@ body {
     margin:0.5em;
     font-family:Arial, sans-serif;
     font-weight:bold;
+    height:100%;
+    width:100%;
+    margin:0px;
+    padding:0px;
+    background: hsl(0, 0%, 90%);
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
 }
+
 nav {
-    background-color: #000;
-    color: #fff;
+    background: hsl(0, 60%, 10%);
+    background: linear-gradient(hsl(0, 30%, 20%), hsl(0, 30%, 10%));
+    color: hsl(0, 0%, 90%);
     display: block;
     margin:0px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     overflow: hidden;
-    font-size:2em;
+    font-size:1.5em;
     margin-bottom:1em;
-    background-image: url("logo.png");
+    /*background-image: url("logo.png");
     background-position: left;
     background-size:contain;
-    background-repeat: no-repeat;
-    border: 0.5em solid #000;
+    background-repeat: no-repeat;*/
+    box-shadow: 0 2px 4px hsla(0, 0%, 20%, 0.5)
 }
 
 nav ul {
     margin: 0;
-    padding: 0;
-    float:right;
+    padding: 0 0 0 1em;
+    float:left;
 }
 
 nav ul li {
@@ -32,15 +41,13 @@ nav ul li {
 }
 
 nav > ul > li > a {
-    color: #fff;
+    color: #FFF;
     display: block;
-    padding: 0em 1em;
+    padding: 0 1em 0 0;
     text-decoration: none;
 }
 
 footer {
-    background-color: #000;
-    color: #fff;
     display: block;
     margin:0px;
     padding-top: 0.5em;
@@ -48,7 +55,6 @@ footer {
     overflow: hidden;
     font-size:1em;
     margin-top:2em;
-    border: 0.5em solid #000;
 }
 
 footer ul {
@@ -66,22 +72,250 @@ footer > ul > li > a {
 }
 
 footer
- ul li:first-child {
+ul li:first-child {
     float: left;
 }
 
 footer
- ul li:last-child {
+ul li:last-child {
     float: right;
 }
 
-.list {width:100%;max-width:100%;}
+section.list {
+    color: hsl(0, 60%, 10%);
+    margin-top: 2em;
+    width: 80%;
+    max-width:80%;
+    margin: 0 auto;
+    padding: 1em 2em;
+    /*border-left: 2px solid hsla(0, 60%, 20%, 0);*/
+    /*transition: border 0.1s linear;*/
+}
+
+/*section.list:hover {
+    border-left: 2px solid hsla(0, 60%, 20%, 1);
+}*/
+
+/* PIN */
+
+.cell {
+    width: 100%;
+    text-align: center;
+}
+
+
+/*------
+# Pincode
+----*/
+
+#message {
+    color: hsl(0, 60%, 50%);
+    min-height: 1.25em;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    margin-top: 0.5em;
+}
+
+#message.show {
+    opacity: 1;
+}
+
+#status {
+    height: 2em;
+    text-align: center;
+    background-image: url('ring.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 2em;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+}
+
+#status.load {opacity: 1}
+
+#numbers {
+    max-width: 300px;
+    padding: 0 20px;
+    margin: 0 auto;
+    position: relative;
+    display: block;
+    transition: all 0.5s ease-out;
+    opacity: 1;
+}
+
+#numbers.load {
+    opacity: 0.3;
+}
+
+.cell button {
+    cursor: pointer;
+    width: 2.5em;
+    height: 2.5em;
+    margin-bottom: 0.5em;
+    background-color: hsl(0, 60%, 10%);
+    border: 0;
+    color: hsl(0, 0%, 90%);
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1.5em;
+    border-radius: 100%;
+    opacity: 1;
+    outline: 0;
+    box-shadow: 0 4px 4px hsla(0, 0%, 20%, 0.6);
+    transition: all 0.1s linear;
+}
+
+.cell button:hover {
+    margin-top: -4px;
+    box-shadow: 0 8px 6px hsla(0, 0%, 20%, 0.3)
+}
+
+.cell button:active {
+    margin-top: -1px;
+    background-color: hsl(0, 60%, 30%);
+    box-shadow: 0 5px 5px hsla(0, 0%, 20%, 0.4)
+}
+
+
+#fields {
+    max-width: 12em;
+    margin: 1em auto 2em auto;
+}
+
+#fields .numberfield span {
+    height: 10px;
+    width: 10px;
+    border: 2px solid hsl(0, 60%, 10%);
+    background-color: transparent;
+    border-radius: 100%;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+#fields .numberfield.active span {
+    background-color: hsl(0, 60%, 10%);
+}
+
+#fields .numberfield.load span {
+    background-color: hsla(0, 60%, 10%, 0.3);
+    border-color: hsla(0, 60%, 10%, 0.3);
+    transition: all .2s ease-in-out;
+
+}
+
+
+/*------
+# Toast Grid
+----*/
+
+.grid__col--1-of-3,
+.grid__col--2-of-6,
+.grid__col--4-of-12 {
+    width: 33.33333%;
+}
+
+.grid__col--1-of-4,
+.grid__col--2-of-8,
+.grid__col--3-of-12 {
+    width: 25%;
+}
+
+.grid__col {
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: -.25em;
+    min-height: 1px;
+    padding: 0 1em;
+    vertical-align: top;
+}
+
+.grid__col--centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid__col--d-first {
+    float: left;
+}
+
+.grid__col--d-last {
+    float: right;
+}
+
+.grid--no-gutter {
+    margin-left: 0;
+    width: 100%;
+}
+
+.grid--no-gutter .grid__col {
+    padding-left: 0;
+}
+
+.grid--no-gutter .grid__col--span-all {
+    margin-left: 0;
+    width: 100%;
+}
+
+.grid__col--ab {
+    vertical-align: bottom;
+}
+
+.grid__col--am {
+    vertical-align: middle;
+}
+
+/* list */
+section.list h1 {
+    font-size: 3em;
+    color: hsl(0, 40%, 20%);
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+section.activity {
+    max-width: 360px;
+    margin: 0 auto;
+    display: none;
+    color: hsl(0, 40%, 20%);
+    padding: 1em 1em;
+    background-color: hsl(0, 0%, 80%);
+    border-radius: 0.5em;
+    box-shadow: inset 0px 2px 4px hsla(0, 30%, 30%, 0.3)
+}
+
+section.activity ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+section.activity ul li {
+    cursor: pointer;
+}
+
+section.activity ul li:hover {
+    color: hsla(0, 40%, 20%, 0.6);
+}
+section.activity ul li:active {
+    color: hsla(0, 60%, 30%, 1);
+}
+
+section.activity ul li span.time {
+    color: hsla(0, 40%, 20%, 0.6);
+    margin-right: 1em;
+}
+/* list */
+
 .tg  {
     border-collapse:collapse;
     border-spacing:0;
     margin: auto;
     width: 100%;
-    }
+}
 .tg td{
     vertical-align: middle;
     font-family:Arial, sans-serif;
@@ -91,7 +325,7 @@ footer
     border-width:1px;
     overflow:visible;
     word-break:normal;
-    }
+}
 .tg tr td:last-child{width: 5.5em;min-width:6em;}
 .tg th{font-size:1.5em;
     padding:10px 5px;
@@ -109,29 +343,29 @@ footer
 .tg tr:nth-child(odd) {background-color: #FFF}
 
 .round-button-circle {
-  width: 1.6em;
-  height: 1.6em;
-  border-radius: 50%;
-  border:0px;
-  overflow:hidden;
-  margin:auto;
-  background-color: #000;
-  color: #fff;
+    width: 1.6em;
+    height: 1.6em;
+    border-radius: 50%;
+    border:0px;
+    overflow:hidden;
+    margin:auto;
+    background-color: #000;
+    color: #fff;
 }
 .round-button-circle:hover, .round-button-circle:active {
-  cursor: pointer;
+    cursor: pointer;
 }
 .round-button-circle a {
     display:block;
-	float:left;
-	width:100%;
-	padding-top:50%;
+    float:left;
+    width:100%;
+    padding-top:50%;
     padding-bottom:50%;
-	line-height:1em;
-	margin-top:-0.5em;
+    line-height:1em;
+    margin-top:-0.5em;
 
-	text-align:center;
-	color:#fff;
+    text-align:center;
+    color:#fff;
     font-size:1em;
     font-weight:bold;
     text-decoration:none;
@@ -153,29 +387,32 @@ footer
     font-size: inherit;
 }
 
-.round-loading {
+p#load-message {display:none;}
+
+div.round-loading {
+    display: none;
     background-color: transparent;
     background-image: url('ring.gif');
     background-position: center;
     background-size:cover;
 }
-.round-loading:hover {
+div.round-loading:hover {
     background-color: transparent;
     background-image: url('ring.gif');
     background-position: center;
     background-size:cover;
 }
-.round-loading:active {
+div.round-loading:active {
     background-color: transparent;
     background-image: url('ring.gif');
     background-position: center;
     background-size:cover;
 }
-.round-loading a {
+div.round-loading a {
     color: #000;
 }
 
-.settings {
+div.settings {
     padding: 2em;
 }
 
@@ -234,11 +471,11 @@ td.commentRow select {
 
 @media only screen and (max-width: 750px) {
     footer > ul > li:first-child {
-    float: none;
-}
+        float: none;
+    }
     footer > ul > li:last-child {
-    float:none;
-}
+        float:none;
+    }
 }
 @media only screen and (max-width: 750px) and (min-width: 560px) {
     footer{font-size:1.2em;}
@@ -257,6 +494,21 @@ td.commentRow select {
     nav{font-size:1em;}
     footer{font-size:0.8em;}
     .table-button:nth-last-child(-n+2){display:none;}
+
+
+}
+
+
+@media only screen and (max-width: 480px) {
+    section.list {
+        width: 100%;
+        max-width: 100%;
+    }
+    section.activity {
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: inset 0px 2px 4px hsla(0, 30%, 30%, 0.3)
+    }
 }
 
 @media only screen and (max-width: 360px) and (min-width: 300px){
@@ -283,8 +535,8 @@ td.commentRow select {
     float: unset;
     }*/
     nav ul li {
-    display: list-item;
-    list-style-type: none;
+        display: list-item;
+        list-style-type: none;
     }
     body {font-size:0.8em;}
     .list {overflow:scroll;}
