@@ -10,10 +10,12 @@ function createTable(group,members,buttons) {
     // Loopa igenom varje grupp
     for (g in group) {
         html += '<h1>'+group[g]+'</h1>';
-        html += '<ul>';
+        html += '<ul class="cards">';
         // Loopa igenom varje person
         for (m in members[g]) {
-            html += '<li>';
+            html += '<li><div class="profile">';
+            html += '</div>';
+            html += '<div class="name">';
             member = members[g][m].split(";");
             cid = member[0];
             name = member[1];
@@ -38,7 +40,7 @@ function createTable(group,members,buttons) {
             html += '\')" class="round-button">';
             html += "&#x25ba";
             html += '</a></div></td>';*/
-            html += '</li>';
+            html += '</div></li>';
         }
         html += '</ul>';
     }

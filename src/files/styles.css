@@ -1,12 +1,18 @@
+html {
+    background-color: hsla(0, 0%, 15%, 1);
+    background: repeating-linear-gradient(hsla(0, 0%, 20%, 1),hsla(0, 0%, 15%, 1));
+    background-repeat: repeat;
+    background-attachment: fixed;
+}
+
 body {
-    margin:0.5em;
+    color: #FFF;
     font-family:Arial, sans-serif;
     font-weight:bold;
     height:100%;
     width:100%;
-    margin:0px;
+    margin:0;
     padding:0px;
-    background: hsl(0, 0%, 90%);
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-tap-highlight-color: transparent;
 }
@@ -26,7 +32,7 @@ nav {
     background-position: left;
     background-size:contain;
     background-repeat: no-repeat;*/
-    box-shadow: 0 2px 4px hsla(0, 0%, 20%, 0.5)
+    /*box-shadow: 0 2px 4px hsla(0, 0%, 20%, 0.5)*/
 }
 
 nav ul {
@@ -96,7 +102,56 @@ section.list {
     border-left: 2px solid hsla(0, 60%, 20%, 1);
 }*/
 
-/* PIN */
+/* Loading icon */
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-ring-big div {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid #000;
+    border-color: #e6e6e6 transparent #e6e6e6 transparent;
+    animation: lds-dual-ring 1.3s linear infinite;
+    transition: all 0.3s ease-in-out;
+}
+.loading-ring-big {
+    width: 50px;
+    height: 50px;
+}
+
+.loading-ring-small div {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    border-color: #e6e6e6 transparent #e6e6e6 transparent;
+    animation: lds-dual-ring 1.3s linear infinite;
+    transition: all 0.3s ease-in-out;
+}
+
+.loading-ring-small {
+    width: 25px;
+    height: 25px;
+}
+
+/*------
+# Pincode
+----*/
 
 .cell {
     width: 100%;
@@ -104,16 +159,12 @@ section.list {
 }
 
 
-/*------
-# Pincode
-----*/
-
 #message {
-    color: hsl(0, 60%, 50%);
+    color: hsla(0, 100%, 60%, 1);
     min-height: 1.25em;
     transition: all 0.5s ease-in-out;
     opacity: 0;
-    margin-top: 0.5em;
+    margin-top: 2em;
 }
 
 #message.show {
@@ -122,12 +173,11 @@ section.list {
 
 #status {
     height: 2em;
+    width: 50px;
     text-align: center;
-    background-image: url('ring.gif');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
     margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
     transition: all 0.5s ease-in-out;
     opacity: 0;
 }
@@ -148,33 +198,36 @@ section.list {
     opacity: 0.3;
 }
 
+#numbers.load button {
+    transform: scale(1);
+    background-color: hsl(0, 0%, 90%);
+}
+
 .cell button {
     cursor: pointer;
     width: 2.5em;
     height: 2.5em;
     margin-bottom: 0.5em;
-    background-color: hsl(0, 60%, 10%);
+    background-color: hsl(0, 0%, 90%);
     border: 0;
-    color: hsl(0, 0%, 90%);
+    color: #000;
     font-size: 1.5em;
     font-weight: bold;
     line-height: 1.5em;
     border-radius: 100%;
     opacity: 1;
     outline: 0;
-    box-shadow: 0 4px 4px hsla(0, 0%, 20%, 0.6);
     transition: all 0.1s linear;
 }
 
 .cell button:hover {
-    margin-top: -4px;
-    box-shadow: 0 8px 6px hsla(0, 0%, 20%, 0.3)
+    transform: scale(1.05);
+    background-color: hsl(0, 0%, 100%);
 }
 
 .cell button:active {
-    margin-top: -1px;
-    background-color: hsl(0, 60%, 30%);
-    box-shadow: 0 5px 5px hsla(0, 0%, 20%, 0.4)
+    transform: scale(0.95);
+    background-color: hsl(0, 0%, 60%);
 }
 
 
@@ -186,7 +239,7 @@ section.list {
 #fields .numberfield span {
     height: 10px;
     width: 10px;
-    border: 2px solid hsl(0, 60%, 10%);
+    border: 2px solid hsl(0, 0%, 90%);
     background-color: transparent;
     border-radius: 100%;
     position: relative;
@@ -196,14 +249,13 @@ section.list {
 }
 
 #fields .numberfield.active span {
-    background-color: hsl(0, 60%, 10%);
+    background-color: hsl(0, 0%, 90%);
 }
 
 #fields .numberfield.load span {
-    background-color: hsla(0, 60%, 10%, 0.3);
-    border-color: hsla(0, 60%, 10%, 0.3);
+    background-color: hsla(0, 0%, 90%, 0.3);
+    border-color: hsla(0, 0%, 90%, 0);
     transition: all .2s ease-in-out;
-
 }
 
 
@@ -270,10 +322,47 @@ section.list {
 
 /* list */
 section.list h1 {
+    text-align: center;
     font-size: 3em;
-    color: hsl(0, 40%, 20%);
     margin: 0;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+section.list ul.cards {
+    margin: 1em 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+}
+
+section.list ul.cards li {
+    flex-basis: auto;
+    padding: 0;
+    height: 10em;
+    width: 8em;
+    margin: 0em 1em;
+}
+
+section.list ul.cards li div.profile {
+    margin: 0 0 0.5em 0;
+    padding: 0;
+    width: 100%;
+    height: 8em;
+    border-radius: 1em;
+    background-image: url(https://s.gravatar.com/avatar/c1413644dbcd7152d70b0ab2ea14c953?s=120);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+section.list ul.cards li div.name {
+    margin: 0;
+    height: 1.5em;
+    width: 100%;
+    text-align: center;
 }
 
 section.activity {

@@ -46,7 +46,7 @@ function sendPIN() {
             $("#status").removeClass("load");
             $("#message").html("Fel PIN-kod. "+(6-tries)+" försök kvar.").addClass("show");
         } else {
-            $("#message").html("Laddar lista..").addClass("show");
+            $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             getData(data.OTP);
         }
     })
