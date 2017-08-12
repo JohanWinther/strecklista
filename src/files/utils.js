@@ -1,3 +1,20 @@
+var mouseDown = false;
+var fingerDown = false;
+$("html").on('mousedown', function() {
+    mouseDown = true;
+});
+$("html").on('mouseup', function() {
+    mouseDown = false;
+});
+$("html").on('click mousedown touchstart mousemove mouseup touchend touchmove', function(event) {
+    console.log(event.type);
+
+    /*if (event.type == "mouseup") documentClick = true;
+    if (documentClick){
+        console.log("clicked");
+    }*/
+ });
+
 function createCookie(name,value,days) {
     var expires = "";
     if (days) {
