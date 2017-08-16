@@ -60,12 +60,11 @@ function sendPIN() {
 }
 
 function setTable(data) {
-
     window.title = data.title;
     $('section.list').hide();
     $('section.list').html(createTable(data.groups, data.members, data.buttons)).slideDown(1000);
     $("section.activity ul").hide();
-    updateActivity();
+    //updateActivity();
     $("section.activity").delay(1200).slideDown(500);
     enterCode = "";
     $("#numbers").removeClass("load");

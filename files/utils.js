@@ -1,4 +1,4 @@
-var mouseDown = false;
+/*var mouseDown = false;
 var fingerDown = false;
 $("html").on('mousedown', function() {
     mouseDown = true;
@@ -12,8 +12,8 @@ $("html").on('click mousedown touchstart mousemove mouseup touchend touchmove', 
     /*if (event.type == "mouseup") documentClick = true;
     if (documentClick){
         console.log("clicked");
-    }*/
- });
+    }
+});*/
 
 function createCookie(name,value,days) {
     var expires = "";
