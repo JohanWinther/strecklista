@@ -8,7 +8,11 @@ $(function() {
     // Detta körs när sidan är klar för att manipuleras
 
     if (macroURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
-    //if(readCookie("sessionID")!=null) getData(sessionID);
+    var pin = readCookie("PIN");
+    if(pin!=null){
+        enterCode=pin;
+        sendPIN();
+    }
 
     $("#numbers").on("click", "button", function() {
         var lengthCode = parseInt(enterCode.length);
@@ -47,6 +51,7 @@ function sendPIN() {
             $("#status").removeClass("load");
             $("#message").html("Fel PIN-kod. "+(6-tries)+" försök kvar.").addClass("show");
         } else {
+            createCookie("PIN",enterCode,10);
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             setTable(data);
         }
