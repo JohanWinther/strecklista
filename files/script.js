@@ -36,9 +36,9 @@ $(function() {
 });
 
 function sendPIN() {
-    $.getJSON(macroURL+"?prefix=sendPIN&pin="+enterCode+"&callback=?")
+    $.getJSON(macroURL+"?prefix=getTable&pin="+enterCode+"&callback=?")
     .done(function(data) {
-        if (data.OTP==""){
+        if (data==""){
             // Wrong PIN
             enterCode = "";
             $("#numbers").removeClass("load");
@@ -47,7 +47,7 @@ function sendPIN() {
             $("#message").html("Fel PIN-kod. "+(6-tries)+" försök kvar.").addClass("show");
         } else {
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
-            getData(data.OTP);
+            setTable(data);
         }
     })
     .fail(function(data) {
@@ -59,30 +59,18 @@ function sendPIN() {
     });
 }
 
-function getData(OTP) {
+function setTable(data) {
 
-    $.getJSON(macroURL+"?prefix=getTable&OTP="+OTP+"&callback=?")
-    .done(function(data) {
-        if (data!="") {
-            window.title = data.title;
-            $('section.list').hide();
-            $('section.list').html(createTable(data.groups, data.members, data.buttons)).slideDown(1000);
-            $("section.activity ul").hide();
-            updateActivity();
-            $("section.activity").delay(1200).slideDown(500);
-        }
-        enterCode = "";
-        $("#numbers").removeClass("load");
-        $("#fields .numberfield").removeClass("load");
-        $("#status").removeClass("load");
-    })
-    .fail(function(data) {
-        enterCode = "";
-        $("#numbers").removeClass("load");
-        $("#fields .numberfield").removeClass("load");
-        $("#status").removeClass("load");
-        $("#message").html("Kunde inte ansluta till servern.").addClass("show");
-    });
+    window.title = data.title;
+    $('section.list').hide();
+    $('section.list').html(createTable(data.groups, data.members, data.buttons)).slideDown(1000);
+    $("section.activity ul").hide();
+    updateActivity();
+    $("section.activity").delay(1200).slideDown(500);
+    enterCode = "";
+    $("#numbers").removeClass("load");
+    $("#fields .numberfield").removeClass("load");
+    $("#status").removeClass("load");
 }
 
 function runActivityFun() {
