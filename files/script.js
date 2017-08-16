@@ -12,8 +12,9 @@ $(function() {
     if(pin!=null){
         enterCode=pin;
         sendPIN();
+    } else {
+        $("#status").removeClass("load");
     }
-    $("#status").removeClass("load");
 
     $("#numbers").on("click", "button", function() {
         var lengthCode = parseInt(enterCode.length);
