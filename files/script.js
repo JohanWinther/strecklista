@@ -1,3 +1,4 @@
+// Test
 // Sätt globala variabler (dessa hamnar under window)
 var state = {};
 var enterCode = "";
