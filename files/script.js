@@ -83,7 +83,7 @@ function setTable(data) {
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
 
-    $("section.list ul.cards li").mouseenter(function() {
+    $("section.list ul.cards li").mouseover(function() {
         ActionBar(1,{
             left:$(this)[0].offsetLeft,
             top:$(this)[0].offsetTop,
@@ -91,7 +91,7 @@ function setTable(data) {
             height:$(this)[0].offsetHeight
         });
     });
-    $("section.list ul.cards li").mouseleave(function() {
+    $("section.list ul.cards li").mouseout(function() {
         ActionBar(0);
     });
 }
