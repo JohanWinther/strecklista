@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro:700');
+
 html {
     background-color: hsl(0, 0%, 15%);
 }
@@ -426,6 +428,7 @@ div.action-bar li {
     padding: 0.1em;
     margin: 0.05em;
     cursor: pointer;
+    font-family: 'Anonymous Pro', monospace;
 }
 
 div.action-bar-arrow {

@@ -40,6 +40,10 @@ $(function() {
             }
         }
     });
+
+
+
+
 });
 
 function sendPIN() {
@@ -78,6 +82,14 @@ function setTable(data) {
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
+
+    $("section.list ul.cards li").hover(function() {
+        console.log("Hej Opium och Lexcell!");
+        console.log($("section.list ul.cards li")[0].offsetLeft);
+        console.log($("section.list ul.cards li")[0].offsetTop);
+        $("div.action-bar-arrow").css("top",$("section.list ul.cards li")[0].offsetTop);
+        $("div.action-bar-arrow").css("left",$("section.list ul.cards li")[0].offsetLeft);
+    });
 }
 
 function runActivityFun() {
