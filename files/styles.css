@@ -1,8 +1,5 @@
 html {
-    background-color: hsla(0, 0%, 15%, 1);
-    background: repeating-linear-gradient(hsla(0, 0%, 20%, 1),hsla(0, 0%, 15%, 1));
-    background-repeat: repeat;
-    background-attachment: fixed;
+    background-color: hsl(0, 0%, 15%);
 }
 
 body {
@@ -18,8 +15,7 @@ body {
 }
 
 nav {
-    background: hsl(0, 60%, 10%);
-    background: linear-gradient(hsl(0, 30%, 20%), hsl(0, 30%, 10%));
+    background: hsl(0, 0%, 8%);
     color: hsl(0, 0%, 90%);
     display: block;
     margin:0px;
@@ -28,11 +24,10 @@ nav {
     overflow: hidden;
     font-size:1.5em;
     margin-bottom:1em;
-    /*background-image: url("logo.png");
-    background-position: left;
-    background-size:contain;
-    background-repeat: no-repeat;*/
-    /*box-shadow: 0 2px 4px hsla(0, 0%, 20%, 0.5)*/
+    border-bottom: 1px solid hsla(0, 0%, 100%, 0.3);
+    position: fixed;
+    width: 100%;
+    top: 0em;
 }
 
 nav ul {
@@ -88,7 +83,6 @@ ul li:last-child {
 }
 
 section.list {
-    color: hsl(0, 60%, 10%);
     margin-top: 2em;
     width: 80%;
     max-width:80%;
@@ -345,6 +339,7 @@ section.list ul.cards li {
     height: 10em;
     width: 8em;
     margin: 0em 1em;
+    color: hsl(0, 0%, 80%);
 }
 
 section.list ul.cards li div.profile {
@@ -374,6 +369,7 @@ section.activity {
     background-color: hsl(0, 0%, 80%);
     border-radius: 0.5em;
     box-shadow: inset 0px 2px 4px hsla(0, 30%, 30%, 0.3)
+    margin-top: 4em;
 }
 
 section.activity ul {
@@ -397,6 +393,53 @@ section.activity ul li span.time {
     color: hsla(0, 40%, 20%, 0.6);
     margin-right: 1em;
 }
+
+div.action-bar {
+    background-color: hsla(0, 0%, 90%, 0.9);
+    width: 24em;
+    height: 4em;
+    position: absolute;
+    top: calc(183px + 10em);
+    left: calc((100vw - 25em) / 2);
+    z-index: 999;
+    border-radius: 4em;
+    padding: 0.2em;
+}
+
+div.action-bar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    font-size: 3em;
+    color: hsl(0, 0%, 100%);
+    width: 100%;
+    height: 4em;
+}
+
+div.action-bar li {
+    width: 1em;
+    height: 1em;
+    background-color: hsl(0,0%,15%);
+    border-radius: 1em;
+    text-align: center;
+    padding: 0.1em;
+    margin: 0.05em;
+    cursor: pointer;
+}
+
+div.action-bar-arrow {
+    position: absolute;
+    top: calc(183px + 10em - 1em);
+    left: calc(600px + 8em/2);
+    z-index: 999;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 100px 100px 100px;
+    border-color: transparent transparent hsla(0, 0%, 90%, 0.9) transparent;
+}
+
 /* list */
 
 .tg  {

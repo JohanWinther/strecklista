@@ -70,10 +70,10 @@ function sendPIN() {
 function setTable(data) {
     window.title = data.title;
     $('section.list').hide();
-    $('section.list').html(createTable(data.groups, data.members, data.buttons)).slideDown(1000);
+    $('section.list').html(createTable(data.groups, data.members, data.buttons)).fadeIn(1000);
     $("section.activity ul").hide();
     //updateActivity();
-    $("section.activity").delay(1200).slideDown(500);
+    $("section.activity").delay(1200).fadeIn(500);
     enterCode = "";
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");
