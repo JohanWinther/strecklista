@@ -3,6 +3,7 @@
 var state = {};
 var enterCode = "";
 var tries = 0;
+state.action = "hide";
 
 $(function() {
     // Detta körs när sidan är klar för att manipuleras
@@ -83,16 +84,19 @@ function setTable(data) {
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
 
-    $("section.list ul.cards li").mouseover(function() {
-        ActionBar(1,{
-            left:$(this)[0].offsetLeft,
-            top:$(this)[0].offsetTop,
-            width:$(this)[0].offsetWidth,
-            height:$(this)[0].offsetHeight
-        });
-    });
-    $("section.list ul.cards li").mouseout(function() {
-        ActionBar(0);
+    $("section.list ul.cards li").tap(function() {
+        if (state.action=="hide") {
+            state.action="show";
+            ActionBar(1,{
+                left:$(this)[0].offsetLeft,
+                top:$(this)[0].offsetTop,
+                width:$(this)[0].offsetWidth,
+                height:$(this)[0].offsetHeight
+            });
+        } else {
+            state.action="hide";
+            ActionBar(0);
+        }
     });
 }
 
