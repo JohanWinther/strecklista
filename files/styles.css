@@ -406,6 +406,8 @@ div.action-bar {
     z-index: 999;
     border-radius: 4em;
     padding: 0.2em;
+    transform: scale(1);
+    transition: transform 0.2s ease;
 }
 
 div.action-bar ul {
@@ -441,6 +443,8 @@ div.action-bar-arrow {
     border-style: solid;
     border-width: 0 1em 1em 1em;
     border-color: transparent transparent hsla(0, 0%, 90%, 0.9) transparent;
+    transition: transform 0.2s ease;
+    transform: scale(1);
 }
 
 div.action-bar.hide {

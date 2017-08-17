@@ -84,12 +84,32 @@ function setTable(data) {
     $("#status").removeClass("load");
 
     $("section.list ul.cards li").hover(function() {
-        console.log("Hej Opium och Lexcell!");
-        console.log($("section.list ul.cards li")[0].offsetLeft);
-        console.log($("section.list ul.cards li")[0].offsetTop);
-        $("div.action-bar-arrow").css("top",$("section.list ul.cards li")[0].offsetTop);
-        $("div.action-bar-arrow").css("left",$("section.list ul.cards li")[0].offsetLeft);
+        ActionBar(1,{
+            left:$(this)[0].offsetLeft,
+            top:$(this)[0].offsetTop,
+            width:$(this)[0].offsetWidth,
+            height:$(this)[0].offsetHeight
+        });},
+        function() {
+            ActionBar(0);
+        }
+        });
     });
+}
+
+function ActionBar(show, data) {
+    if (show) {
+        $("div.action-bar-arrow").css("top", data.top);
+        $("div.action-bar-arrow").css("left", data.left);
+        $("div.action-bar-arrow").css("transform", "scale(1)");
+
+        $("div.action-bar").css("top", data.top);
+        $("div.action-bar").css("left", data.left);
+        $("div.action-bar").css("transform", "scale(1)");
+    } else {
+        $("div.action-bar-arrow").css("transform", "scale(0)");
+        $("div.action-bar").css("transform", "scale(0)");
+    }
 }
 
 function runActivityFun() {
