@@ -436,8 +436,16 @@ div.action-bar-arrow {
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 0 100px 100px 100px;
+    border-width: 0 1em 1em 1em;
     border-color: transparent transparent hsla(0, 0%, 90%, 0.9) transparent;
+}
+
+div.action-bar.hide {
+    display: none;
+}
+
+div.action-bar-arrow.hide {
+    display: none;
 }
 
 /* list */
