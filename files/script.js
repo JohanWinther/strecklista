@@ -83,15 +83,15 @@ function setTable(data) {
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
 
-    $("section.list ul.cards li").hover(function() {
+    $("section.list ul.cards li").mouseenter(function() {
         ActionBar(1,{
             left:$(this)[0].offsetLeft,
             top:$(this)[0].offsetTop,
             width:$(this)[0].offsetWidth,
             height:$(this)[0].offsetHeight
         });
-    },
-    function() {
+    });
+    $("section.list ul.cards li").mouseleave(function() {
         ActionBar(0);
     });
 }
