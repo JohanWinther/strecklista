@@ -84,7 +84,7 @@ function setTable(data) {
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
 
-    $("section.list ul.cards li").on("click touchend", function() {
+    $("section.list ul.cards li").on("click touchend", function(e) {
         e.stopImmediatePropagation();
 
         if(e.event == "touchend") {
