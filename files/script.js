@@ -84,20 +84,35 @@ function setTable(data) {
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
 
-    $("section.list ul.cards li").tap(function() {
-        if (state.action=="hide") {
-            state.action="show";
-            ActionBar(1,{
-                left:$(this)[0].offsetLeft,
-                top:$(this)[0].offsetTop,
-                width:$(this)[0].offsetWidth,
-                height:$(this)[0].offsetHeight
-            });
-        } else {
-            state.action="hide";
-            ActionBar(0);
+    $("section.list ul.cards li").on("click touchend", function() {
+        e.stopImmediatePropagation();
+
+        if(e.event == "touchend") {
+            handled = true;
+            ActionBarClickeed();
+        }
+        else if(e.event == "click" && !handled) {
+            ActionBarClickeed();
+        }
+        else {
+            handled = false;
         }
     });
+}
+
+function ActionBarClicked() {
+    if (state.action=="hide") {
+        state.action="show";
+        ActionBar(1,{
+            left:$(this)[0].offsetLeft,
+            top:$(this)[0].offsetTop,
+            width:$(this)[0].offsetWidth,
+            height:$(this)[0].offsetHeight
+        });
+    } else {
+        state.action="hide";
+        ActionBar(0);
+    }
 }
 
 function ActionBar(show, data) {
