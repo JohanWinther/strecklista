@@ -89,11 +89,10 @@ function setTable(data) {
             top:$(this)[0].offsetTop,
             width:$(this)[0].offsetWidth,
             height:$(this)[0].offsetHeight
-        });},
-        function() {
-            ActionBar(0);
-        }
         });
+    },
+    function() {
+        ActionBar(0);
     });
 }
 
