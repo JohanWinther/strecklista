@@ -109,7 +109,7 @@ function setTable(data) {
 function ActionBar(show, data) {
     if (show) {
         $("div.action-bar-arrow").css("top", "calc("+ data.top + "px + " + data.height + "px - " + $("div.action-bar-arrow").css("border-width").substr(4,4) + ")");
-        $("div.action-bar-arrow").css("left", "calc(" + data.left + "px + "+ data.width +"px/2 - "$("div.action-bar-arrow").css("border-width").substr(4,4)"px)");
+        $("div.action-bar-arrow").css("left", "calc(" + data.left + "px + "+ data.width +"px/2 - " + $("div.action-bar-arrow").css("border-width").substr(4,4) + "px)");
         $("div.action-bar-arrow").css("opacity", 1);
 
         $("div.action-bar").css("top", "calc(" + data.top + "px + "+ data.height +"px)");
