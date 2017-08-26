@@ -96,7 +96,7 @@ function setTable(data) {
         });
     });
 
-    $("document").on("click touchend", function(e) {
+    $(document).on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
         if (state.action == "show") {
@@ -108,12 +108,12 @@ function setTable(data) {
 
 function ActionBar(show, data) {
     if (show) {
-        $("div.action-bar-arrow").css("top", data.top);
-        $("div.action-bar-arrow").css("left", data.left);
+        $("div.action-bar-arrow").css("top", "calc("+ data.top + "px + " + data.height + "px - " + $("div.action-bar-arrow").css("border-width").substr(4,4) + ")");
+        $("div.action-bar-arrow").css("left", "calc(" + data.left + "px + "+ data.width +"px/2 - "$("div.action-bar-arrow").css("border-width").substr(4,4)"px)");
         $("div.action-bar-arrow").css("transform", "scale(1)");
 
-        $("div.action-bar").css("top", data.top);
-        $("div.action-bar").css("left", data.left);
+        $("div.action-bar").css("top", "calc(" + data.top + "px + "+ data.height +"px)");
+        $("div.action-bar").css("left", "calc((100vw - " + $("div.action-bar").css("width") + ") / 2)");
         $("div.action-bar").css("transform", "scale(1)");
     } else {
         $("div.action-bar-arrow").css("transform", "scale(0)");
