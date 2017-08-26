@@ -87,23 +87,6 @@ function setTable(data) {
     $("section.list ul.cards li").on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
-        if (state.action=="hide") {
-            ActionBarClicked();
-        }
-
-    });
-
-    $("document").on("click touchend", function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        if (state.action == "show") {
-            ActionBarClicked();
-        }
-    });
-}
-
-function ActionBarClicked() {
-    if (state.action=="hide") {
         state.action="show";
         ActionBar(1,{
             left:$(this)[0].offsetLeft,
@@ -111,10 +94,16 @@ function ActionBarClicked() {
             width:$(this)[0].offsetWidth,
             height:$(this)[0].offsetHeight
         });
-    } else {
-        state.action="hide";
-        ActionBar(0);
-    }
+    });
+
+    $("document").on("click touchend", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (state.action == "show") {
+            state.action="hide";
+            ActionBar(0);
+        }
+    });
 }
 
 function ActionBar(show, data) {
