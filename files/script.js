@@ -85,9 +85,20 @@ function setTable(data) {
     $("#status").removeClass("load");
 
     $("section.list ul.cards li").on("click touchend", function(e) {
-        e.stopPropagation()
-        e.preventDefault()
-        console.log(e.event);
+        e.stopPropagation();
+        e.preventDefault();
+        if (state.action=="hide") {
+            ActionBarClicked();
+        }
+
+    });
+
+    $("document").on("click touchend", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (state.action == "show") {
+            ActionBarClicked();
+        }
     });
 }
 
