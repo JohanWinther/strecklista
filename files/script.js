@@ -4,6 +4,9 @@ var state = {};
 var enterCode = "";
 var tries = 0;
 state.action = "hide";
+var actionBar = actionBar;
+var actionBarArrow = actionBarArrow;
+
 
 $(function() {
     // Detta körs när sidan är klar för att manipuleras
@@ -92,7 +95,8 @@ function setTable(data) {
             left:$(this)[0].offsetLeft,
             top:$(this)[0].offsetTop,
             width:$(this)[0].offsetWidth,
-            height:$(this)[0].offsetHeight
+            height:$(this)[0].offsetHeight,
+            cid:$(this).attr("data-cid")
         });
     });
 
@@ -108,16 +112,19 @@ function setTable(data) {
 
 function ActionBar(show, data) {
     if (show) {
-        $("div.action-bar-arrow").css("top", "calc("+ data.top + "px + " + data.height + "px - " + $("div.action-bar-arrow").css("border-width").substr(4,4) + ")");
-        $("div.action-bar-arrow").css("left", "calc(" + data.left + "px + "+ data.width +"px/2 - " + $("div.action-bar-arrow").css("border-width").substr(4,4) + "px)");
-        $("div.action-bar-arrow").css("opacity", 1);
+        actionBarArrow.css("top", "calc("+ data.top + "px + " + data.height + "px - " + actionBarArrow.css("border-width").substr(4,4) + ")");
+        actionBarArrow.css("left",
+        "calc(" + data.left + "px + " + data.width + "px/2 - " + actionBarArrow.css("border-width").substr(4,4) + ")");
+        actionBarArrow.css("opacity", 1);
 
-        $("div.action-bar").css("top", "calc(" + data.top + "px + "+ data.height +"px)");
-        $("div.action-bar").css("left", "calc((100vw - " + $("div.action-bar").css("width") + ") / 2)");
-        $("div.action-bar").css("transform", "scale(1)");
+        actionBar.attr("data-cid",data.cid);
+        actionBar.css("top", "calc(" + data.top + "px + "+ data.height +"px)");
+        actionBar.css("left", "calc((100vw - " + actionBar.css("width") + ") / 2)");
+        actionBar.css("transform", "scale(1)");
     } else {
-        $("div.action-bar-arrow").css("opacity", 0);
-        $("div.action-bar").css("transform", "scale(0)");
+        actionBarArrow.css("opacity", 0);
+        actionBar.css("transform", "scale(0)");
+        actionBar.attr("data-cid","");
     }
 }
 
