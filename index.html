@@ -74,17 +74,16 @@
         </div>
     </section>
     <div class="action-bar-arrow" style="transform: scale(0)"></div>
-    <div class="action-bar" data-cid="cid1" style="transform: scale(0)">
+    <div id="action-bar-float" class="action-bar" data-cid style="transform: scale(0)">
         <ul>
-            <li data-action="pay">1</li>
-            <li data-action="pay">2</li>
-            <li data-action="pay">4</li>
-            <li data-action="input">#</li>
-            <li data-action="plus">+</li>
         </ul>
     </div>
     <footer>
 
     </footer>
+    <script type="text/javascript">
+    var actionBar = $("div.action-bar");
+    var actionBarArrow = $("div.action-bar-arrow");
+    </script>
 </body>
 </html>

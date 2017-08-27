@@ -4,7 +4,7 @@
     buttons = lista med knappar
 */
 
-function createTable(group,members,buttons) {
+function createTable(group,members) {
     // Skapa table
     var html = '';
     // Loopa igenom varje grupp
@@ -13,33 +13,19 @@ function createTable(group,members,buttons) {
         html += '<ul class="cards">';
         // Loopa igenom varje person
         for (m in members[g]) {
-            html += '<li><div class="profile">';
-            html += '</div>';
-            html += '<div class="name">';
             member = members[g][m].split(";");
             cid = member[0];
             name = member[1];
-            html += name;
-            /*html += '</td>';
-            for (b in buttons) {
-                html += '<td class="table-button">';
-                html += '<div class="round-button-circle">';
-                html += '<a onclick="pay.call(this,\'';
-                html += cid
-                html += '\',';
-                html += "'"+buttons[b]+"'";
-                html += ')" class="round-button">';
-                html += buttons[b];
-                html += '</a></div></td>';
+            email = member[2];
+            if (email == "") {
+                email = cid+"@student.chalmers.se";
             }
-            html += '<td>'
-            html += '<input type="number" class="num-input"></input>';
-            html += '<div class="round-button-circle round-left">';
-            html += '<a onclick="payVal.call(this,\'';
-            html += cid
-            html += '\')" class="round-button">';
-            html += "&#x25ba";
-            html += '</a></div></td>';*/
+            //html += '<li data-cid=' + cid + '><div class="profile" data-cid="'+cid+'" data-email="'+email+'" style="background-image: url(https://s.gravatar.com/avatar/'+MD5(email)+'?s=128&d=blank);">';
+            html += '<li data-cid=' + cid + '><div class="profile" data-cid="'+cid+'" data-email="'+email+'">';
+            html += '<div>'+name.substr(0,1)+'</div>';
+            html += '</div>';
+            html += '<div class="name">';
+            html += name;
             html += '</div></li>';
         }
         html += '</ul>';

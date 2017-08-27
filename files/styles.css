@@ -130,6 +130,22 @@ section.list {
     height: 50px;
 }
 
+.loading-ring-button div {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid #000;
+    border-color: #e6e6e6 transparent #e6e6e6 transparent;
+    animation: lds-dual-ring 1.3s linear infinite;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    color: hsl(0,0%,15%);
+}
+.loading-ring-button {
+    width: 50px;
+    height: 50px;
+}
+
 .loading-ring-small div {
     width: 20px;
     height: 20px;
@@ -176,6 +192,7 @@ section.list {
     margin-right: auto;
     transition: all 0.5s ease-in-out;
     opacity: 0;
+    user-select: none;
 }
 
 #status.load {opacity: 1}
@@ -188,6 +205,7 @@ section.list {
     display: block;
     transition: all 0.5s ease-out;
     opacity: 1;
+    user-select: none;
 }
 
 #numbers.load {
@@ -214,6 +232,7 @@ section.list {
     opacity: 1;
     outline: 0;
     transition: all 0.1s linear;
+    user-select: none;
 }
 
 .cell button:hover {
@@ -230,6 +249,7 @@ section.list {
 #fields {
     max-width: 12em;
     margin: 1em auto 2em auto;
+    user-select: none;
 }
 
 #fields .numberfield span {
@@ -348,11 +368,25 @@ section.list ul.cards li div.profile {
     margin: 0 0 0.5em 0;
     padding: 0;
     width: 100%;
-    height: 8em;
+    height: 128px;
     border-radius: 1em;
-    background-image: url(https://s.gravatar.com/avatar/c1413644dbcd7152d70b0ab2ea14c953?s=120);
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+div.profile div {
+    z-index: -1;
+    position: relative;
+    width: 125px;
+    height: 125px;
+    text-align: center;
+    font-size: 80px;
+    line-height: 128px;
+    color: hsl(0, 0%, 15%);
+    border-radius: 16px;
+    border: solid 1px hsl(0, 0%, 80%);
+    background-color: hsl(0,0%,80%);
+    user-select: none;
 }
 
 section.list ul.cards li div.name {
@@ -398,16 +432,14 @@ section.activity ul li span.time {
 
 div.action-bar {
     background-color: hsla(0, 0%, 90%, 0.9);
-    width: 24em;
-    height: 4em;
+    max-width: 80vw;
     position: absolute;
-    top: calc(183px + 10em);
-    left: calc((100vw - 25em) / 2);
     z-index: 999;
-    border-radius: 4em;
+    border-radius: 1em;
     padding: 0.2em;
-    transform: scale(1);
-    transition: transform 0.2s ease, left 0.1s ease, top 0.1s ease;
+    transform-origin: center -3em;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.1s ease-in-out, top 0.3s ease-in-out;
+    user-select: none;
 }
 
 div.action-bar ul {
@@ -415,6 +447,8 @@ div.action-bar ul {
     padding: 0;
     margin: 0;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     font-size: 3em;
     color: hsl(0, 0%, 100%);
     width: 100%;
@@ -434,16 +468,14 @@ div.action-bar li {
 
 div.action-bar-arrow {
     position: absolute;
-    top: calc(183px + 10em - 1em);
-    left: calc(600px + 8em/2);
     z-index: 999;
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 0 1em 1em 1em;
     border-color: transparent transparent hsla(0, 0%, 90%, 0.9) transparent;
-    transition: left 0.1s ease, top 0.1s ease, opacity 0.1s ease;
-    opacity: 0;
+    transform-origin: center -2em;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.1s ease-in-out,top 0.3s ease-in-out;
 }
 
 div.action-bar.hide {
@@ -649,6 +681,7 @@ td.commentRow select {
     section.list {
         width: 100%;
         max-width: 100%;
+        padding:0;
     }
     section.activity {
         max-width: 100%;
