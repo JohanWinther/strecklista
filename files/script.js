@@ -75,7 +75,6 @@ function setTable(data) {
     window.title = data.title;
     $('section.list').hide();
     $('section.list').html(createTable(data.groups, data.members)).fadeIn(1000);
-    $("section.activity ul").hide();
     $("div.profile").each(function(i,el) {
         var imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-email"))+'?s=128&d=404';
         // Image Does Not Exist
@@ -92,8 +91,8 @@ function setTable(data) {
             }
         });
     });
-    //updateActivity();
-    $("section.activity").delay(1200).fadeIn(500);
+    runActivityFun();
+    updateActivity();
     enterCode = "";
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");
@@ -102,9 +101,9 @@ function setTable(data) {
 
     // Lägg till knappar i action-bar
     for (b in data.buttons) {
-            $("div#action-bar-float ul").append('<li data-action="pay">' + data.buttons[b] + '</li>');
+            $("div.action-bar ul").append('<li data-action="pay" data-amount="'+data.buttons[b]+'"><span>' + data.buttons[b] + '</span></li>');
     }
-    $("div#action-bar-float ul").append('<li data-action="input">#</li><li data-action="plus">+</li>');
+    $("div.action-bar ul").append('<li data-action="input"><span>#</span></li>');
 
     setTouchEvents();
 
@@ -144,7 +143,7 @@ function setTouchEvents() {
             state.current = $(this);
             if (state.current.attr("data-cid")!=actionBar.attr("data-cid")) {
                 scrollToCurrent();
-                $("div#action-bar-float li").each(function(i,el){
+                $("div.action-bar li").each(function(i,el){
                     resetColor($(el));
                 });
                 ActionBar(1,{
@@ -161,7 +160,7 @@ function setTouchEvents() {
         }
     });
 
-    $("div#action-bar-float li").on("click touchend", function(e) {
+    $("div.action-bar li").on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
         if (dragging) {
@@ -169,26 +168,27 @@ function setTouchEvents() {
             return;
         }
         if (!state.processing) {
-            if ($(this).attr("data-action") == "pay") {
-                pay($(this), parseInt($(this).text()));
-            }
-            if ($(this).attr("data-action") == "input") {
-                var amount = prompt("Antal kronor:");
-                if (amount != null) {
-                    amount = parseInt(amount);
-                    if (amount > 0) {
-                        pay($(this), amount);
-                    } else if (amount != null) {
-                        flashColor($(this),"red");
-                        $(this).removeClass("loading-ring-button");
-                        $(this).html($(this).text());
+            if ($(this).parent().parent().attr("data-cid")!="") {
+                if ($(this).attr("data-action") == "pay") {
+                    pay($(this), parseInt($(this).attr("data-amount")));
+                }
+                if ($(this).attr("data-action") == "input") {
+                    var amount = prompt("Antal kronor:");
+                    if (amount != null) {
+                        amount = parseInt(amount);
+                        if (amount > 0) {
+                            pay($(this), amount);
+                        } else if (amount != null) {
+                            flashColor($(this),"red");
+                            $(this).removeClass("loading-ring-button");
+                        }
                     }
                 }
             }
         }
     });
 
-    $("div#action-bar-float").on("click touchend", function(e) {
+    $("div.action-bar").on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
     });
@@ -225,15 +225,6 @@ function scrollToCurrent() {
 
 function ActionBar(show, data) {
     if (show) {
-        if (state.current == null) {
-            actionBar.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0s ease-in-out, top 0s ease-in-out");
-            actionBarArrow.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0s ease-in-out, top 0s ease-in-out");
-        } else if (state.current != null) {
-            actionBar.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out");
-            actionBarArrow.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.1s ease-in-out, top 0.3s ease-in-out");
-        }
-        actionBarArrow.borderwidth = parseInt(actionBarArrow.css("border-width").substr(4,2));
-
         actionBar.attr("data-cid",data.cid);
         actionBar.css("top", data.top + actionBarArrow.borderwidth + data.height);
         var width = parseInt(actionBar.css('width'));
@@ -249,9 +240,14 @@ function ActionBar(show, data) {
         actionBarArrow.css("left", data.left + data.width/2 - actionBarArrow.borderwidth);
         actionBarArrow.css("transform", "scale(1)");
         actionBarArrow.css("opacity", 1);
+
+        setTimeout(function() {
+            actionBar.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out");
+            actionBarArrow.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out");
+        },10);
     } else {
-        actionBar.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out");
-        actionBarArrow.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.1s ease-in-out, top 0.3s ease-in-out");
+        actionBar.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0s ease-in-out, top 0s ease-in-out");
+        actionBarArrow.css("transition","opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0s ease-in-out, top 0s ease-in-out");
         actionBarArrow.css("transform", "scale(0)");
         actionBar.css("transform", "scale(0)");
         actionBar.css("opacity", 0);
@@ -264,7 +260,7 @@ function runActivityFun() {
     setTimeout(function() {
        updateActivity();
        runActivityFun();
-   }, 10000);
+   }, 1000*30);
 }
 
 function updateActivity() {
@@ -273,10 +269,29 @@ function updateActivity() {
         if (data.list!="") {
             var html = '';
             for (li in data.list) {
-                html += '<li><span class="time">'+data.list[li].time+'</span><span>'+data.list[li].name+'</span> '+data.list[li].type+' <span>'+data.list[li].amount+'</span> kr.</li>';
+                var category;
+                switch (data.list[li].category) {
+                    case "SP":
+                        category = "streckade";
+                        break;
+                    case "Makulering":
+                        category = "ångrade";
+                        break;
+                    case "Plussning":
+                        category = "plussade";
+                        break;
+                    default:
+                        category = "streckade";
+                }
+                html += '<li><span class="time">'+data.list[li].time.substr(data.list[li].time.length - 8)+'</span><span>'+data.list[li].name+'</span> '+category+' <span>'+Math.abs(data.list[li].amount)+'</span> kr.</li>';
             }
             $("section.activity ul").html(html);
+            setTimeout(function() {$("section.activity").css("height",$("section.activity ul")[0].offsetHeight + "px");$("section.activity ul").slideDown(500);},1)
+        } else {
+            html = '<li><span class="time">Inga senaste transaktioner.</span></li>';
+            $("section.activity ul").html(html);
         }
+        $("section.activity").slideDown(1000);
     });
 }
 
@@ -285,7 +300,8 @@ function pay(el,amount) {
     if (!isNaN(amount)) {
         if (!state.processing) {
             el.addClass("loading-ring-button");
-            el.html("<div></div>"+el.text());
+            el.prepend("<div></div>");
+            el.find("span").first().text(amount);
             state.processing = 1;
             change = -amount;
             sendPayment(cid,change,'SP','',el);
@@ -342,9 +358,11 @@ function sendPayment(cid,change,category,comment,self) {
     .done(function (data) {
         state.processing = 0;
         self.removeClass("loading-ring-button");
-        self.html(self.text());
+        self.find('div').first().remove();
+        if (self.attr("data-action")=="input") self.find("span").first().text("#");
         success = data.success;
         if (success) {
+            updateActivity();
             flashColor(self,"green")
             console.log(cid+" har ändrats med "+change+" kr. Nu: "+data.current+" kr.");
             if (data.current <= 0) {
@@ -364,7 +382,8 @@ function sendPayment(cid,change,category,comment,self) {
     .fail(function(data) {
         state.processing = 0;
         self.removeClass("loading-ring-button");
-        self.html(self.text());
+        self.find('div').first().remove();
+        if (self.attr("data-action")=="input") self.find("span").first().text("#");
         flashColor(self,"red");
         if (change<0) {
             console.log("Kunde inte strecka "+(-change)+"kr på "+cid+": Ingen kontakt med servern.");

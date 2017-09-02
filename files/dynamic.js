@@ -20,7 +20,6 @@ function createTable(group,members) {
             if (email == "") {
                 email = cid+"@student.chalmers.se";
             }
-            //html += '<li data-cid=' + cid + '><div class="profile" data-cid="'+cid+'" data-email="'+email+'" style="background-image: url(https://s.gravatar.com/avatar/'+MD5(email)+'?s=128&d=blank);">';
             html += '<li data-cid=' + cid + '><div class="profile" data-cid="'+cid+'" data-email="'+email+'">';
             html += '<div>'+name.substr(0,1)+'</div>';
             html += '</div>';
@@ -34,56 +33,6 @@ function createTable(group,members) {
     // Returnera tabell som html
     return html;
 }
-/*
-function createTable(group,members,buttons) {
-    // Skapa table
-    var html = '';
-    html += '<table class="tg">';
-    html += '<tbody id="tableBody">';
-
-    // Loopa igenom varje grupp
-    for (g in group) {
-        html += '<tr>';
-        html += '<th colspan='+(buttons.length+2)+'>';
-        html += group[g];
-        html += '</th>';
-        // Loopa igenom varje person
-        for (m in members[g]) {
-            html += '<tr>';
-            html += '<td>';
-            member = members[g][m].split(";");
-            cid = member[0];
-            name = member[1];
-            html += name;
-            html += '</td>';
-            for (b in buttons) {
-                html += '<td class="table-button">';
-                html += '<div class="round-button-circle">';
-                html += '<a onclick="pay.call(this,\'';
-                html += cid
-                html += '\',';
-                html += "'"+buttons[b]+"'";
-                html += ')" class="round-button">';
-                html += buttons[b];
-                html += '</a></div></td>';
-            }
-            html += '<td>'
-            html += '<input type="number" class="num-input"></input>';
-            html += '<div class="round-button-circle round-left">';
-            html += '<a onclick="payVal.call(this,\'';
-            html += cid
-            html += '\')" class="round-button">';
-            html += "&#x25ba";
-            html += '</a></div></td>';
-            html += '</tr>';
-        }
-    }
-    html += '</tbody>';
-    html += '</table>';
-
-    // Returnera tabell som html
-    return html;
-}*/
 
 function createPlussningsBox(name) {
 html = '';

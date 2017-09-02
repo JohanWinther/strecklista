@@ -28,11 +28,13 @@
 
         </ul>
     </nav>
-    <section class="activity">
+    <ul class="cards"><li data-cid="cid1"><div class="profile" data-cid="cid1" data-email="welocy95@gmail.com"><div>W</div></div><div class="name">Wello</div></li></ul>
+    <div id="action-bar-top" class="action-bar" data-cid>
         <ul>
-            <li><span class="time">20:02:02</span><span>Wello</span> streckade <span>90</span> kr.</li>
-            <li><span class="time">20:02:02</span><span>Schillschill</span> streckade <span>90</span> kr.</li>
-            <li><span class="time">20:02:02</span><span>Wello</span> streckade <span>90</span> kr.</li>
+        </ul>
+    </div>
+    <section class="activity" style="display:none">
+        <ul>
         </ul>
     </section>
     <section class="list">
@@ -82,8 +84,9 @@
 
     </footer>
     <script type="text/javascript">
-    var actionBar = $("div.action-bar");
+    var actionBar = $("div#action-bar-float");
     var actionBarArrow = $("div.action-bar-arrow");
+    actionBarArrow.borderwidth = parseInt(actionBarArrow.css("border-width").substr(4,2));
     </script>
 </body>
 </html>
