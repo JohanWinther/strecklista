@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <title>Strecklista</title>
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="manifest.json">
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#000000">
@@ -23,66 +21,81 @@
 </head>
 
 <body>
-    <nav>
-        <ul>
-
-        </ul>
-    </nav>
-    <ul class="cards"><li data-cid="cid1"><div class="profile" data-cid="cid1" data-email="welocy95@gmail.com"><div>W</div></div><div class="name">Wello</div></li></ul>
-    <div id="action-bar-top" class="action-bar" data-cid>
-        <ul>
-        </ul>
-    </div>
-    <section class="activity" style="display:none">
-        <ul>
-        </ul>
-    </section>
-    <section class="list">
-        <div class="cell">
-            <div id="status" class="load">
-                <div class="loading-ring-big">
-                    <div></div>
-                </div>
-            </div>
-            <div id="message">
-            </div>
-            <div id="fields">
-                <div class="grid">
-                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                    <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                </div>
-            </div>
-            <div id="numbers">
-                <div class="grid">
-                    <div class="grid__col grid__col--1-of-3"><button>1</button></div>
-                    <div class="grid__col grid__col--1-of-3"><button>2</button></div>
-                    <div class="grid__col grid__col--1-of-3"><button>3</button></div>
-
-                    <div class="grid__col grid__col--1-of-3"><button>4</button></div>
-                    <div class="grid__col grid__col--1-of-3"><button>5</button></div>
-                    <div class="grid__col grid__col--1-of-3"><button>6</button></div>
-
-                    <div class="grid__col grid__col--1-of-3"><button>7</button></div>
-                    <div class="grid__col grid__col--1-of-3"><button>8</button></div>
-                    <div class="grid__col grid__col--1-of-3"><button>9</button></div>
-
-                    <div class="grid__col grid__col--1-of-3"></div>
-                    <div class="grid__col grid__col--1-of-3"><button>0</button></div>
-                    <div class="grid__col grid__col--1-of-3"></div>
-                </div>
-            </div>
+    <nav tabindex="1">
+        <div class="menu-button" style="display:none" tabindex="0">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
         </div>
-    </section>
+        <div class="top-bar">
+            <span id="back"></span>
+            <span id="title">Strecklista</span>
+        </div>
+        <ul class="menu" id="main">
+        </ul>
+        <footer>
+            <ul>
+                <li onclick="alert('PR-chef i F6 15/16')">Skapad av Johan "Wello" Winther</li>
+                <li><a href="https://github.com/JohanWinther/strecklista" target="_blank">GitHub</a></li>
+                <li><a href="mailto:johan.winther@outlook.com">Kontakt</a></li>
+            </ul>
+        </footer>
+    </nav>
+    <div class="content">
+        <div class="overlay"></div>
+        <div id="action-bar-top" class="action-bar" data-cid style="display:none">
+            <ul>
+            </ul>
+        </div>
+        <section class="activity" style="display:none">
+            <div class="overlay"></div>
+            <ul>
+            </ul>
+        </section>
+        <section class="list">
+            <div class="cell">
+                <div id="status" class="load">
+                    <div class="loading-ring-big">
+                        <div></div>
+                    </div>
+                </div>
+                <div id="message">
+                </div>
+                <div id="fields">
+                    <div class="grid">
+                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
+                    </div>
+                </div>
+                <div id="numbers">
+                    <div class="grid">
+                        <div class="grid__col grid__col--1-of-3"><button>1</button></div>
+                        <div class="grid__col grid__col--1-of-3"><button>2</button></div>
+                        <div class="grid__col grid__col--1-of-3"><button>3</button></div>
+
+                        <div class="grid__col grid__col--1-of-3"><button>4</button></div>
+                        <div class="grid__col grid__col--1-of-3"><button>5</button></div>
+                        <div class="grid__col grid__col--1-of-3"><button>6</button></div>
+
+                        <div class="grid__col grid__col--1-of-3"><button>7</button></div>
+                        <div class="grid__col grid__col--1-of-3"><button>8</button></div>
+                        <div class="grid__col grid__col--1-of-3"><button>9</button></div>
+
+                        <div class="grid__col grid__col--1-of-3"></div>
+                        <div class="grid__col grid__col--1-of-3"><button>0</button></div>
+                        <div class="grid__col grid__col--1-of-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
     <div class="action-bar-arrow" style="transform: scale(0)"></div>
     <div id="action-bar-float" class="action-bar" data-cid style="transform: scale(0)">
         <ul>
         </ul>
     </div>
-    <footer>
-
-    </footer>
     <script type="text/javascript">
     var actionBar = $("div#action-bar-float");
     var actionBarArrow = $("div.action-bar-arrow");

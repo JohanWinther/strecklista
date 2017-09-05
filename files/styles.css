@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Anonymous+Pro:700');
 
+* {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+    }
+
 html {
     background-color: hsl(0, 0%, 0%);
 }
@@ -17,71 +27,193 @@ body {
 }
 
 nav {
-    background: hsl(0, 0%, 0%);
-    color: hsl(0, 0%, 90%);
-    display: block;
-    margin:0px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    overflow: hidden;
-    font-size:1.5em;
-    border-bottom: 1px solid hsla(0, 0%, 100%, 0.3);
-    position: fixed;
-    width: 100%;
-    top: 0em;
-    z-index: 999;
-}
-
-nav ul {
+    background: hsl(0, 0%, 80%);
+    color: hsl(0, 0%, 0%);
     margin: 0;
-    padding: 0 0 0 1em;
-    float:left;
+    padding: 0;
+    position: absolute;
+    width: 75%;
+    top: 0;
+    left: -75%;
+    height: auto;
+    min-height: 100vh;
+    z-index: 9999;
+    box-sizing: border-box;
+    min-width: 460px;
+    transition: left 0.5s ease;
 }
 
-nav ul li {
-    display: inline-block;
-    list-style-type: none;
+nav:focus, nav:hover {
+    left: 0%;
+    position: absolute;
 }
 
-nav > ul > li > a {
+nav div.top-bar {
+    width: 100%;
+    height: 3em;
+    background-color: hsl(0, 0%, 0%);
+    display: block;
+    position: relative;
+    margin: 0;
     color: #FFF;
-    display: block;
-    padding: 0 1em 0 0;
-    text-decoration: none;
+    box-sizing: border-box;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
-footer {
-    display: block;
-    margin:0px;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    overflow: hidden;
-    font-size:1em;
-    margin-top:2em;
+div.top-bar span#title {
+    margin-left: 3em;
+    width: auto;
+    line-height: 3em;
+    box-sizing: border-box;
+    transition: margin-left 0.2s ease;
 }
 
-footer ul {
+div.top-bar span#back {
+    background-image: url(back.png);
+    background-size: 1.2em;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 3em;
+    height: inherit;
+    position: absolute;
+    box-sizing: border-box;
+    transition: opacity 0.2s ease;
+    opacity: 1;
+}
+
+nav ul.menu {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+}
+
+nav ul.menu > li {
+    list-style-type: none;
+    background-color: white;
+    border-bottom: 1px solid hsl(0, 0%, 80%);
+}
+
+nav ul.menu li {
+    cursor: pointer;
+}
+
+nav ul.menu > li span {
+    color: #000;
+    padding: 1em;
+    height: auto;
+    display: block;
+    line-height: 1em;
+}
+
+ nav ul.menu > li:focus:before, nav ul.menu > li:hover:before {
+    content: '';
+    background-color: hsl(0, 0%, 80%);
+    width: 0.3em;
+    min-height: 3em;
+    position: absolute;
+}
+
+nav ul.menu > li > li, nav ul.menu > li > li > span {
+    background-color: hsl(0, 0%, 80%);
+    display: none;
+}
+
+nav ul.menu > li:focus > li, nav ul.menu > li:focus > li > span, nav ul.menu > li:hover > li, nav ul.menu > li:hover > li > span {
+    display: block;
+}
+
+nav ul.menu > li > li > span {
+    border-bottom: 1px solid hsl(0, 0%, 50%);
+}
+
+nav div.menu-button {
+    display: inline-block;
+    cursor: pointer;
+    position: absolute;
+    left: 100%;
+    padding: 0.5em 0.8em;
+    transition: opacity 0.5s ease-in-out;
+    background-color: hsl(0, 0%, 80%);
+    border-radius: 1em;
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+    box-shadow: 5px 5px 20px hsla(0, 0%, 0%, 0.2);
+}
+
+.bar1, .bar2, .bar3 {
+    width: 2em;
+    height: 0.25em;
+    background-color: hsl(0, 0%, 0%);
+    margin: 0.45em 0;
+    transition: 0.5s ease-in-out;
+}
+
+nav:focus div.menu-button, nav:hover div.menu-button {
+    opacity: 0;
+}
+
+/*
+nav:hover div.bar1 {
+    transform: translate(0 ,calc(1.41 * 0.5em)) rotate(-45deg);
+    transform-origin: center;
+}
+nav:hover div.bar2 {
+    opacity: 0;
+}
+nav:hover div.bar3 {
+    transform: translate(0 ,calc(-1.41 * 0.5em)) rotate(45deg);
+    transform-origin: center;
+}
+*/
+
+nav footer {
+    padding: 1em;
+    color: hsl(0, 0%, 30%);
+}
+
+nav footer ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-footer ul li {
-    display: inline-block;
-    list-style-type: none;
+nav footer ul li {
+    display: inline;
+    margin-right: 1em;
 }
 
-footer > ul > li > a {
-    color: #fff;
+nav footer ul li a {
+    text-decoration: none;
+    color: hsl(0, 0%, 0%);
 }
 
-footer
-ul li:first-child {
-    float: left;
+div.content {
+    position: absolute;
+    height: auto;
+    width: 100%;
 }
 
-footer
-ul li:last-child {
-    float: right;
+nav:focus ~ div.content, nav:hover ~ div.content {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+nav:focus ~ div.content > div.overlay, nav:hover ~ div.content > div.overlay {
+    left: 75%;
+}
+
+div.content > div.overlay {
+    position: fixed;
+    width: 25%;
+    height: 100%;
+    top: 0;
+    left: -25%;
+    z-index: 1100;
+    background-image: linear-gradient(90deg, hsla(0, 0%, 0%, 0.5),hsla(0, 0%, 0%, 0));
+    transition: 0.5s ease;
 }
 
 section.list {
@@ -257,7 +389,7 @@ section.list {
     position: relative;
     display: inline-block;
     text-align: center;
-    transition: all 0.2s ease;
+    transition: all 0.2s ease-in-out;
 }
 
 #fields .numberfield.active span {
@@ -356,7 +488,7 @@ ul.cards li {
     padding: 0;
     height: 10em;
     width: 8em;
-    margin: 0em 1em;
+    margin: 0 1em;
     color: hsl(0, 0%, 80%);
 }
 
@@ -395,11 +527,19 @@ ul.cards li div.name {
 section.activity {
     margin: 1em auto;
     color: hsl(0, 0%, 0%);
-    padding: 1em 1em;
+    padding: 3em 1em 1em 1em;
     background-color: hsl(0, 0%, 80%);
     border-radius: 0;
     width: 100%;
-    transition: height 0.3s ease-in-out;
+    box-sizing: border-box;
+    background-image: url(history.png);
+    background-size: 2em;
+    background-repeat: no-repeat;
+    background-position: center 0.5em;
+}
+
+section.activity > div.overlay {
+    display: none;
 }
 
 section.activity ul {
@@ -407,14 +547,6 @@ section.activity ul {
     margin: auto;
     padding: 0;
     width: fit-content;
-}
-
-section.activity ul li {
-    cursor: pointer;
-}
-
-section.activity ul li:active {
-    color: hsl(0, 0%, 15%);
 }
 
 section.activity ul li span.time {
@@ -565,11 +697,29 @@ td.commentRow select {
     section.activity {
         max-width: 360px;
         position: fixed;
-        border-radius: 1em;
-        top: 4em;
-        left: 5%;
+        border-radius: 1em 1em 0 0;
+        bottom: -12em;
+        height: 15em;
+        margin: 0;
+        padding-top: 3em;
+        right: 5%;
         z-index: 1000;
         box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.4);
         width: fit-content;
+        transition: bottom 0.3s ease-in-out;
+    }
+    section.activity:focus, section.activity:hover {
+        bottom: 0;
+    }
+
+    section.activity > div.overlay {
+        position: absolute;
+        width: 100%;
+        margin-left: -1em;
+        height: 12em;
+        z-index: 1050;
+        background-image: linear-gradient(0deg, hsla(0, 0%, 80%, 1) 5%, hsla(0, 0%, 80%, 0) 50%);
+        transition: 0.5s ease;
+        display: block;
     }
 }

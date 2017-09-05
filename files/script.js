@@ -6,6 +6,9 @@ var state = {},
     dragging = false;
 state.current = null;
 state.processing = 0;
+state.menu = [];
+state.menu.item = "";
+state.menu.level = "";
 
 $(function() {
     // Detta körs när sidan är klar för att manipuleras
@@ -47,7 +50,7 @@ $(function() {
 });
 
 function sendPIN() {
-    $.getJSON(macroURL+"?prefix=getTable&pin="+enterCode+"&callback=?")
+    $.getJSON(macroURL+"?prefix=getData&pin="+enterCode+"&callback=?")
     .done(function(data) {
         if (data==""){
             // Wrong PIN
@@ -60,6 +63,18 @@ function sendPIN() {
             createCookie("PIN",enterCode,10);
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             setTable(data);
+            if (data.list!="") {
+                var html = '<ul class="menu" id="users">';
+                for (li in data.list) {
+                    html += '<li data-cid="'+data.list[li][0]+'" tabindex="'+li+'"><span>'+ data.list[li][2] +'</span></li>';
+                }
+                html += '</ul>'
+                $("nav footer").before(html);
+                $("nav ul#users > li").append('<li data-action="favorite"><span>Markera som favorit</span></li><li data-action="plus"><span>Plussa</span></li><li data-action="statistics"><span>Statistik</span></li>');
+                $("nav ul#users").hide();
+            }
+
+            setTouchEvents();
         }
     })
     .fail(function(data) {
@@ -104,8 +119,12 @@ function setTable(data) {
             $("div.action-bar ul").append('<li data-action="pay" data-amount="'+data.buttons[b]+'"><span>' + data.buttons[b] + '</span></li>');
     }
     $("div.action-bar ul").append('<li data-action="input"><span>#</span></li>');
-
-    setTouchEvents();
+    $("nav ul.menu#main").html('<li data-link="users" tabindex="0"><span>Användare</span></li><li data-link="settings" tabindex="1"><span>Inställningar</span></li><li data-link="admin" tabindex="2"><span>Admin</span></li>');
+    state.menu.item = $("nav ul.menu#main");
+    state.menu.level = 1;
+    $("nav div.top-bar span#back").hide()
+    $("nav div.top-bar span#title").css("margin-left","1em");
+    $("nav div.menu-button").fadeIn(500);
 
     $(window).on('resize', function(e) {
             if (state.current != null) {
@@ -130,7 +149,6 @@ function setTouchEvents() {
     $("body").on("touchstart", function(){
         dragging = false;
     });
-
 
     $("section.list ul.cards li").on("click touchend", function(e) {
         e.stopPropagation();
@@ -193,6 +211,39 @@ function setTouchEvents() {
         e.preventDefault();
     });
 
+    $("nav ul.menu li").on("click touchend",function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var link = $(this).attr("data-link");
+        if (link == "users") {
+            MenuNavigateTo($("nav ul.menu#users"), $(this).text(), 1);
+        } else if (link == "settings") {
+            //
+        } else if (link == "admin") {
+            //
+        }
+    });
+
+    $("nav div.top-bar span#back").on("click touchend",function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (state.menu.level == 2) {
+            MenuNavigateTo($("nav ul.menu#main"), "Strecklista", -1);
+        }
+    });
+
+    $("nav ul#users > li > li").on("click touchend",function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        var action = $(this).attr("data-action");
+        if (action == "favorite") {
+            var cid = $(this).parent().attr("data-cid");
+            createCookie("favorite", cid);
+            console.log($(this).parent().attr("data-cid") + " är satt som favorit.");
+            $("#action-bar-top").attr("data-cid", cid);
+        }
+    });
+
     $(document).on("click touchend", function(e) {
         e.stopPropagation();
         //e.preventDefault();
@@ -207,6 +258,21 @@ function setTouchEvents() {
             }
         }
     });
+}
+
+function MenuNavigateTo(to, title, add) {
+    $("nav div.top-bar span#title").text(title);
+    state.menu.item.hide();
+    to.show();
+    state.menu.item = to;
+    state.menu.level += add;
+    if (state.menu.level == 1) {
+        $("nav div.top-bar span#back").css("opacity", 0);
+        $("nav div.top-bar span#title").css("margin-left","1em");
+    } else {
+        $("nav div.top-bar span#back").removeAttr("style");
+        $("nav div.top-bar span#title").removeAttr("style");
+    }
 }
 
 function scrollToCurrent() {
@@ -268,7 +334,7 @@ function updateActivity() {
     .done(function(data) {
         if (data.list!="") {
             var html = '';
-            for (li in data.list) {
+            for (var li = 0; li<data.list.length || li < 10; li++) {
                 var category;
                 switch (data.list[li].category) {
                     case "SP":
@@ -286,7 +352,6 @@ function updateActivity() {
                 html += '<li><span class="time">'+data.list[li].time.substr(data.list[li].time.length - 8)+'</span><span>'+data.list[li].name+'</span> '+category+' <span>'+Math.abs(data.list[li].amount)+'</span> kr.</li>';
             }
             $("section.activity ul").html(html);
-            setTimeout(function() {$("section.activity").css("height",$("section.activity ul")[0].offsetHeight + "px");$("section.activity ul").slideDown(500);},1)
         } else {
             html = '<li><span class="time">Inga senaste transaktioner.</span></li>';
             $("section.activity ul").html(html);
