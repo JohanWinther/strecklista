@@ -299,7 +299,7 @@ function setTouchEvents() {
         $("#plusButtons").slideDown(500);
     });
 
-    $("section#plus p#plusButtons button").on("click touchend",function(e) {
+    $("section#plus p#plusButtons .button").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
         if ($(this).text() == "Ja") {

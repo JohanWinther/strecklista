@@ -495,10 +495,11 @@ section.main.settings input {
     width: 5em;
 }
 
-section.main.settings span.button {
+section#plus p#plusButtons span.button {
     margin-left: 0.25em;
     margin-right: 0.25em;
     cursor: pointer;
+    display: inline-block;
 }
 
 section.main.settings select > option {
@@ -510,9 +511,13 @@ section.main.settings select:hover, section.main input:hover, section.main span.
     color: hsl(0,0%,100%);
 }
 
+section.settings#plus p#plusButtons > * {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
 section.main img.QR {
     border-radius: 1em;
-    margin-top: 1em;
 }
 
 section.settings p {
@@ -521,7 +526,6 @@ section.settings p {
 
 section.settings#plus p > span {
     display: block;
-    margin-top: 1em;
 }
 
 section.main a.swish {
