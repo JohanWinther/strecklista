@@ -52,25 +52,30 @@
         </section>
         <section class="main settings" id="plus">
             <h1>Plussa</h1>
+            <h2 id="step1">1. Välj belopp och användare</h2>
             <p id="plusOptions">
-                <input type="number" min="1" id="amount" value="1"/> kr på
+                Plussa
+                <input type="number" min="1" max="5000" step="1" id="amount" value="1"/> kr på
                 <select class="users" id="plusUser">
                     <option value="">Välj..</option>
                     <option value="cid2">Smeknamn 1</option>
                     <option value="cid1">Wello</option>
                 </select>
             </p>
+            <h2 id="step2">2. Swisha</h2>
             <p id="plusSwish">
-                <a href="" class="swish" id="swish-button">
+                <a class="swish" id="swish-button">
                     <img src="files/swish.png" alt="Swish" />
-                    Swisha in 1 kr
+                    Tryck för att öppna Swish
                 </a>
-            </p>
-            <p id="plusButtons">
-                <span>Skanna denna i Swish om inte appen startade automatiskt:</span>
+                <span>Eller skanna koden nedan med Swish om appen är på en annan enhet:</span>
                 <img src="" alt="Swish QR-kod" class="QR" id="swish-QR"/>
+            </p>
+            <h2 id="step3">3. Bekräfta betalning</h2>
+            <p id="plusButtons">
                 <span>Är betalningen genomförd?</span>
-                <span class="button">Ja</span><span class="button">Nej</span></p>
+                <span class="button">Ja, skicka in!</span>
+            </p>
         </section>
         <section class="main settings" id="settings">
             <h1>Inställningar</h1>

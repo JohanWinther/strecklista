@@ -30,6 +30,11 @@ $(function() {
         tries--;
     }
 
+    $("#step2").css("opacity",0.5);
+    $("#step3").css("opacity",0.5);
+    $("#plusButtons").css("opacity",0.5);
+    $("#plusSwish").css("opacity",0.5);
+
     $("#numbers").on("click", "button", function() {
         var lengthCode = parseInt(enterCode.length);
         if (lengthCode < 4) {
@@ -72,7 +77,7 @@ function sendPIN(calledByUser) {
             createCookie("PIN",enterCode,10); // Set PIN as cookie for 10 days
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             swish = data.swish;
-            setTable(data.table);
+            setData(data.table);
             if (data.list!="") {
                 //var html = '<ul class="menu" id="users">';
                 /*for (li in data.list) {
@@ -101,7 +106,7 @@ function sendPIN(calledByUser) {
     });
 }
 
-function setTable(data) {
+function setData(data) {
     window.title = data.title;
     $('section#list').hide();
     $('section#list').html(createTable(data.groups, data.members)).fadeIn(1000);
@@ -139,9 +144,6 @@ function setTable(data) {
     $("nav div.top-bar span#back").hide()
     $("nav div.top-bar span#title").css("margin-left","1em");
     $("nav div.menu-button").fadeIn(500);
-    $("#plusSwish").hide();
-    $("#plusButtons").hide();
-    updateSwishLink(1);
 
     $(window).on('resize', function(e) {
             if (state.current != null) {
@@ -275,44 +277,50 @@ function setTouchEvents() {
         }
     });
 
-    $("section#plus input#amount").on("change", function(e){
+    $("section#plus input#amount").on("input", function(e){
         var amount = parseInt(this.value);
-        if (!isNaN(amount) && amount > 0) {
-            updateSwishLink(amount);
+        if (isNaN(amount)) {
+            this.value = "1";
+        } else if (amount < 1) {
+            this.value = "1";
+        } else if (amount > "5000") {
+            this.value = "5000";
         } else {
-            this.value = 1;
+            this.value = parseInt(this.value);
         }
+        updateSwishLink(parseInt(this.value));
     });
 
     $("section#plus select#plusUser").on("change", function(e){
-        if (this.value != "") {
-            $("#plusSwish").fadeIn(500);
-        } else {
-            $("#plusSwish").fadeOut(500);
-        }
         updateSwishLink(parseInt($("section#plus input#amount").val()));
-    });
-
-    $("a#swish-button").on("click touchend",function(e) {
-        $("#plusOptions").slideUp(500);
-        $("#plusSwish").slideUp(500);
-        $("#plusButtons").slideDown(500);
+        if (this.value != "") {
+            $("#plusButtons").css("opacity",1);
+            $("#plusSwish").css("opacity",1);
+            $("#step2").css("opacity",1);
+            $("#step3").css("opacity",1);
+            $("#plusButtons span.button").css("cursor","pointer");
+        } else {
+            $("#swish-button").removeAttr("href");
+            $("#step2").css("opacity",0.5);
+            $("#step3").css("opacity",0.5);
+            $("#plusButtons").css("opacity",0.5);
+            $("#plusSwish").css("opacity",0.5);
+            $("#plusButtons span.button").removeAttr("style");
+        }
     });
 
     $("section#plus p#plusButtons .button").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
-        if ($(this).text() == "Ja") {
+        if($("#step3").css("opacity") == 1) {
             if (!state.processing) {
+                $(this).css("background-color","hsl(0, 0%, 100%)");
+                $(this).css("color","hsl(0, 0%, 0%)");
                 state.processing = 1;
                 var cid = $("section#plus select#plusUser").val();
                 var change = parseInt($("section#plus input#amount").val());
                 sendPayment(cid,change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
             }
-        } else {
-            $("#plusSwish").slideDown(500);
-            $("p#plusOptions").slideDown(500);
-            $("#plusButtons").slideUp(500);
         }
     });
 }
@@ -332,7 +340,6 @@ function updateSwishLink(amount) {
         }
     };
     $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
-    $("a#swish-button").html('<img src="files/swish.png" alt="Swish">Swisha in '+amount+' kr');
     $("a#swish-button").attr("data-ref",ref);
     $("#swish-QR").attr("src",'https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C'+swish+'%3B'+amount+'%3B'+"Plussa: "+ref+'%3B0&chld=H|1');
 }
@@ -462,6 +469,7 @@ function sendPayment(cid,change,category,comment,self) {
     $.getJSON(macroURL+"?"+"pin="+enterCode+"&cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?")
     .done(function (data) {
         state.processing = 0;
+        $("section#plus p#plusButtons .button").attr("style","");
         self.removeClass("loading-ring-button");
         self.find('div').first().remove();
         if (self.attr("data-action")=="input") self.find("span").first().text("#");
@@ -476,8 +484,6 @@ function sendPayment(cid,change,category,comment,self) {
                 } else if (data.current <=10) {
                     console.log(cid+" har endast "+(data.current)+" kr kvar att strecka på!");
                 }
-                $("p#plusOptions").slideDown(500);
-                $("#plusButtons").slideUp(500);
                 $("section#plus select#plusUser").val("").change();
             } else {
                 flashColor(self,"red");
@@ -494,6 +500,7 @@ function sendPayment(cid,change,category,comment,self) {
     })
     .fail(function(data) {
         state.processing = 0;
+        $("section#plus p#plusButtons .button").attr("style","");
         self.removeClass("loading-ring-button");
         self.find('div').first().remove();
         if (self.attr("data-action")=="input") self.find("span").first().text("#");

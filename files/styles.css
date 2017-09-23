@@ -15,7 +15,7 @@ html {
 }
 
 body {
-    color: #FFF;
+    color: hsl(0, 0%, 80%);
     font-family:Arial, sans-serif;
     font-weight:bold;
     height:100%;
@@ -489,10 +489,10 @@ section.main.settings p {
 
 section.main.settings select, section.main.settings input, section.main.settings span.button {
     border-radius: 0.5em;
-    border: 2px solid hsl(0, 0%, 80%);
+    border: 2px solid hsl(0, 0%, 100%);
     padding: 0.5em;
     margin-top: 0.5em;
-    color: hsl(0,0%,80%);
+    color: hsl(0,0%,100%);
 }
 
 section.main.settings input {
@@ -502,7 +502,6 @@ section.main.settings input {
 section#plus p#plusButtons span.button {
     margin-left: 0.25em;
     margin-right: 0.25em;
-    cursor: pointer;
     display: inline-block;
 }
 
@@ -515,7 +514,7 @@ section.main.settings select:hover, section.main input:hover, section.main span.
     color: hsl(0,0%,100%);
 }
 
-section.settings#plus p#plusButtons > * {
+section.settings#plus p > * {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
@@ -534,23 +533,15 @@ section.settings#plus p > span {
 
 section.main a.swish {
     text-decoration: none;
-    color: hsl(0,0%,80%);
+    color: hsl(0,0%, 100%);
 }
 
 section.main a.swish img {
-    filter: brightness(100) opacity(0.8);
+    filter: brightness(100);
     vertical-align: middle;
     margin-right: 10px;
     width: 3em;
     height: 3em;
-}
-
-section.main a.swish:hover {
-    color: hsl(0,0%,100%);
-}
-
-section.main a.swish:hover img {
-    filter: brightness(100) opacity(1);
 }
 
 
@@ -595,7 +586,7 @@ div.profile div {
     color: hsl(0, 0%, 15%);
     border-radius: 16px;
     border: solid 1px hsl(0, 0%, 80%);
-    background-color: hsl(0,0%,80%);
+    background-color: hsl(0,0%, 80%);
     user-select: none;
 }
 
