@@ -16,11 +16,6 @@ $(function() {
 
     window.scrollTo(0, 0);
     if (macroURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
-    // Try default code
-    enterCode="0000";
-    sendPIN(0);
-    tries--;
-    $("#message").html("").removeClass("show");
 
     // Try PIN in cookie
     var pin = readCookie("PIN");
@@ -131,7 +126,6 @@ function setData(data) {
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
-
 
     // Lägg till knappar i action-bar
     for (b in data.buttons) {
@@ -314,8 +308,8 @@ function setTouchEvents() {
         e.preventDefault();
         if($("#step3").css("opacity") == 1) {
             if (!state.processing) {
-                $(this).css("background-color","hsl(0, 0%, 100%)");
                 $(this).css("color","hsl(0, 0%, 0%)");
+                $(this).css("background-color","hsl(0, 0%, 100%)");
                 state.processing = 1;
                 var cid = $("section#plus select#plusUser").val();
                 var change = parseInt($("section#plus input#amount").val());
