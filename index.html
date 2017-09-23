@@ -60,8 +60,17 @@
                     <option value="cid1">Wello</option>
                 </select>
             </p>
-            <p><a href="" class="swish" id="swish-button"><img src="files/swish.png" alt="Swish">Swisha in 1 kr</a></p>
-            <p id="plusButtons">Genomförd betalning?<br><button>Ja</button><button>Nej</button></p>
+            <p id="plusSwish">
+                <a href="" class="swish" id="swish-button">
+                    <img src="files/swish.png" alt="Swish" />
+                    Swisha in 1 kr
+                </a>
+            </p>
+            <p id="plusButtons">
+                <span>Skanna denna i Swish om inte appen startade automatiskt:</span>
+                <img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C0000000000%3B1%3BPlus%3B0&chld=H|0" alt="Swish QR-kod" class="QR" id="swish-QR"/>
+                <span>Är betalningen genomförd?</span>
+                <button>Ja</button><button>Nej</button></p>
         </section>
         <section class="main settings" id="settings">
             <h1>Inställningar</h1>

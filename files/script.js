@@ -139,8 +139,8 @@ function setTable(data) {
     $("nav div.top-bar span#back").hide()
     $("nav div.top-bar span#title").css("margin-left","1em");
     $("nav div.menu-button").fadeIn(500);
-    $("#swish-button").hide();
-    $("p#plusButtons").hide();
+    $("#plusSwish").hide();
+    $("#plusButtons").hide();
     updateSwishLink(1);
 
     $(window).on('resize', function(e) {
@@ -286,17 +286,17 @@ function setTouchEvents() {
 
     $("section#plus select#plusUser").on("change", function(e){
         if (this.value != "") {
-            $("#swish-button").fadeIn(500);
+            $("#plusSwish").fadeIn(500);
         } else {
-            $("#swish-button").fadeOut(500);
+            $("#plusSwish").fadeOut(500);
         }
         updateSwishLink(parseInt($("section#plus input#amount").val()));
     });
 
     $("a#swish-button").on("click touchend",function(e) {
-        $("section#plus p#plusOptions").slideUp(500);
-        $(this).slideUp(500);
-        $("p#plusButtons").slideDown(500);
+        $("#plusOptions").slideUp(500);
+        $("#plusSwish").slideUp(500);
+        $("#plusButtons").slideDown(500);
     });
 
     $("section#plus button").on("click touchend",function(e) {
@@ -308,10 +308,10 @@ function setTouchEvents() {
             sendPayment(cid,change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
             $("section#plus select#plusUser").val("").change();
         } else {
-            $("a#swish-button").slideDown(500);
+            $("#plusSwish").slideDown(500);
         }
-        $("section#plus p#plusOptions").slideDown(500);
-        $("p#plusButtons").slideUp(500);
+        $("p#plusOptions").slideDown(500);
+        $("#plusButtons").slideUp(500);
     });
 }
 
@@ -332,6 +332,7 @@ function updateSwishLink(amount) {
     $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
     $("a#swish-button").html('<img src="files/swish.png" alt="Swish">Swisha in '+amount+' kr');
     $("a#swish-button").attr("data-ref",ref);
+    $("#swish-QR").attr("src",'http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C'+swish+'%3B'+amount+'%3B'+"Plussa: "+ref+'%3B0&chld=H|1');
 }
 
 function MenuNavigateTo(to, title, add) {

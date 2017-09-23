@@ -510,6 +510,20 @@ section.main.settings select:hover, section.main input:hover, section.main butto
     color: hsl(0,0%,100%);
 }
 
+section.main img.QR {
+    border-radius: 1em;
+    margin-top: 1em;
+}
+
+section.settings p {
+    color: hsl(0,0%,80%);
+}
+
+section.settings#plus p > span {
+    display: block;
+    margin-top: 1em;
+}
+
 section.main a.swish {
     text-decoration: none;
     color: hsl(0,0%,80%);
