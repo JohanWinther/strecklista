@@ -304,6 +304,7 @@ function setTouchEvents() {
         e.preventDefault();
         if ($(this).text() == "Ja") {
             if (!state.processing) {
+                state.processing = 1;
                 var cid = $("section#plus select#plusUser").val();
                 var change = parseInt($("section#plus input#amount").val());
                 sendPayment(cid,change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
@@ -456,9 +457,6 @@ function pay(el,amount) {
     } else {
         alert("Knappen är inte ett tal!");
     }
-}
-function payVal(cid,plus) {
-
 }
 
 function sendPayment(cid,change,category,comment,self) {
