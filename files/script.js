@@ -308,13 +308,12 @@ function setTouchEvents() {
                 var cid = $("section#plus select#plusUser").val();
                 var change = parseInt($("section#plus input#amount").val());
                 sendPayment(cid,change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
-                $("section#plus select#plusUser").val("");
             }
         } else {
             $("#plusSwish").slideDown(500);
+            $("p#plusOptions").slideDown(500);
+            $("#plusButtons").slideUp(500);
         }
-        $("p#plusOptions").slideDown(500);
-        $("#plusButtons").slideUp(500);
     });
 }
 
@@ -477,6 +476,9 @@ function sendPayment(cid,change,category,comment,self) {
                 } else if (data.current <=10) {
                     console.log(cid+" har endast "+(data.current)+" kr kvar att strecka på!");
                 }
+                $("p#plusOptions").slideDown(500);
+                $("#plusButtons").slideUp(500);
+                $("section#plus select#plusUser").val("").change();
             } else {
                 flashColor(self,"red");
                 if (change<0) {

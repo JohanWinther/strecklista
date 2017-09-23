@@ -467,6 +467,10 @@ section.main {
 }
 
 /* list */
+section.main {
+    text-align: center;
+}
+
 section.main h1 {
     text-align: center;
     font-size: 3em;
