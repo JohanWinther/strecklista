@@ -4,6 +4,7 @@ var state = {},
     enterCode = "";
     tries = 0;
     dragging = false;
+    swish = "";
 state.current = null;
 state.processing = 0;
 state.menu = [];
@@ -15,12 +16,18 @@ $(function() {
 
     window.scrollTo(0, 0);
     if (macroURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
+    // Try default code
+    enterCode="0000";
+    sendPIN(0);
+    tries--;
+    $("#message").html("").removeClass("show");
+
+    // Try PIN in cookie
     var pin = readCookie("PIN");
-    if(pin!=null){
+    if (pin != null){
         enterCode=pin;
-        sendPIN();
-    } else {
-        $("#status").removeClass("load");
+        sendPIN(0);
+        tries--;
     }
 
     $("#numbers").on("click", "button", function() {
@@ -40,7 +47,7 @@ $(function() {
                 tries++;
                 if (tries<6) {
                     $("#status").addClass("load");
-                    sendPIN();
+                    sendPIN(1);
                 } else {
                     $("#message").html("För många felaktiga försök!").addClass("show");
                 }
@@ -49,20 +56,23 @@ $(function() {
     });
 });
 
-function sendPIN() {
+function sendPIN(calledByUser) {
     $.getJSON(macroURL+"?prefix=getData&pin="+enterCode+"&callback=?")
     .done(function(data) {
         if (data==""){
             // Wrong PIN
-            enterCode = "";
             $("#numbers").removeClass("load");
             $("#fields .numberfield").removeClass("load");
             $("#status").removeClass("load");
+            if (calledByUser)
             $("#message").html("Fel PIN-kod. "+(6-tries)+" försök kvar.").addClass("show");
+            enterCode = "";
         } else {
-            createCookie("PIN",enterCode,10);
+            // Correct PIN
+            createCookie("PIN",enterCode,10); // Set PIN as cookie for 10 days
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
-            setTable(data);
+            swish = data.swish;
+            setTable(data.table);
             if (data.list!="") {
                 var html = '<ul class="menu" id="users">';
                 for (li in data.list) {
@@ -88,8 +98,8 @@ function sendPIN() {
 
 function setTable(data) {
     window.title = data.title;
-    $('section.list').hide();
-    $('section.list').html(createTable(data.groups, data.members)).fadeIn(1000);
+    $('section#list').hide();
+    $('section#list').html(createTable(data.groups, data.members)).fadeIn(1000);
     $("div.profile").each(function(i,el) {
         var imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-email"))+'?s=128&d=404';
         // Image Does Not Exist
@@ -106,7 +116,7 @@ function setTable(data) {
             }
         });
     });
-    runActivityFun();
+    //runActivityFun();
     updateActivity();
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");
@@ -124,6 +134,9 @@ function setTable(data) {
     $("nav div.top-bar span#back").hide()
     $("nav div.top-bar span#title").css("margin-left","1em");
     $("nav div.menu-button").fadeIn(500);
+    $("#swish-button").hide();
+    $("p#plusButtons").hide();
+    updateSwishLink(1);
 
     $(window).on('resize', function(e) {
             if (state.current != null) {
@@ -148,7 +161,7 @@ function setTouchEvents() {
         dragging = false;
     });
 
-    $("section.list ul.cards li").on("click touchend", function(e) {
+    $("section#list ul.cards li").on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
         if (dragging) {
@@ -256,6 +269,64 @@ function setTouchEvents() {
             }
         }
     });
+
+    $("section#plus input#amount").on("change", function(e){
+        var amount = this.value;
+        if (!isNaN(parseInt(amount)) && parseInt(amount) > 0) {
+            updateSwishLink(amount);
+        } else {
+            this.value = 1;
+        }
+    });
+
+    $("section#plus select#plusUser").on("change", function(e){
+        if (this.value != "") {
+            $("#swish-button").fadeIn(500);
+        } else {
+            $("#swish-button").fadeOut(500);
+        }
+        updateSwishLink(parseInt($("section#plus input#amount").val()));
+    });
+
+    $("a#swish-button").on("click touchend",function(e) {
+        $("section#plus p#plusOptions").slideUp(500);
+        $(this).slideUp(500);
+        $("p#plusButtons").slideDown(500);
+    });
+
+    $("section#plus button").on("click touchend",function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if ($(this).text() == "Ja") {
+            var cid = $("section#plus select#plusUser").val();
+            var change = parseInt($("section#plus input#amount").val());
+            sendPayment(cid,change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
+            $("section#plus select#plusUser").val("").change();
+        } else {
+            $("a#swish-button").slideDown(500);
+        }
+        $("section#plus p#plusOptions").slideDown(500);
+        $("p#plusButtons").slideUp(500);
+    });
+}
+
+function updateSwishLink(amount) {
+    var ref = makeID();
+    var swishData = {
+        "version": 1,
+        "payee": {
+            "value":swish
+        },
+        "message":{
+            "value": "Plussa: "+ref
+        },
+        "amount": {
+            "value": amount
+        }
+    };
+    $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
+    $("a#swish-button").html('<img src="files/swish.png" alt="Swish">Swisha in '+amount+' kr');
+    $("a#swish-button").attr("data-ref",ref);
 }
 
 function MenuNavigateTo(to, title, add) {
@@ -275,7 +346,7 @@ function MenuNavigateTo(to, title, add) {
 
 function scrollToCurrent() {
     var offset = 0;
-    var cardHeight = $("section.list ul.cards li")[0].offsetHeight;
+    var cardHeight = $("section#list ul.cards li")[0].offsetHeight;
     var abHeight = actionBar[0].offsetHeight;
     if ((cardHeight + abHeight) >= $(window).height()) {
         offset = (cardHeight + abHeight) - $(window).height();
@@ -333,8 +404,8 @@ function updateActivity() {
         if (data != "") {
         if (data.list!="") {
             var html = '';
-            for (var li = 0; li<data.list.length || li < 10; li++) {
-                var category;
+            for (var li = 0; li<data.list.length && li < 10; li++) {
+                var category ="";
                 switch (data.list[li].category) {
                     case "SP":
                         category = "streckade";
@@ -380,45 +451,6 @@ function pay(el,amount) {
 }
 function payVal(cid,plus) {
 
-    function askForComment() {
-        a.parent().parent().children()[0].value = round(parseFloat(a.parent().parent().children()[0].value),2);
-        name = a.parent().parent().siblings().first().html();
-        a.parent().attr('id', 'currentPlus');
-        a.parent().css("display","none");
-        a.parent().parent().parent().after(createPlussningsBox(name));
-    }
-
-    a = $(this);
-    if (!(cid in state)) {
-        if (plus) {
-            amount = round(-Math.abs(parseFloat($("#plus-amount").val())),2);
-            $("#plus-amount").val(-amount);
-            $("#currentPlus").prev().val(amount)
-            category = $('select#selectionBox').val();
-            comment = $("#comment").val();
-        } else {
-            amount = round(parseFloat(a.parent().parent().children()[0].value),2);
-            category = "SP";
-            comment = "";
-        }
-        if (!isNaN(amount)) {
-            if (amount<0 && !plus) {
-                closeCommentBox();
-                askForComment();
-            } else {
-                a.parent().addClass("round-loading");
-                $("#currentCross").css("display","none");
-                state.processing = 1;
-                change = -amount;
-                sendPayment(cid,change,category,comment,a);
-                if (plus) {
-                    setTimeout(function(){closeCommentBox()},5000);
-                }
-            }
-        } else {
-            alert("Skriv in ett tal!");
-        }
-    }
 }
 
 function sendPayment(cid,change,category,comment,self) {

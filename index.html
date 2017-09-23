@@ -21,8 +21,8 @@
 </head>
 
 <body>
-    <nav tabindex="1">
-        <div class="menu-button" style="display:none" tabindex="0">
+    <nav>
+        <div class="menu-button" style="display:none">
             <div class="bar1"></div>
             <div class="bar2"></div>
             <div class="bar3"></div>
@@ -42,17 +42,37 @@
         </footer>
     </nav>
     <div class="content">
-        <div class="overlay"></div>
         <div id="action-bar-top" class="action-bar" data-cid style="display:none">
             <ul>
             </ul>
         </div>
         <section class="activity" style="display:none">
-            <div class="overlay"></div>
             <ul>
             </ul>
         </section>
-        <section class="list">
+        <section class="main settings" id="plus">
+            <h1>Plussa</h1>
+            <p id="plusOptions">
+                <input type="number" min="1" id="amount" value="1"/> kr på
+                <select class="users" id="plusUser">
+                    <option value="">Välj..</option>
+                    <option value="cid2">Smeknamn 1</option>
+                    <option value="cid1">Wello</option>
+                </select>
+            </p>
+            <p><a href="" class="swish" id="swish-button"><img src="files/swish.png" alt="Swish">Swisha in 1 kr</a></p>
+            <p id="plusButtons">Genomförd betalning?<br><button>Ja</button><button>Nej</button></p>
+        </section>
+        <section class="main settings" id="settings">
+            <h1>Inställningar</h1>
+            <h2>Favorit</h2>
+            <select class="users">
+                <option value="">Välj..</option>
+                <option value="cid2">Smeknamn 1</option>
+                <option value="cid1">Wello</option>
+            </select>
+        </section>
+        <section class="main" id="list">
             <div class="cell">
                 <div id="status" class="load">
                     <div class="loading-ring-big">
