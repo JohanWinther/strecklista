@@ -428,7 +428,7 @@ function updateActivity() {
         }
     } else {
         alert("Fel PIN-kod!");
-        location.reload();
+        location.reload(true);
     }
         $("section.activity").slideDown(1000);
     });
@@ -481,7 +481,7 @@ function sendPayment(cid,change,category,comment,self) {
             }
         } else {
             alert("Fel PIN-kod!");
-            location.reload();
+            location.reload(true);
         }
     })
     .fail(function(data) {
