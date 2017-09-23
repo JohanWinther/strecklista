@@ -483,7 +483,7 @@ section.main.settings p {
     margin-top: 1em;
 }
 
-section.main.settings select, section.main.settings input, section.main.settings button {
+section.main.settings select, section.main.settings input, section.main.settings span.button {
     border-radius: 0.5em;
     border: 2px solid hsl(0, 0%, 80%);
     padding: 0.5em;
@@ -495,7 +495,7 @@ section.main.settings input {
     width: 5em;
 }
 
-section.main.settings button {
+section.main.settings span.button {
     margin-left: 0.25em;
     margin-right: 0.25em;
     cursor: pointer;
@@ -505,7 +505,7 @@ section.main.settings select > option {
     background-color: hsl(0, 0%, 0%);
 }
 
-section.main.settings select:hover, section.main input:hover, section.main button:hover {
+section.main.settings select:hover, section.main input:hover, section.main span.button:hover {
     border: 2px solid hsl(0, 0%, 100%);
     color: hsl(0,0%,100%);
 }
