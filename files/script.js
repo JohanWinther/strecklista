@@ -74,14 +74,19 @@ function sendPIN(calledByUser) {
             swish = data.swish;
             setTable(data.table);
             if (data.list!="") {
-                var html = '<ul class="menu" id="users">';
-                for (li in data.list) {
+                //var html = '<ul class="menu" id="users">';
+                /*for (li in data.list) {
                     html += '<li data-cid="'+data.list[li][0]+'" tabindex="'+li+'"><span>'+ data.list[li][2] +'</span></li>';
                 }
                 html += '</ul>'
                 $("nav footer").before(html);
                 $("nav ul#users > li").append('<li data-action="favorite"><span>Markera som favorit</span></li><li data-action="plus"><span>Plussa</span></li><li data-action="statistics"><span>Statistik</span></li>');
-                $("nav ul#users").hide();
+                $("nav ul#users").hide();*/
+                var html = '<option value="">Välj..</option>';
+                for (li in data.list) {
+                    html += '<option value="'+data.list[li][0]+'">'+data.list[li][2]+'</option>';
+                }
+                $("section.settings select.users").html(html);
             }
 
             setTouchEvents();
