@@ -137,7 +137,6 @@ function setTable(data) {
                 });
             }
         });
-
 }
 
 function setTouchEvents() {
@@ -332,6 +331,7 @@ function runActivityFun() {
 function updateActivity() {
     $.getJSON(macroURL+"?prefix=getActivity&callback=?")
     .done(function(data) {
+        if (data != "") {
         if (data.list!="") {
             var html = '';
             for (var li = 0; li<data.list.length || li < 10; li++) {
@@ -356,6 +356,10 @@ function updateActivity() {
             html = '<li><span class="time">Inga senaste transaktioner.</span></li>';
             $("section.activity ul").html(html);
         }
+    } else {
+        alert("Fel PIN-kod!");
+        location.reload();
+    }
         $("section.activity").slideDown(1000);
     });
 }
@@ -419,29 +423,34 @@ function payVal(cid,plus) {
 }
 
 function sendPayment(cid,change,category,comment,self) {
-    $.getJSON(macroURL+"?"+"cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?")
+    $.getJSON(macroURL+"?"+"pin="+enterCode+"cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?")
     .done(function (data) {
         state.processing = 0;
         self.removeClass("loading-ring-button");
         self.find('div').first().remove();
         if (self.attr("data-action")=="input") self.find("span").first().text("#");
-        success = data.success;
-        if (success) {
-            updateActivity();
-            flashColor(self,"green")
-            console.log(cid+" har ändrats med "+change+" kr. Nu: "+data.current+" kr.");
-            if (data.current <= 0) {
-                console.log(cid+" har "+(-data.current)+" kr i skuld!");
-            } else if (data.current <=10) {
-                console.log(cid+" har endast "+(data.current)+" kr kvar att strecka på!");
+        if (data != "") {
+            success = data.success;
+            if (success) {
+                updateActivity();
+                flashColor(self,"green")
+                console.log(cid+" har ändrats med "+change+" kr. Nu: "+data.current+" kr.");
+                if (data.current <= 0) {
+                    console.log(cid+" har "+(-data.current)+" kr i skuld!");
+                } else if (data.current <=10) {
+                    console.log(cid+" har endast "+(data.current)+" kr kvar att strecka på!");
+                }
+            } else {
+                flashColor(self,"red");
+                if (change<0) {
+                    console.log("Kunde inte strecka "+(-change)+" kr på "+cid+": "+data.message);
+                } else {
+                    alert("Kunde inte lägga till "+change+" kr på "+cid+": "+data.message);
+                }
             }
         } else {
-            flashColor(self,"red");
-            if (change<0) {
-                console.log("Kunde inte strecka "+(-change)+"kr på "+cid+": "+data.message);
-            } else {
-                alert("Kunde inte lägga till "+change+"kr på "+cid+": "+data.message);
-            }
+            alert("Fel PIN-kod!");
+            location.reload();
         }
     })
     .fail(function(data) {
@@ -481,5 +490,3 @@ function closeCommentBox() {
     $('#currentPlus').removeAttr('id');
     $('#plus-box').remove();
 }
-
-function round(number, decimals) { return +(Math.round(number + "e+" + decimals) + "e-" + decimals); }
