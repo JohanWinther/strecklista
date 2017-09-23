@@ -303,9 +303,10 @@ function setTouchEvents() {
         e.stopPropagation();
         e.preventDefault();
         if ($(this).text() == "Ja") {
+            var cid = $("section#plus select#plusUser").val();
             var change = parseInt($("section#plus input#amount").val());
             console.log(cid);
-            sendPayment($("section#plus select#plusUser").val(),change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
+            sendPayment(cid,change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
             $("section#plus select#plusUser").val("").change();
         } else {
             $("#plusSwish").slideDown(500);
@@ -332,7 +333,7 @@ function updateSwishLink(amount) {
     $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
     $("a#swish-button").html('<img src="files/swish.png" alt="Swish">Swisha in '+amount+' kr');
     $("a#swish-button").attr("data-ref",ref);
-    $("#swish-QR").attr("src",'http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C'+swish+'%3B'+amount+'%3B'+"Plussa: "+ref+'%3B0&chld=H|1');
+    $("#swish-QR").attr("src",'https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C'+swish+'%3B'+amount+'%3B'+"Plussa: "+ref+'%3B0&chld=H|1');
 }
 
 function MenuNavigateTo(to, title, add) {
