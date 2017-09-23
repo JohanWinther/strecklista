@@ -328,7 +328,7 @@ function runActivityFun() {
 }
 
 function updateActivity() {
-    $.getJSON(macroURL+"?prefix=getActivity&callback=?")
+    $.getJSON(macroURL+"?prefix=getActivity&pin="+enterCode+"&callback=?")
     .done(function(data) {
         if (data != "") {
         if (data.list!="") {
@@ -422,7 +422,7 @@ function payVal(cid,plus) {
 }
 
 function sendPayment(cid,change,category,comment,self) {
-    $.getJSON(macroURL+"?"+"pin="+enterCode+"cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?")
+    $.getJSON(macroURL+"?"+"pin="+enterCode+"&cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?")
     .done(function (data) {
         state.processing = 0;
         self.removeClass("loading-ring-button");
