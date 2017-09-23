@@ -271,8 +271,8 @@ function setTouchEvents() {
     });
 
     $("section#plus input#amount").on("change", function(e){
-        var amount = this.value;
-        if (!isNaN(parseInt(amount)) && parseInt(amount) > 0) {
+        var amount = parseInt(this.value);
+        if (!isNaN(amount) && amount > 0) {
             updateSwishLink(amount);
         } else {
             this.value = 1;
