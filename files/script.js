@@ -303,9 +303,9 @@ function setTouchEvents() {
         e.stopPropagation();
         e.preventDefault();
         if ($(this).text() == "Ja") {
-            var cid = $("section#plus select#plusUser").val();
             var change = parseInt($("section#plus input#amount").val());
-            sendPayment(cid,change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
+            console.log(cid);
+            sendPayment($("section#plus select#plusUser").val(),change,'Plussning',$("a#swish-button").attr("data-ref"),$(this));
             $("section#plus select#plusUser").val("").change();
         } else {
             $("#plusSwish").slideDown(500);
