@@ -108,7 +108,6 @@ function setTable(data) {
     });
     runActivityFun();
     updateActivity();
-    enterCode = "";
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
