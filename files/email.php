@@ -1,7 +1,5 @@
 <?php
 
-<?php
-
 if (!function_exists('ex'))
 {
     function ex($object, $coords, $default = null)
