@@ -82,6 +82,7 @@ function sendPIN(calledByUser) {
             if (favorite != null) {
                 $("#favoriteUser").val(favorite);
             }
+            $("div.menu-button").fadeIn(500);
             setTouchEvents();
         }
     })
