@@ -286,7 +286,7 @@ function setTouchEvents() {
             eraseCookie("favorite");
         }
         $("#action-bar-top").attr("data-cid", cid);
-        $("#action-bar-top > span").text("Streckar på "+$("#favoriteUser option:selected").text());
+        $("#action-bar-top > span").text("Strecka på "+$("#favoriteUser option:selected").text());
     });
 
     $(document).on("click touchend", function(e) {
