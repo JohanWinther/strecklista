@@ -82,7 +82,7 @@ function sendPIN(calledByUser) {
             if (favorite != null) {
                 $("#favoriteUser").val(favorite);
                 $("div#action-bar-top").attr("data-cid",favorite);
-                $("#action-bar-top > span").text("Streckar på "+$("#favoriteUser option:selected").text());
+                $("#action-bar-top > span").text("Strecka på "+$("#favoriteUser option:selected").text());
                 $("div#action-bar-top").fadeIn(500);
             }
             $("div.menu-button").fadeIn(500);
