@@ -1,4 +1,6 @@
 <?php
+
+require 'SMTP.php';
 $config = [
 
     // Debug mode will echo connection status alerts to
@@ -28,7 +30,7 @@ $config = [
     // "localhost" may cause the email to be considered spam.
     // http://stackoverflow.com/questions/5294478/significance-of-localhost-in-helo-localhost
 
-    'localhost' => 'localhost', // rename to the URL you want as origin of email
+    'localhost' => 'https://www.outlook.com', // rename to the URL you want as origin of email
 
 ];
 echo getenv('email');
