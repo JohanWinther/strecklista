@@ -646,6 +646,14 @@ div#action-bar-top {
     transition: transform 0.5s ease-in-out;
 }
 
+div#action-bar-top > span {
+    color: hsl(0, 0%, 0%);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    line-height: 1.5em;
+    display: block;
+}
+
 p#load-message {display:none;}
 
 div.settings {

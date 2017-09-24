@@ -81,8 +81,9 @@ function sendPIN(calledByUser) {
             var favorite = readCookie("favorite");
             if (favorite != null) {
                 $("#favoriteUser").val(favorite);
+                $("div#action-bar-top").attr("data-cid",favorite);
+                $("div#action-bar-top").fadeIn(500);
             }
-            $("div#action-bar-top").removeAttr("style");
             $("div.menu-button").fadeIn(500);
             $("section#pinput").hide();
             setTouchEvents();
@@ -100,7 +101,7 @@ function sendPIN(calledByUser) {
 function setData(data) {
     window.title = data.title;
     $('section#list').hide();
-    $('section#list').html(createTable(data.groups, data.members)).fadeIn(1000);
+    $('section#list').html(createTable(data.groups, data.members)).fadeIn(500);
     $("div.profile").each(function(i,el) {
         var imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-email"))+'?s=128&d=404';
         // Image Does Not Exist
@@ -119,6 +120,7 @@ function setData(data) {
     });
     //runActivityFun();
     updateActivity();
+    $("section.activity").slideDown(1000);
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");
     $("#status").removeClass("load");
@@ -255,10 +257,12 @@ function setTouchEvents() {
         closeMenu();
         $("section.main").hide();
         $("section.activity").hide();
+        $("#action-bar-top").hide();
         var link = $(this).attr("data-link");
         if (link == "list") {
             $("section#list").fadeIn(500);
             $("section.activity").slideDown(500);
+            if ($("#action-bar-top").attr("data-cid") != "") $("#action-bar-top").fadeIn(500);
         } else if (link == "stats") {
             $("section#stats").fadeIn(500);
         } else if (link == "plus") {
@@ -281,6 +285,7 @@ function setTouchEvents() {
             eraseCookie("favorite");
         }
         $("#action-bar-top").attr("data-cid", cid);
+        $("#action-bar-top > span").text("Streckar på "+cid);
     });
 
     $(document).on("click touchend", function(e) {
@@ -503,7 +508,6 @@ function updateActivity() {
             alert("Fel PIN-kod!");
             location.reload(true);
         }
-        $("section.activity").slideDown(1000);
     });
 }
 
@@ -586,11 +590,4 @@ function resetColor(el) {
     el.css("transition");
     el.css("background-color","");
     el.css("background-color");
-}
-
-
-function closeCommentBox() {
-    $('#currentPlus').removeAttr('style');
-    $('#currentPlus').removeAttr('id');
-    $('#plus-box').remove();
 }
