@@ -41,17 +41,23 @@
     </header>
     <div class="content">
         <div class="top-margin"></div>
+
+
         <section class="activity" style="display:none">
             <ul>
                 <li><span class="time">Inga senaste transaktioner.</span></li>
             </ul>
         </section>
+
+
         <div id="action-bar-top" class="action-bar" data-cid style="display:none">
             <span></span>
             <ul>
 
             </ul>
         </div>
+
+
         <section class="main settings" id="plus" style="display:none">
             <h1>Plussa</h1>
             <h2 id="step1">1. Välj belopp och användare</h2>
@@ -77,6 +83,8 @@
                 <span class="button">Ja, skicka in!</span>
             </p>
         </section>
+
+
         <section class="main settings" id="settings" style="display:none">
             <h1>Inställningar</h1>
             <h2>Favorit</h2>
@@ -84,6 +92,14 @@
                 <option value="">Välj..</option>
             </select>
         </section>
+
+        <section class="main settings" id="admin" style="display:none">
+            <h1>Admin</h1>
+            <h2>Logga in</h2>
+            <p><input type="password" id="password" placeholder="Lösenord"/><input type="submit" value="Logga in" id="loginBtn" onclick="adminLogin()" /></p>
+            <p id="loginErr"></p>
+        </section>
+
         <section class="main" id="list" style="display:none">
         </section>
         <section class="main" id="pinput">
@@ -124,12 +140,17 @@
                 </div>
             </div>
         </section>
+
+
     </div>
+
+
     <div class="action-bar-arrow" style="transform: scale(0)"></div>
     <div id="action-bar-float" class="action-bar" data-cid style="transform: scale(0)">
         <ul>
         </ul>
     </div>
+
 
     <footer>
         <ul>

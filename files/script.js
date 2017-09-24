@@ -70,6 +70,8 @@ function sendPIN(calledByUser) {
             createCookie("PIN",enterCode,10); // Set PIN as cookie for 10 days
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             swish = data.swish;
+            window.title = data.title;
+            $("a#logo").text(data.title);
             setData(data.table);
             if (data.list!="") {
                 var html = '<option value="">Välj..</option>';
@@ -100,7 +102,6 @@ function sendPIN(calledByUser) {
 }
 
 function setData(data) {
-    window.title = data.title;
     $('section#list').hide();
     $('section#list').html(createTable(data.groups, data.members)).fadeIn(500);
     $("div.profile").each(function(i,el) {

@@ -28,25 +28,26 @@ body {
 }
 
 header {
-    background: hsl(0, 0%, 0%);
+    background: hsl(0, 0%, 15%);
     width: 100%;
     height: 4em;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    border-bottom: 4px solid hsl(0, 0%, 80%);
+    /*border-bottom: 4px solid hsl(0, 0%, 80%);*/
     z-index: 9999;
     font-size: 1.2em;
 }
 
 #logo {
-	margin: 0.5em;
+	margin: 0.5em 0 0.5em 1em;
 	float: left;
-	width: 3em;
+	width: fit-content;
+    line-height: 3em;
 	height: 3em;
-	background: url(https://www.ftek.se/wp-content/uploads/2017/06/f61718.png) no-repeat center;
-    background-size: contain;
+    color: hsl(0, 0%, 100%);
 	display: block;
+    cursor: pointer;
 }
 
 nav {
@@ -114,14 +115,14 @@ div.menu-button {
     width: 3em;
     height: 3em;
     box-sizing: border-box;
-    background-color: hsla(0, 0%, 100%);
+    background-color: hsla(0, 0%, 100%, 0);
     border-radius: 3em;
-    box-shadow: 5px 5px 20px hsla(0, 0%, 0%, 0.2);
     transition: background-color 0.2s ease-in-out;
 }
 
 div.menu-button:hover {
     background-color: hsla(0, 0%, 100%, 0.2);
+    box-shadow: 5px 5px 20px hsla(0, 0%, 0%, 0.2);
 }
 
 .bar1, .bar2, .bar3 {
@@ -225,7 +226,7 @@ section.main {
     animation: lds-dual-ring 1.3s linear infinite;
     transition: all 0.3s ease-in-out;
     position: fixed;
-    color: hsl(0,0%,15%);
+    color: hsl(0,0%,0%);
 }
 
 .loading-ring-small div {
@@ -444,6 +445,13 @@ section.main.settings input {
     width: 5em;
 }
 
+section.settings#admin input[type="password"] {
+    border-radius: 0.5em 0 0 0.5em;
+}
+section.settings#admin input[type="submit"] {
+    border-radius: 0 0.5em 0.5em 0;
+}
+
 section#plus p#plusButtons span.button {
     margin-left: 0.25em;
     margin-right: 0.25em;
@@ -511,7 +519,7 @@ ul.cards li {
 }
 
 ul.cards li div.profile {
-    margin: 0 0 0.5em 0;
+    margin-bottom: 0.5em;
     padding: 0;
     width: 100%;
     height: 128px;
@@ -528,7 +536,7 @@ div.profile div {
     text-align: center;
     font-size: 80px;
     line-height: 128px;
-    color: hsl(0, 0%, 15%);
+    color: hsl(0, 0%, 0%);
     border-radius: 16px;
     border: solid 1px hsl(0, 0%, 80%);
     background-color: hsl(0,0%, 80%);
@@ -800,7 +808,7 @@ td.commentRow select {
         max-width: 300px;
         overflow-y: auto;
         overflow-x: hidden;
-        height: calc(100vh - 5em);
+        height: calc(100vh - 4em);
     }
 
     nav ul.menu {
