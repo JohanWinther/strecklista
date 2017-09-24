@@ -2,7 +2,7 @@
 echo getenv('email');
 use PHPlib\SMTP;
 echo getenv('email');
-$mail = new SMTP(require __DIR__ . 'email-config.php');
+$mail = new SMTP(require __DIR__ . '/files/email-config.php');
 echo getenv('email');
 $mail->to('welocy95@gmail.com');
 echo getenv('email');
