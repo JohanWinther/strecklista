@@ -7,4 +7,4 @@ $mail->reply('ekebba@student.chalmers.se', 'Ebba Ekblom');
 $mail->subject('Streckskuld');
 $mail->body('This is a <b>HTML</b> email.');
 $result = $mail->send();
- ?>
+echo $result ?>
