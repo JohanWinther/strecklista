@@ -172,6 +172,10 @@ div.content {
     width: 100%;
 }
 
+div.top-margin {
+    height: 5em;
+}
+
 section.main {
     width: 80%;
     max-width:80%;
@@ -500,9 +504,9 @@ ul.cards {
 ul.cards li {
     flex-basis: auto;
     padding: 0;
-    height: 10em;
+    height: fit-content;
     width: 8em;
-    margin: 0 1em;
+    margin: 0 1em 1em 1em;
     color: hsl(0, 0%, 80%);
 }
 
@@ -532,14 +536,14 @@ div.profile div {
 
 ul.cards li div.name {
     margin: 0;
-    height: 1.5em;
+    height: fit-content;
     width: 100%;
     text-align: center;
+    word-wrap: break-word;
 }
 
 section.activity {
-    margin: 1em auto;
-    margin-top: 5em;
+    margin: 0 auto 1em auto;
     color: hsl(0, 0%, 0%);
     padding: 3em 1em 1em 1em;
     background-color: hsl(0, 0%, 80%);
@@ -552,8 +556,9 @@ section.activity {
     background-position: center 0.5em;
 }
 
-section.activity > div.overlay {
-    display: none;
+section.activity > ul > li[data-category="streckade"]:active {
+    background-color: hsla(0, 0%, 0%,0.2);
+    border-radius: 0.25em;
 }
 
 section.activity ul {
@@ -635,9 +640,10 @@ div#action-bar-top {
     position: initial;
     max-width: fit-content;
     width: 80vw;
-    margin: 5em auto;
+    margin: 2em auto;
     z-index: -1;
     transform: scale(1);
+    transition: transform 0.5s ease-in-out;
 }
 
 p#load-message {display:none;}
@@ -705,6 +711,73 @@ td.commentRow select {
         max-width: 100%;
         padding:0;
     }
+
+    header {
+        font-size: 0.8em;
+    }
+
+    div.top-margin {
+        height: 3.4em;
+    }
+
+    section.activity {
+        font-size: 0.8em;
+    }
+
+    section.activity > ul > li {
+        margin-bottom: 0.5em;
+    }
+
+    ul.cards li {
+        width: 4em;
+        color: hsl(0, 0%, 80%);
+    }
+
+    ul.cards li div.profile {
+        margin: 0 0 0.5em 0;
+        height: 64px;
+        border-radius: 0.5em;
+    }
+
+    div.profile div {
+        width: 62px;
+        height: 62px;
+        font-size: 40px;
+        line-height: 64px;
+        border-radius: 8px;
+    }
+
+    ul.cards li div.name {
+        text-align: center;
+        font-size: 0.75em;
+    }
+
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    ul.cards li {
+        width: 6em;
+        color: hsl(0, 0%, 80%);
+    }
+
+    ul.cards li div.profile {
+        margin: 0 0 0.5em 0;
+        height: 96px;
+        border-radius: 0.5em;
+    }
+
+    div.profile div {
+        width: 94px;
+        height: 94px;
+        font-size: 60px;
+        line-height: 96px;
+        border-radius: 12px;
+    }
+
+    ul.cards li div.name {
+        text-align: center;
+        font-size: 0.62em;
+    }
 }
 
 @media (min-width: 768px) {
@@ -717,6 +790,9 @@ td.commentRow select {
         right: 0;
         width: 30%;
         max-width: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(100vh - 5em);
     }
 
     nav ul.menu {
@@ -737,9 +813,6 @@ td.commentRow select {
     }
 }
 @media (min-width: 1024px) {
-    section.main {
-        margin-top: 6em;
-    }
 
     section.activity {
         max-width: 360px;
@@ -757,6 +830,11 @@ td.commentRow select {
     }
     section.activity:focus, section.activity:hover {
         bottom: 0;
+    }
+
+    section.activity > ul > li[data-category="streckade"]:hover {
+        background-color: hsla(0, 0%, 0%,0.2);
+        border-radius: 0.25em;
     }
 
     section.activity > div.overlay {

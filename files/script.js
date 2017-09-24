@@ -82,7 +82,9 @@ function sendPIN(calledByUser) {
             if (favorite != null) {
                 $("#favoriteUser").val(favorite);
             }
+            $("div#action-bar-top").removeAttr("style");
             $("div.menu-button").fadeIn(500);
+            $("section#pinput").hide();
             setTouchEvents();
         }
     })
@@ -158,6 +160,7 @@ function setTouchEvents() {
             return;
         }
         if (!state.processing) {
+            closeMenu();
             state.current = $(this);
             if (state.current.attr("data-cid")!=actionBar.attr("data-cid")) {
                 scrollToCurrent();
@@ -206,29 +209,56 @@ function setTouchEvents() {
         }
     });
 
-    $("div.action-bar").on("click touchend", function(e) {
+    /*$("div.action-bar").on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
-    });
+    });*/
 
     $("div.menu-button").on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
-        if (state.menuIsOpen) {
-            closeMenu();
-        } else {
-            openMenu();
+        if (dragging) {
+            dragging = false;
+            return;
+        }
+        if (!state.processing) {
+            ActionBar(0);
+            if (state.menuIsOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+    });
+
+    $("a#logo").on("click touchend",function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (dragging) {
+            dragging = false;
+            return;
+        }
+        if (!state.processing) {
+            $("section.main").hide();
+            $("section#list").fadeIn(500);
+            $("section.activity").slideDown(500);
         }
     });
 
     $("nav ul.menu li").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
+        if (dragging) {
+            dragging = false;
+            return;
+        }
         closeMenu();
         $("section.main").hide();
+        $("section.activity").hide();
         var link = $(this).attr("data-link");
         if (link == "list") {
             $("section#list").fadeIn(500);
+            $("section.activity").slideDown(500);
         } else if (link == "stats") {
             $("section#stats").fadeIn(500);
         } else if (link == "plus") {
@@ -274,33 +304,19 @@ function setTouchEvents() {
     $("section#plus input#amount").on("input", function(e){
         var amount = parseInt(this.value);
         if (isNaN(amount)) {
-            this.value = "1";
+            this.value = "";
         } else if (amount < 1) {
-            this.value = "1";
-        } else if (amount > "5000") {
-            this.value = "5000";
+            this.value = 1;
+        } else if (amount > 5000) {
+            this.value = 5000;
         } else {
             this.value = parseInt(this.value);
         }
-        updateSwishLink(parseInt(this.value));
+        updateSwishLink(this.value, $("section#plus select#plusUser").val());
     });
 
     $("section#plus select#plusUser").on("change", function(e){
-        updateSwishLink(parseInt($("section#plus input#amount").val()));
-        if (this.value != "") {
-            $("#plusButtons").css("opacity",1);
-            $("#plusSwish").css("opacity",1);
-            $("#step2").css("opacity",1);
-            $("#step3").css("opacity",1);
-            $("#plusButtons span.button").css("cursor","pointer");
-        } else {
-            $("#swish-button").removeAttr("href");
-            $("#step2").css("opacity",0.5);
-            $("#step3").css("opacity",0.5);
-            $("#plusButtons").css("opacity",0.5);
-            $("#plusSwish").css("opacity",0.5);
-            $("#plusButtons span.button").removeAttr("style");
-        }
+        updateSwishLink($("section#plus input#amount").val(),this.value);
     });
 
     $("section#plus p#plusButtons .button").on("click touchend",function(e) {
@@ -319,6 +335,24 @@ function setTouchEvents() {
     });
 }
 
+function disableSteps() {
+    $("#swish-button").removeAttr("href");
+    $("#step2").css("opacity",0.5);
+    $("#step3").css("opacity",0.5);
+    $("#plusButtons").css("opacity",0.5);
+    $("#plusSwish").css("opacity",0.5);
+    $("#plusButtons span.button").removeAttr("style");
+}
+
+function enableSteps() {
+    $("#plusButtons").css("opacity",1);
+    $("#plusSwish").css("opacity",1);
+    $("#step2").css("opacity",1);
+    $("#step3").css("opacity",1);
+    $("#plusButtons span.button").css("cursor","pointer");
+    $("swish-QR").removeAttr("src");
+}
+
 function openMenu() {
     $("div.bar1, div.bar2, div.bar3").addClass("close");
     $("nav").slideDown(200);
@@ -331,23 +365,28 @@ function closeMenu() {
     state.menuIsOpen = 0;
 }
 
-function updateSwishLink(amount) {
-    var ref = makeID();
-    var swishData = {
-        "version": 1,
-        "payee": {
-            "value":swish
-        },
-        "message":{
-            "value": "Plussa: "+ref
-        },
-        "amount": {
-            "value": amount
-        }
-    };
-    $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
-    $("a#swish-button").attr("data-ref",ref);
-    $("#swish-QR").attr("src",'https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C'+swish+'%3B'+amount+'%3B'+"Plussa: "+ref+'%3B0&chld=H|1');
+function updateSwishLink(amount, cid) {
+    if (amount == "" || cid == "") {
+        disableSteps();
+    } else {
+        var ref = makeID();
+        var swishData = {
+            "version": 1,
+            "payee": {
+                "value":swish
+            },
+            "message":{
+                "value": "Plussa: "+ref
+            },
+            "amount": {
+                "value": amount
+            }
+        };
+        $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
+        $("a#swish-button").attr("data-ref",ref);
+        $("#swish-QR").attr("src",'https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C'+swish+'%3B'+amount+'%3B'+"Plussa: "+ref+'%3B0&chld=H|1');
+        enableSteps();
+    }
 }
 
 function scrollToCurrent() {
@@ -407,35 +446,63 @@ function runActivityFun() {
 function updateActivity() {
     $.getJSON(macroURL+"?prefix=getActivity&pin="+enterCode+"&callback=?")
     .done(function(data) {
+        $("section.activity > ul > li").unbind();
         if (data != "") {
-        if (data.list!="") {
-            var html = '';
-            for (var li = 0; li<data.list.length && li < 10; li++) {
-                var category ="";
-                switch (data.list[li].category) {
-                    case "SP":
+            if (data.list!="") {
+                var html = '';
+                for (var li = 0; li<data.list.length && li < 10; li++) {
+                    var category ="";
+                    switch (data.list[li].category) {
+                        case "SP":
                         category = "streckade";
                         break;
-                    case "Makulering":
+                        case "Makulering":
                         category = "ångrade";
                         break;
-                    case "Plussning":
+                        case "Plussning":
                         category = "plussade";
                         break;
-                    default:
+                        default:
                         category = "streckade";
+                    }
+                    html += '<li data-category="'+ category +'" data-cid="'+ data.list[li].cid +'" data-time="'+ data.list[li].time +'" data-name="'+ data.list[li].name +'" data-amount="'+ Math.abs(data.list[li].amount) +'">';
+                    html += '<span class="time">'+ data.list[li].time.substr(data.list[li].time.length - 8) + '</span>';
+                    html += '<span class="name">'+ data.list[li].name +'</span> ';
+                    html += category;
+                    html += ' <span class="amount">'+ Math.abs(data.list[li].amount) +'</span>';
+                    html += ' kr.</li>';
                 }
-                html += '<li><span class="time">'+data.list[li].time.substr(data.list[li].time.length - 8)+'</span><span>'+data.list[li].name+'</span> '+category+' <span>'+Math.abs(data.list[li].amount)+'</span> kr.</li>';
+                $("section.activity ul").html(html);
+                $("section.activity > ul > li").on("click touchend", function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (dragging) {
+                        dragging = false;
+                        return;
+                    }
+                    if ($(this).attr("data-category") == "streckade") {
+                        if (confirm('Vill du ångra streckningen på '+ $(this).attr("data-name") +' för '+ $(this).attr("data-amount") +' kr?')) {
+                            var comment = prompt("Lämna en kort kommentar om vad som hände:");
+                            if (comment != null) {
+                                if (comment.length >= 5) {
+                                    sendPayment($(this).attr("data-cid"),parseInt($(this).attr("data-amount")),'Makulering',comment, $(this));
+                                } else {
+                                    alert("Ångerbegäran avbröts på grund av för kort kommentar.");
+                                }
+                            } else {
+                                alert("Du avbröt ångerbegäran.");
+                            }
+                        }
+                    }
+                });
+            } else {
+                html = '<li><span class="time">Inga senaste transaktioner.</span></li>';
+                $("section.activity ul").html(html);
             }
-            $("section.activity ul").html(html);
         } else {
-            html = '<li><span class="time">Inga senaste transaktioner.</span></li>';
-            $("section.activity ul").html(html);
+            alert("Fel PIN-kod!");
+            location.reload(true);
         }
-    } else {
-        alert("Fel PIN-kod!");
-        location.reload(true);
-    }
         $("section.activity").slideDown(1000);
     });
 }
