@@ -386,7 +386,7 @@ function updateSwishLink(amount, cid) {
                 "value": "Plussa: "+ref
             },
             "amount": {
-                "value": amount
+                "value": parseInt(amount)
             }
         };
         $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
