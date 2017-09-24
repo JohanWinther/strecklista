@@ -21,26 +21,24 @@
 </head>
 
 <body>
-    <nav>
-        <div class="menu-button" style="display:none">
+    <header>
+        <a href="/" id="logo"></a>
+        <nav>
+            <ul class="menu">
+                <li data-link="list" class="current"><span>Strecklista</span></li>
+                <li data-link="stats"><span>Statistik</span></li>
+                <li data-link="plus"><span>Plussa</span></li>
+                <li data-link="settings"><span>Inställningar</span></li>
+                <li data-link="admin"><span>Admin</span></li>
+                <li data-link="about"><span>Om appen</span></li>
+            </ul>
+        </nav>
+        <div class="menu-button">
             <div class="bar1"></div>
             <div class="bar2"></div>
             <div class="bar3"></div>
         </div>
-        <div class="top-bar">
-            <span id="back"></span>
-            <span id="title">Strecklista</span>
-        </div>
-        <ul class="menu" id="main">
-        </ul>
-        <footer>
-            <ul>
-                <li onclick="alert('PR-chef i F6 15/16')">Skapad av Johan "Wello" Winther</li>
-                <li><a href="https://github.com/JohanWinther/strecklista" target="_blank">GitHub</a></li>
-                <li><a href="mailto:johan.winther@outlook.com">Kontakt</a></li>
-            </ul>
-        </footer>
-    </nav>
+    </header>
     <div class="content">
         <div id="action-bar-top" class="action-bar" data-cid style="display:none">
             <ul>
@@ -50,7 +48,7 @@
             <ul>
             </ul>
         </section>
-        <section class="main settings" id="plus">
+        <section class="main settings" id="plus" style="display:none">
             <h1>Plussa</h1>
             <h2 id="step1">1. Välj belopp och användare</h2>
             <p id="plusOptions">
@@ -58,8 +56,6 @@
                 <input type="number" min="1" max="5000" step="1" id="amount" value="1"/> kr på
                 <select class="users" id="plusUser">
                     <option value="">Välj..</option>
-                    <option value="cid2">Smeknamn 1</option>
-                    <option value="cid1">Wello</option>
                 </select>
             </p>
             <h2 id="step2">2. Swisha</h2>
@@ -77,13 +73,11 @@
                 <span class="button">Ja, skicka in!</span>
             </p>
         </section>
-        <section class="main settings" id="settings">
+        <section class="main settings" id="settings" style="display:none">
             <h1>Inställningar</h1>
             <h2>Favorit</h2>
-            <select class="users">
+            <select class="users" id="favoriteUser">
                 <option value="">Välj..</option>
-                <option value="cid2">Smeknamn 1</option>
-                <option value="cid1">Wello</option>
             </select>
         </section>
         <section class="main" id="list">
@@ -130,6 +124,15 @@
         <ul>
         </ul>
     </div>
+
+    <footer>
+        <ul>
+            <li onclick="alert('PR-chef i F6 15/16')">Skapad av Johan "Wello" Winther</li>
+            <li><a href="https://github.com/JohanWinther/strecklista" target="_blank">GitHub</a></li>
+            <li><a href="mailto:johan.winther@outlook.com">Kontakt</a></li>
+        </ul>
+    </footer>
+
     <script type="text/javascript">
     var actionBar = $("div#action-bar-float");
     var actionBarArrow = $("div.action-bar-arrow");

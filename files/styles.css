@@ -8,6 +8,7 @@
         font-size: 100%;
         vertical-align: baseline;
         background: transparent;
+        user-select: none;
     }
 
 html {
@@ -26,67 +27,44 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-nav {
-    display: none;
-    background: hsl(0, 0%, 80%);
-    color: hsl(0, 0%, 0%);
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    width: 75%;
-    top: 0;
-    left: -75%;
-    height: auto;
-    min-height: 100vh;
-    z-index: 9999;
-    box-sizing: border-box;
-    min-width: 460px;
-    transition: left 0.5s ease;
-}
-
-nav:focus, nav:hover {
-    left: 0%;
-    position: absolute;
-}
-
-nav div.top-bar {
+header {
+    background: hsl(0, 0%, 0%);
     width: 100%;
-    height: 3em;
-    background-color: hsl(0, 0%, 0%);
-    display: block;
-    position: relative;
-    margin: 0;
-    color: #FFF;
-    box-sizing: border-box;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-div.top-bar span#title {
-    margin-left: 3em;
-    width: auto;
-    line-height: 3em;
-    box-sizing: border-box;
-    transition: margin-left 0.2s ease;
-}
-
-div.top-bar span#back {
-    background-image: url(back.png);
-    background-size: 1.2em;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 3em;
-    height: inherit;
+    height: 4em;
     position: absolute;
-    box-sizing: border-box;
-    transition: opacity 0.2s ease;
-    opacity: 1;
+    top: 0;
+    left: 0;
+    border-bottom: 4px solid hsl(0, 0%, 80%);
+    z-index: 9999;
+    font-size: 1.2em;
+    box-shadow: 0px 5px 10px hsla(0, 0%, 0%, 0.2)
+}
+
+#logo {
+	margin: 0.5em;
+	float: left;
+	width: 3em;
+	height: 3em;
+	background: url(https://www.ftek.se/wp-content/uploads/2017/06/f61718.png) no-repeat center;
+    background-size: contain;
+	display: block;
+}
+
+nav {
+	position: absolute;
+    top: 4em;
+    display: none;
+}
+
+nav:hover {
+    display: block;
 }
 
 nav ul.menu {
     margin: 0;
     padding: 0;
     font-size: 1.2em;
+    width: 100vw;
 }
 
 nav ul.menu > li {
@@ -107,7 +85,7 @@ nav ul.menu > li span {
     line-height: 1em;
 }
 
- nav ul.menu > li:focus:before, nav ul.menu > li:hover:before {
+nav ul.menu > li:focus:before, nav ul.menu > li:hover:before {
     content: '';
     background-color: hsl(0, 0%, 80%);
     width: 0.3em;
@@ -115,76 +93,76 @@ nav ul.menu > li span {
     position: absolute;
 }
 
-nav ul.menu > li > li, nav ul.menu > li > li > span {
-    background-color: hsl(0, 0%, 80%);
-    display: none;
+nav ul.menu > li > span {
+    transition: margin-left 0.2s ease-in-out;
 }
 
-nav ul.menu > li:focus > li, nav ul.menu > li:focus > li > span, nav ul.menu > li:hover > li, nav ul.menu > li:hover > li > span {
-    display: block;
+nav ul.menu > li:hover > span {
+    margin-left: 0.3em;
 }
+
 
 nav ul.menu > li > li > span {
     border-bottom: 1px solid hsl(0, 0%, 50%);
 }
 
-nav div.menu-button {
+div.menu-button {
+    margin: 0.5em;
+    float: right;
     display: inline-block;
     cursor: pointer;
-    position: absolute;
-    left: 100%;
-    padding: 0.5em 0.8em;
-    transition: opacity 0.5s ease-in-out;
-    background-color: hsl(0, 0%, 80%);
-    border-radius: 1em;
-    margin-left: 0.5em;
-    margin-top: 0.5em;
+    padding: 0.6em 1.35em;
+    width: 3em;
+    height: 3em;
+    box-sizing: border-box;
+    background-color: hsla(0, 0%, 100%);
+    border-radius: 3em;
     box-shadow: 5px 5px 20px hsla(0, 0%, 0%, 0.2);
+    transition: background-color 0.2s ease-in-out;
+}
+
+div.menu-button:hover {
+    background-color: hsla(0, 0%, 100%, 0.2);
 }
 
 .bar1, .bar2, .bar3 {
-    width: 2em;
-    height: 0.25em;
-    background-color: hsl(0, 0%, 0%);
-    margin: 0.45em 0;
-    transition: 0.5s ease-in-out;
+    margin-left: auto;
+    width: 0.3em;
+    height: 0.3em;
+    background-color: hsl(0, 0%, 100%);
+    margin: 0.25em 0;
+    transition: 0.2s ease-in-out;
 }
 
-nav:focus div.menu-button, nav:hover div.menu-button {
-    opacity: 0;
-}
-
-/*
-nav:hover div.bar1 {
-    transform: translate(0 ,calc(1.41 * 0.5em)) rotate(-45deg);
+.bar1.close {
+    transform: translateY(0.6em) translateX(0.05em) rotate(45deg) scaleX(6);
     transform-origin: center;
 }
-nav:hover div.bar2 {
+.bar2.close {
     opacity: 0;
 }
-nav:hover div.bar3 {
-    transform: translate(0 ,calc(-1.41 * 0.5em)) rotate(45deg);
+.bar3.close {
+    transform: translateY(-0.6em) translateX(0.05em) rotate(-45deg) scaleX(6);
     transform-origin: center;
 }
-*/
 
-nav footer {
+footer {
     padding: 1em;
     color: hsl(0, 0%, 30%);
 }
 
-nav footer ul {
+footer ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-nav footer ul li {
+footer ul li {
     display: inline;
     margin-right: 1em;
 }
 
-nav footer ul li a {
+footer ul li a {
     text-decoration: none;
     color: hsl(0, 0%, 0%);
 }
@@ -193,44 +171,17 @@ div.content {
     position: absolute;
     height: auto;
     width: 100%;
-}
-
-nav:focus ~ div.content, nav:hover ~ div.content {
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-    overflow-y: hidden;
-}
-
-nav:focus ~ div.content > div.overlay, nav:hover ~ div.content > div.overlay {
-    left: 75%;
-}
-
-div.content > div.overlay {
-    position: fixed;
-    width: 25%;
-    height: 100%;
-    top: 0;
-    left: -25%;
-    z-index: 1100;
-    background-image: linear-gradient(90deg, hsla(0, 0%, 0%, 0.5),hsla(0, 0%, 0%, 0));
-    transition: 0.5s ease;
+    /*top: 6em;*/
 }
 
 section.main {
-    margin-top: 2em;
     width: 80%;
     max-width:80%;
     margin: 1em auto;
     padding: 1em 2em;
     text-align: center;
-    /*border-left: 2px solid hsla(0, 60%, 20%, 0);*/
-    /*transition: border 0.1s linear;*/
+    margin-top: 6em;
 }
-
-/*section.main:hover {
-    border-left: 2px solid hsla(0, 60%, 20%, 1);
-}*/
 
 /* Loading icon */
 
@@ -322,7 +273,6 @@ section.main {
     margin-right: auto;
     transition: all 0.5s ease-in-out;
     opacity: 0;
-    user-select: none;
 }
 
 #status.load {opacity: 1}
@@ -335,7 +285,6 @@ section.main {
     display: block;
     transition: all 0.5s ease-out;
     opacity: 1;
-    user-select: none;
 }
 
 #numbers.load {
@@ -362,7 +311,6 @@ section.main {
     opacity: 1;
     outline: 0;
     transition: all 0.1s linear;
-    user-select: none;
 }
 
 .cell button:hover {
@@ -379,7 +327,6 @@ section.main {
 #fields {
     max-width: 12em;
     margin: 1em auto 2em auto;
-    user-select: none;
 }
 
 #fields .numberfield span {
@@ -467,9 +414,6 @@ section.main {
 }
 
 /* list */
-section.main {
-    text-align: center;
-}
 
 section.main h1 {
     text-align: center;
@@ -587,7 +531,6 @@ div.profile div {
     border-radius: 16px;
     border: solid 1px hsl(0, 0%, 80%);
     background-color: hsl(0,0%, 80%);
-    user-select: none;
 }
 
 ul.cards li div.name {
@@ -638,7 +581,6 @@ div.action-bar {
     padding: 0.2em;
     transform-origin: center -3em;
     transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.1s ease-in-out, top 0.3s ease-in-out;
-    user-select: none;
     font-family: monospace;
 }
 
@@ -766,7 +708,38 @@ td.commentRow select {
         padding:0;
     }
 }
+
+@media (min-width: 768px) {
+
+    header {
+        position: fixed;
+    }
+    nav {
+        top: 4em;
+        right: 0;
+        width: 30%;
+        max-width: 300px;
+    }
+
+    nav ul.menu {
+        background-color: hsl(0, 0%, 0%);
+        color: hsl(0, 0%, 100%);
+        width: 100%;
+        border-left: 4px solid hsl(0, 0%, 80%);
+        border-bottom: 2px solid hsl(0, 0%, 80%);
+    }
+
+    nav ul.menu > li {
+        border-bottom: 2px solid hsl(0, 0%, 80%);
+    }
+
+    nav ul.menu > li, nav ul.menu > li span {
+        background-color: inherit;
+        color: inherit;
+    }
+}
 @media (min-width: 1024px) {
+
     section.activity {
         max-width: 360px;
         position: fixed;

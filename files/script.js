@@ -1,15 +1,13 @@
 // Test
 // Sätt globala variabler (dessa hamnar under window)
 var state = {},
-    enterCode = "";
+    enterCode = "0000";
     tries = 0;
     dragging = false;
     swish = "";
 state.current = null;
 state.processing = 0;
-state.menu = [];
-state.menu.item = "";
-state.menu.level = "";
+state.menuIsOpen = 0;
 
 $(function() {
     // Detta körs när sidan är klar för att manipuleras
@@ -21,9 +19,9 @@ $(function() {
     var pin = readCookie("PIN");
     if (pin != null){
         enterCode=pin;
-        sendPIN(0);
-        tries--;
     }
+    sendPIN(0);
+    tries--;
 
     $("#step2").css("opacity",0.5);
     $("#step3").css("opacity",0.5);
@@ -74,21 +72,16 @@ function sendPIN(calledByUser) {
             swish = data.swish;
             setData(data.table);
             if (data.list!="") {
-                //var html = '<ul class="menu" id="users">';
-                /*for (li in data.list) {
-                    html += '<li data-cid="'+data.list[li][0]+'" tabindex="'+li+'"><span>'+ data.list[li][2] +'</span></li>';
-                }
-                html += '</ul>'
-                $("nav footer").before(html);
-                $("nav ul#users > li").append('<li data-action="favorite"><span>Markera som favorit</span></li><li data-action="plus"><span>Plussa</span></li><li data-action="statistics"><span>Statistik</span></li>');
-                $("nav ul#users").hide();*/
                 var html = '<option value="">Välj..</option>';
                 for (li in data.list) {
                     html += '<option value="'+data.list[li][0]+'">'+data.list[li][2]+'</option>';
                 }
                 $("section.settings select.users").html(html);
             }
-
+            var favorite = readCookie("favorite");
+            if (favorite != null) {
+                $("#favoriteUser").val(favorite);
+            }
             setTouchEvents();
         }
     })
@@ -132,12 +125,6 @@ function setData(data) {
             $("div.action-bar ul").append('<li data-action="pay" data-amount="'+data.buttons[b]+'"><span>' + data.buttons[b] + '</span></li>');
     }
     $("div.action-bar ul").append('<li data-action="input"><span>#</span></li>');
-    $("nav ul.menu#main").html('<li data-link="users" tabindex="0"><span>Användare</span></li><li data-link="settings" tabindex="1"><span>Inställningar</span></li><li data-link="admin" tabindex="2"><span>Admin</span></li>');
-    state.menu.item = $("nav ul.menu#main");
-    state.menu.level = 1;
-    $("nav div.top-bar span#back").hide()
-    $("nav div.top-bar span#title").css("margin-left","1em");
-    $("nav div.menu-button").fadeIn(500);
 
     $(window).on('resize', function(e) {
             if (state.current != null) {
@@ -223,37 +210,46 @@ function setTouchEvents() {
         e.preventDefault();
     });
 
+    $("div.menu-button").on("click touchend", function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (state.menuIsOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
     $("nav ul.menu li").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
+        closeMenu();
+        $("section.main").hide();
         var link = $(this).attr("data-link");
-        if (link == "users") {
-            MenuNavigateTo($("nav ul.menu#users"), $(this).text(), 1);
+        if (link == "list") {
+            $("section#list").fadeIn(500);
+        } else if (link == "stats") {
+            $("section#stats").fadeIn(500);
+        } else if (link == "plus") {
+            $("section#plus").fadeIn(500);
         } else if (link == "settings") {
-            //
+            $("section#settings").fadeIn(500);
         } else if (link == "admin") {
-            //
+            $("section#admin").fadeIn(500);
+        } else if (link == "about") {
+            $("section#about").fadeIn(500);
         }
     });
 
-    $("nav div.top-bar span#back").on("click touchend",function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        if (state.menu.level == 2) {
-            MenuNavigateTo($("nav ul.menu#main"), "Strecklista", -1);
-        }
-    });
-
-    $("nav ul#users > li > li").on("click touchend",function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        var action = $(this).attr("data-action");
-        if (action == "favorite") {
-            var cid = $(this).parent().attr("data-cid");
+    $("#favoriteUser").on("change",function(e) {
+        var cid = $(this).val();
+        if (cid != "") {
             createCookie("favorite", cid);
-            console.log($(this).parent().attr("data-cid") + " är satt som favorit.");
-            $("#action-bar-top").attr("data-cid", cid);
+            console.log(cid + " är satt som favorit.");
+        } else {
+            eraseCookie("favorite");
         }
+        $("#action-bar-top").attr("data-cid", cid);
     });
 
     $(document).on("click touchend", function(e) {
@@ -262,6 +258,9 @@ function setTouchEvents() {
         if (dragging) {
             dragging = false;
             return;
+        }
+        if (state.menuIsOpen) {
+            closeMenu();
         }
         if (!state.processing) {
             if (state.current != null) {
@@ -319,6 +318,18 @@ function setTouchEvents() {
     });
 }
 
+function openMenu() {
+    $("div.bar1, div.bar2, div.bar3").addClass("close");
+    $("nav").slideDown(200);
+    state.menuIsOpen = 1;
+}
+
+function closeMenu() {
+    $("div.bar1, div.bar2, div.bar3").removeClass("close");
+    $("nav").slideUp(200);
+    state.menuIsOpen = 0;
+}
+
 function updateSwishLink(amount) {
     var ref = makeID();
     var swishData = {
@@ -336,21 +347,6 @@ function updateSwishLink(amount) {
     $("a#swish-button").attr("href","swish://payment?data="+encodeURIComponent(JSON.stringify(swishData)));
     $("a#swish-button").attr("data-ref",ref);
     $("#swish-QR").attr("src",'https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=C'+swish+'%3B'+amount+'%3B'+"Plussa: "+ref+'%3B0&chld=H|1');
-}
-
-function MenuNavigateTo(to, title, add) {
-    $("nav div.top-bar span#title").text(title);
-    state.menu.item.hide();
-    to.show();
-    state.menu.item = to;
-    state.menu.level += add;
-    if (state.menu.level == 1) {
-        $("nav div.top-bar span#back").css("opacity", 0);
-        $("nav div.top-bar span#title").css("margin-left","1em");
-    } else {
-        $("nav div.top-bar span#back").removeAttr("style");
-        $("nav div.top-bar span#title").removeAttr("style");
-    }
 }
 
 function scrollToCurrent() {
