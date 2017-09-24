@@ -1,5 +1,5 @@
 <?php
-use SMTP;
+use PHPlib\SMTP;
 $mail = new SMTP(require __DIR__ . 'email-config.php');
 $mail->to('welocy95@gmail.com');
 $mail->from(getenv('email'), 'Ebba Ekblom'); // email is required, name is optional
