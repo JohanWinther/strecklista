@@ -2,6 +2,7 @@
 use PHPlib\SMTP;
 $mail = new SMTP(require __DIR__ . 'email-config.php');
 $mail->to('welocy95@gmail.com');
+echo getenv('email');
 $mail->from(getenv('email'), 'Ebba Ekblom'); // email is required, name is optional
 $mail->reply('ekebba@student.chalmers.se', 'Ebba Ekblom');
 $mail->subject('Streckskuld');
