@@ -824,7 +824,7 @@ td.commentRow select {
     }
 
     nav ul.menu > li, nav ul.menu > li span {
-        background-color: inherit;
+        background-color: hsl(0, 0%, 15%);
         color: inherit;
     }
 }

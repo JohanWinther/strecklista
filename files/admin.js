@@ -2,8 +2,6 @@
 var email_str = "";
 var emailIdx = 0;
 
-
-
 function adminLogin() {
     $("#loginErr").html("Loggar in..");
     $("#loginBtn").removeAttr("onclick");
@@ -55,20 +53,5 @@ function hideEmailList() {
     } else {
         $("#hideLink").html("Göm");
         $("#emailList").removeAttr("style");
-    }
-}
-
-var pay = function(cid,amount) {
-    a = $(this);
-    amount = parseFloat(amount);
-    if (!isNaN(amount)) {
-        if (!(cid in state)) {
-            a.parent().addClass("round-loading");
-            state[cid] = 1;
-            change = -amount;
-            sendPayment(cid,change,'SP','',a);
-        }
-    } else {
-        alert("Knappen är inte ett tal!");
     }
 }
