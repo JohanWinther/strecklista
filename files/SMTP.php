@@ -1,6 +1,6 @@
 <?php
 
-namespace Travis;
+namespace PHPlib;
 
 class SMTP {
 
