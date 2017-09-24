@@ -120,7 +120,7 @@ function setData(data) {
             }
         });
     });
-    //runActivityFun();
+    runActivityFun();
     updateActivity();
     $("section.activity").slideDown(1000);
     $("#numbers").removeClass("load");
