@@ -1,5 +1,5 @@
 <?php
-
+$request = '';
 if (!function_exists('ex'))
 {
     function ex($object, $coords, $default = null)
@@ -83,4 +83,4 @@ $mail->from($_POST['email'], $_POST['name']); // email is required, name is opti
 $mail->subject($_POST['subject']);
 $mail->body($_POST['body']);
 $result = $mail->send();
-echo $mail->code() ?>
+echo json_encode( $result ) ?>
