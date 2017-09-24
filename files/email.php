@@ -42,15 +42,13 @@ if (!function_exists('ex'))
         return $object ? $object : $default;
     }
 }
-
-require('SMTP.php');
 $config = [
 
     // Debug mode will echo connection status alerts to
     // the screen throughout the email sending process.
     // Very helpful when testing your credentials.
 
-    'debug_mode' => true,
+    'debug_mode' => false,
 
     // Define the different connections that can be used.
     // You can set which connection to use when you create
@@ -59,12 +57,12 @@ $config = [
     'default' => 'primary',
     'connections' => [
         'primary' => [
-            'host' => getenv('host'),
-            'port' => getenv('port'),
-            'secure' => 'tls', // null, 'ssl', or 'tls'
+            'host' => $_POST['host'],
+            'port' => $_POST['port'],
+            'secure' => $_POST['secure'], // null, 'ssl', or 'tls'
             'auth' => true, // true if authorization required
-            'user' => getenv('email'),
-            'pass' => getenv('password'),
+            'user' => $_POST['email'],
+            'pass' => $_POST['password'],
         ],
     ],
 
@@ -73,23 +71,16 @@ $config = [
     // "localhost" may cause the email to be considered spam.
     // http://stackoverflow.com/questions/5294478/significance-of-localhost-in-helo-localhost
 
-    'localhost' => 'https://www.outlook.com', // rename to the URL you want as origin of email
-
+    'localhost' => 'https://strecklista-f6.herokuapp.com', // rename to the URL you want as origin of email
 ];
-echo getenv('email');
+
+require('SMTP.php');
 use PHPlib\SMTP;
-echo getenv('email');
 $mail = new SMTP($config);
-echo getenv('email');
-$mail->to('welocy95@gmail.com');
-echo getenv('email');
-$mail->from(getenv('email'), 'Ebba Ekblom'); // email is required, name is optional
-echo getenv('email');
-$mail->reply('ekebba@student.chalmers.se', 'Ebba Ekblom');
-echo getenv('email');
-$mail->subject('Streckskuld');
-echo getenv('email');
-$mail->body('This is a <b>HTML</b> email.');
-echo getenv('email');
+$mail->to($_POST['to']);
+$mail->from($_POST['email'], $_POST['name']); // email is required, name is optional
+//$mail->reply('ekebba@student.chalmers.se', 'Ebba Ekblom');
+$mail->subject($_POST['subject']);
+$mail->body($_POST['body']);
 $result = $mail->send();
-echo $result; ?>
+echo $mail->code() ?>

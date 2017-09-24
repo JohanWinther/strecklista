@@ -3,6 +3,7 @@ var email_str = "";
 var emailIdx = 0;
 
 function adminLogin() {
+    /*
     $("#loginErr").html("Loggar in..");
     $("#loginBtn").removeAttr("onclick");
     $("#loginBtn").prop('disabled', true);
@@ -18,7 +19,31 @@ function adminLogin() {
     })
     .fail(function(data) {
         $("#list").html("<p>Kunde inte ansluta till strecklistan, var vänlig <a href=\"admin.html\">försök igen</a>!</p>");
-    });
+    });*/
+    var host = "smtp-mail.outlook.com",
+        port = "587",
+        secure = "tls",
+        email = "ftek-streckning@outlook.com",
+        password = ".mRM~!m,",
+        to = "welocy95@gmail.com",
+        name = "Ebba Ekblom",
+        subject = "Hej Johan",
+        body = "Jag gillar dig :)";
+    dataString = "host="+encodeURIComponent(host);
+    dataString += "&port="+encodeURIComponent(port);
+    dataString += "&secure="+encodeURIComponent(secure);
+    dataString += "&email="+encodeURIComponent(email);
+    dataString += "&password="+encodeURIComponent(password);
+    dataString += "&to="+encodeURIComponent(to);
+    dataString += "&name="+encodeURIComponent(name);
+    dataString += "&subject="+encodeURIComponent(subject);
+    dataString += "&body="+encodeURIComponent(body);
+    $.post("./email.php", dataString, function(data, textStatus) {
+        console.log(data);
+        console.log(textStatus);
+        //data contains the JSON object
+        //textStatus contains the status: success, error, etc
+    }, "json");
 }
 
 
