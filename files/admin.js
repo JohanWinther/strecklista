@@ -1,6 +1,7 @@
 // Sätt globala variabler (dessa hamnar under window)
 var email_str = "";
 var emailIdx = 0;
+var email_tries = 0;
 var mail_user = "";
 var mail_pw = "";
 var password = "";
@@ -129,12 +130,18 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID) {
                 $("li#"+emailID).find("span.status").text(" - Klar!");
             } else {
                 $("#emailStatus").text("Fel inställningar.");
-                sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
-                $("li#"+emailID).find("span.status").text(" - Försöker igen..");
+                if (email_tries <= 5) {
+                    sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
+                    $("li#"+emailID).find("span.status").text(" - Försöker igen..");
+                    email_tries++;
+                }
             }
     }).fail(function(data) {
         $("#emailStatus").text("Kunde inte ansluta till servern.");
-        sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
-        $("li#"+emailID).find("span.status").text(" - Försöker igen..");
+        if (email_tries <= 5) {
+            sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
+            $("li#"+emailID).find("span.status").text(" - Försöker igen..");
+            email_tries++;
+        }
     });
 }
