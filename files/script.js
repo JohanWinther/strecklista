@@ -213,10 +213,10 @@ function setTouchEvents() {
         }
     });
 
-    /*$("div.action-bar").on("click touchend", function(e) {
+    $("div.action-bar").on("click touchend", function(e) {
         e.stopPropagation();
         e.preventDefault();
-    });*/
+    });
 
     $("div.menu-button").on("click touchend", function(e) {
         e.stopPropagation();
