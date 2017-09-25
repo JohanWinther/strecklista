@@ -43,12 +43,9 @@ function adminLogin() {
 }
 
 function sendEmails(preview) {
-    if (preview) {
-        $("#emailStatus").text("Hämtar mail..");
-        $("#previewEmails").attr('disabled', true);
-    } else {
-        $("#emailStatus").text("Skickar mail..");
-        $("#sendEmails").attr('disabled', true);
+    $("#emailStatus").text("Laddar maillista..");
+    $("#previewEmails").attr('disabled', true
+    $("#sendEmails").attr('disabled', true);
     }
     $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&callback=?")
     .done(function (data) {
@@ -137,38 +134,4 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID) {
     }).fail(function(data) {
         console.log(data);
     });
-}
-
-
-function createEmailFile() {
-    $("#fileBtn").attr("value","Skapar fil...");
-    $("#fileBtn").removeAttr("onclick");
-    $("#fileBtn").prop('disabled', true);
-    $.getJSON(macroURL+"?prefix=getEmails&callback=?")
-    .done(function (data) {
-        var str = JSON.stringify(data);
-        var dataUri = 'data:text/plain;charset=utf-8,'+ encodeURIComponent(str);
-        var link = document.getElementById('fileLink').href = dataUri;
-        $("#fileLink").html("emails.txt");
-        $("#fileBtn").attr("onclick","createEmailFile()");
-        $("#fileBtn").prop('disabled', false);
-        $("#fileBtn").attr("value","Skapa streckmailsfil");
-    })
-    .fail(function (data) {
-        $("#fileBtn").attr("onclick","createEmailFile()");
-        $("#fileBtn").prop('disabled', false);
-        $("#fileBtn").attr("value","Kunde inte skapa fil. Försök igen!");
-    });
-}
-
-
-
-function hideEmailList() {
-    if ($("#hideLink").html()=="Göm") {
-        $("#hideLink").html("Visa");
-        $("#emailList").css("display","none");
-    } else {
-        $("#hideLink").html("Göm");
-        $("#emailList").removeAttr("style");
-    }
 }
