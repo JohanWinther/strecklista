@@ -429,8 +429,15 @@ section.main h2 {
     margin: 0.5em 0;
 }
 
-section.main.settings p {
+section.main h3 {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
     margin-top: 1em;
+}
+
+section.main.settings p {
+    margin: 1em 0;
 }
 
 section.main.settings select, section.main.settings input, section.main.settings span.button {
@@ -439,6 +446,7 @@ section.main.settings select, section.main.settings input, section.main.settings
     padding: 0.5em;
     margin-top: 0.5em;
     color: hsl(0,0%,100%);
+    width: fit-content;
 }
 
 section.main.settings input {
@@ -451,10 +459,32 @@ section.settings#admin input[type="password"] {
 section.settings#admin input[type="submit"] {
     border-radius: 0 0.5em 0.5em 0;
 }
+section.settings#admin input[type="email"] {
+    width: 14em;
+}
 
-section#plus p#plusButtons span.button {
-    margin-left: 0.25em;
-    margin-right: 0.25em;
+ul#emailList li {
+    margin-top: 1em;
+    text-align: left;
+}
+
+ul#emailList a {
+    text-decoration: none;
+    color: hsl(0, 0%, 100%);
+}
+
+ul#emailList li > span.to {
+    font-family: monospace;
+}
+ul#emailList li > span.body {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+
+section.main.settings span.button {
+    margin-left: auto;
+    margin-right: auto;
     display: inline-block;
 }
 
@@ -806,8 +836,6 @@ td.commentRow select {
         right: 0;
         width: 30%;
         max-width: 300px;
-        overflow-y: auto;
-        overflow-x: hidden;
         height: calc(100vh - 4em);
     }
 
@@ -828,6 +856,7 @@ td.commentRow select {
         color: inherit;
     }
 }
+
 @media (min-width: 1024px) {
 
     section.activity {

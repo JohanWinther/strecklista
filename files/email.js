@@ -64,7 +64,7 @@ function sendEmail(mail_from,to,subject,message,mail_pw,emailID) {
             $("#"+emailID).html("- Klar!");
         } else {
             $("#"+emailID).html("- Försöker igen...");
-            sendEmail(mail_from,to,subject,message,mail_pw,emailID)
+            sendEmail(mail_user,to,subject,message,mail_pw,emailID)
         }
     });
 }

@@ -71,7 +71,7 @@ $config = [
     // "localhost" may cause the email to be considered spam.
     // http://stackoverflow.com/questions/5294478/significance-of-localhost-in-helo-localhost
 
-    'localhost' => 'https://strecklista-f6.herokuapp.com', // rename to the URL you want as origin of email
+    'localhost' => $_POST['url'], // rename to the URL you want as origin of email
 ];
 
 require('SMTP.php');
@@ -79,7 +79,6 @@ use PHPlib\SMTP;
 $mail = new SMTP($config);
 $mail->to($_POST['to']);
 $mail->from($_POST['email'], $_POST['from']); // email is required, name is optional
-//$mail->reply('ekebba@student.chalmers.se', 'Ebba Ekblom');
 $mail->subject($_POST['subject']);
 $mail->body($_POST['body']);
 $result = $mail->send();

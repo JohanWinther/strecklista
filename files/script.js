@@ -326,7 +326,7 @@ function setTouchEvents() {
         updateSwishLink($("section#plus input#amount").val(),this.value);
     });
 
-    $("section#plus p#plusButtons .button").on("click touchend",function(e) {
+    $("span#confirmPlus").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
         if($("#step3").css("opacity") == 1) {
@@ -340,6 +340,15 @@ function setTouchEvents() {
             }
         }
     });
+
+    $("span#adminBox").on("click touchend",function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        if ($("#loginBtn").attr("disabled") != "disabled") {
+            adminLogin();
+        }
+    });
+
 }
 
 function disableSteps() {

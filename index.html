@@ -81,7 +81,7 @@
             <h2 id="step3">3. Bekräfta betalning</h2>
             <p id="plusButtons">
                 <span>Är betalningen genomförd?</span>
-                <span class="button">Ja, skicka in!</span>
+                <span class="button" id="confirmPlus">Ja, skicka in!</span>
             </p>
         </section>
 
@@ -96,8 +96,36 @@
 
         <section class="main settings" id="admin" style="display:none">
             <h1>Admin</h1>
-            <p><input type="password" id="password" placeholder="Lösenord"/><input type="submit" value="Logga in" id="loginBtn" onclick="adminLogin()" /></p>
-            <p id="loginErr"></p>
+            <div id="loginBox">
+                <p>
+                    <input type="password" id="password" placeholder="Lösenord"/>
+                    <input type="submit" value="Logga in" id="loginBtn" onclick="adminLogin()" />
+                </p>
+                <p id="loginMessage"></p>
+            </div>
+            <div id="adminBox" style="display:none">
+                <h2>Streckmail</h2>
+                <h3>Testmail</h3>
+                <p>
+                    <input type="email" id="email" placeholder="Email" name="email" />
+                    <br>
+                    <span class="button" id="sendTestEmail">Skicka testmail</span>
+                </p>
+                <h3>Skicka till användare</h3>
+                <p>
+                    <span>Förhandsgranskningen visar alla mail längst ner på sidan.</span>
+                    <br>
+                    <span class="button" id="previewEmails">Förhandsgranska streckmail</span>
+                    <br>
+                    <span><br>När du klickat på skicka kommer sändningstatus för varje mail att visas nedan.</span>
+                    <br>
+                    <span class="button" id="sendEmails">Skicka streckmail</span>
+                </p>
+                <h3>Status</h3>
+                <p id="emailStatus">Inga mail skickade.</p>
+                <ul id="emailList">
+                </ul>
+            </div>
         </section>
 
         <section class="main" id="list" style="display:none">
