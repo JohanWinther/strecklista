@@ -44,10 +44,10 @@ function adminLogin() {
 
 function sendEmails(preview) {
     $("#emailStatus").text("Laddar maillista..");
-    $("#previewEmails").attr('disabled', true
+    $("#previewEmails").attr('disabled', true);
     $("#sendEmails").attr('disabled', true);
     }
-    $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&callback=?")
+    $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&preview="+preview+"&callback=?")
     .done(function (data) {
         $("#emailList").html("");
         email_str = "";
@@ -95,7 +95,7 @@ function sendEmails(preview) {
 
 // Definiera mailfunktionen
 function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID) {
-    $("li#"+emailID).find("span.status").text(" - Skickar..");
+    $("#emailList > ul > li#"+emailID).find("span.status").text(" - Skickar..");
     var host = "smtp-mail.outlook.com",
         port = "587",
         secure = "tls",
