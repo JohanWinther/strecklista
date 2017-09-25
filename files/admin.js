@@ -46,7 +46,6 @@ function sendEmails(preview) {
     $("#emailStatus").text("Laddar maillista..");
     $("#previewEmails").attr('disabled', true);
     $("#sendEmails").attr('disabled', true);
-    }
     $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&preview="+preview+"&callback=?")
     .done(function (data) {
         $("#emailList").html("");
