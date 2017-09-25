@@ -18,6 +18,23 @@ function adminLogin() {
             mail_name = data.mail_name;
             $("#loginBox").hide();
             $("#adminBox").fadeIn(500);
+            $("#sendTestEmail").on("click touchend",function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                if ($(this).attr("disabled") != "disabled") {
+                    var to = $("#adminBox input#email").val();
+                    if (to != "") {
+                        sendEmail(
+                            mail_user,
+                            mail_pw,
+                            mail_name,
+                            to,
+                            "Testutskick från "+location.href+,
+                            "Hej!<br>Detta meddelande är ett <b>testutskick</b>.",
+                            "0");
+                    }
+                }
+            });
             $("#previewEmails").on("click touchend",function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -96,11 +113,23 @@ function sendEmails(preview) {
 // Definiera mailfunktionen
 function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID) {
     $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
-    var host = "smtp-mail.outlook.com",
-        port = "587",
-        secure = "tls",
-        email = mail_user,
-        url = location.href;
+    var host = "smtp-mail.outlook.com";
+    var port = "587";
+    var secure = "tls";
+    var url = location.href; // Application url from where the smtp call was made
+
+    // Check if CID and handle server settings
+    // User is net.chalmers.se and email can be nothing, student, alumn
+    var email = "";
+    var regexp = /(.+)@(.*)chalmers\.se/;
+    var regArray = regexp.exec(mail_user);
+    if (regArray == null || regArray[2] == "net.") {
+        email = mail_user;
+    } else {
+        mail_user = regArray[1]+"@net.chalmers.se";
+        email = regArray[1]+"@"+regArray[2]+"chalmers.se";
+    }
+    // Add all variables to data string
     dataString = "host="+encodeURIComponent(host);
     dataString += "&port="+encodeURIComponent(port);
     dataString += "&secure="+encodeURIComponent(secure);
