@@ -1,7 +1,6 @@
 // Sätt globala variabler (dessa hamnar under window)
 var email_str = "";
 var emailIdx = 0;
-var email_tries = 0;
 var mail_user = "";
 var mail_pw = "";
 var password = "";
@@ -29,9 +28,11 @@ function adminLogin() {
                             mail_pw,
                             mail_name,
                             to,
-                            "Testutskick från "+location.href+,
-                            "Hej!<br>Detta meddelande är ett <b>testutskick</b>.",
-                            "0");
+                            "Testutskick från "+location.href,
+                            "Hej!<br><br>Detta meddelande är ett <b>testutskick</b>.<br><br>Med vänlig hälsning<br><a href='"+location.href+"' target='_blank'>"+location.href+"</a>",
+                            "0",0);
+                    } else {
+                        $("#adminBox input#email").focus();
                     }
                 }
             });
@@ -61,7 +62,7 @@ function adminLogin() {
 }
 
 function sendEmails(preview) {
-    $("#emailStatus").text("Laddar maillista..");
+    $("#emailStatus").text("Laddar listan av mail..");
     $("#previewEmails").attr('disabled', true);
     $("#sendEmails").attr('disabled', true);
     $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&preview="+preview+"&callback=?")
@@ -82,7 +83,7 @@ function sendEmails(preview) {
                 }
                 email_str += '</li>';
                 if (!preview) {
-                    sendEmail(mail_user, mail_pw, mail_user, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID);
+                    sendEmail(mail_user, mail_pw, mail_user, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID, 1);
                 }
                 emailIdx++;
             }
@@ -111,66 +112,63 @@ function sendEmails(preview) {
 }
 
 // Definiera mailfunktionen
-function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID) {
-    $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
-    var host = "smtp-mail.outlook.com";
-    var port = "587";
-    var secure = "tls";
-    var url = location.href; // Application url from where the smtp call was made
+function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries) {
+    console.log(numberOfTries);
+    if (numberOfTries <= 3) {
+        $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
+        var host = "smtp-mail.outlook.com";
+        var port = "587";
+        var secure = "tls";
+        var url = location.href; // Application url from where the smtp call was made
 
-    // Check if CID and handle server settings
-    // User is net.chalmers.se and email can be nothing, student, alumn
-    var email = "";
-    var regexp = /(.+)@(.*)chalmers\.se/;
-    var regArray = regexp.exec(mail_user);
-    if (regArray == null || regArray[2] == "net.") {
-        email = mail_user;
-    } else {
-        mail_user = regArray[1]+"@net.chalmers.se";
-        email = regArray[1]+"@"+regArray[2]+"chalmers.se";
-    }
-    // Add all variables to data string
-    dataString = "host="+encodeURIComponent(host);
-    dataString += "&port="+encodeURIComponent(port);
-    dataString += "&secure="+encodeURIComponent(secure);
-    dataString += "&user="+encodeURIComponent(mail_user);
-    dataString += "&password="+encodeURIComponent(mail_pw);
-    dataString += "&email="+encodeURIComponent(email);
-    dataString += "&to="+encodeURIComponent(to);
-    dataString += "&from="+encodeURIComponent(mail_name);
-    dataString += "&subject="+encodeURIComponent(subject);
-    dataString += "&body="+encodeURIComponent(body);
-    /*$.post("/files/email.php", dataString, function(data, textStatus) {
-        if (textStatus == "success" && data) {
-            $("li#"+emailID).find("span.status").text(" - Klar!");
+        // Check if CID and handle server settings
+        // User is net.chalmers.se and email can be nothing, student, alumn
+        var email = "";
+        var regexp = /(.+)@(.*)chalmers\.se/;
+        var regArray = regexp.exec(mail_user);
+        if (regArray == null || regArray[2] == "net.") {
+            email = mail_user;
         } else {
-            sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
+            mail_user = regArray[1]+"@net.chalmers.se";
+            email = regArray[1]+"@"+regArray[2]+"chalmers.se";
         }
-    }, "json");
-    */
-    $.ajax({
-        url: "/files/email.php",
-        method: "POST",
-        data: dataString,
-        timeout: 10000,
-        dataType: "json"
-    }).done(function(data) {
+        // Add all variables to data string
+        dataString = "host="+encodeURIComponent(host);
+        dataString += "&port="+encodeURIComponent(port);
+        dataString += "&secure="+encodeURIComponent(secure);
+        dataString += "&user="+encodeURIComponent(mail_user);
+        dataString += "&password="+encodeURIComponent(mail_pw);
+        dataString += "&email="+encodeURIComponent(email);
+        dataString += "&to="+encodeURIComponent(to);
+        dataString += "&from="+encodeURIComponent(mail_name);
+        dataString += "&subject="+encodeURIComponent(subject);
+        dataString += "&body="+encodeURIComponent(body);
+        /*$.post("/files/email.php", dataString, function(data, textStatus) {
+            if (textStatus == "success" && data) {
+                $("li#"+emailID).find("span.status").text(" - Klar!");
+            } else {
+                sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
+            }
+        }, "json");*/
+
+        $.ajax({
+            url: "/files/email.php",
+            method: "POST",
+            data: dataString,
+            timeout: 10000,
+            dataType: "json"
+        }).done(function(data) {
             if (data) {
                 $("li#"+emailID).find("span.status").text(" - Klar!");
             } else {
                 $("#emailStatus").text("Fel inställningar.");
-                if (email_tries <= 5) {
-                    sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
-                    $("li#"+emailID).find("span.status").text(" - Försöker igen..");
-                    email_tries++;
-                }
+                sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
+                $("li#"+emailID).find("span.status").text(" - Försöker igen..");
             }
-    }).fail(function(data) {
-        $("#emailStatus").text("Kunde inte ansluta till servern.");
-        if (email_tries <= 5) {
-            sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
+        }).fail(function(data) {
+            $("#emailStatus").text("Kunde inte ansluta till servern.");
+            sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
             $("li#"+emailID).find("span.status").text(" - Försöker igen..");
-            email_tries++;
-        }
-    });
+        });
+    }
 }

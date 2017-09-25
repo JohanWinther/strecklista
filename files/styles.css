@@ -758,6 +758,11 @@ td.commentRow select {
         padding:0;
     }
 
+    section.settings {
+        padding: 0 0.5em;
+        box-sizing: border-box;
+    }
+
     header {
         font-size: 0.8em;
     }

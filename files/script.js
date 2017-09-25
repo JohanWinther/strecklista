@@ -468,25 +468,27 @@ function updateActivity() {
                 var html = '';
                 for (var li = 0; li<data.list.length && li < 10; li++) {
                     var category ="";
-                    switch (data.list[li].category) {
-                        case "SP":
-                        category = "streckade";
-                        break;
-                        case "Makulering":
-                        category = "ångrade";
-                        break;
-                        case "Plussning":
-                        category = "plussade";
-                        break;
-                        default:
-                        category = "streckade";
+                    if (data.list[li].category != "Minusning") {
+                        switch (data.list[li].category) {
+                            case "Streckning":
+                            category = "streckade";
+                            break;
+                            case "Makulering":
+                            category = "ångrade";
+                            break;
+                            case "Plussning":
+                            category = "plussade";
+                            break;
+                            default:
+                            category = "hackade in";
+                        }
+                        html += '<li data-category="'+ category +'" data-cid="'+ data.list[li].cid +'" data-time="'+ data.list[li].time +'" data-name="'+ data.list[li].name +'" data-amount="'+ Math.abs(data.list[li].amount) +'">';
+                        html += '<span class="time">'+ data.list[li].time.substr(data.list[li].time.length - 8) + '</span>';
+                        html += '<span class="name">'+ data.list[li].name +'</span> ';
+                        html += category;
+                        html += ' <span class="amount">'+ Math.abs(data.list[li].amount) +'</span>';
+                        html += ' kr.</li>';
                     }
-                    html += '<li data-category="'+ category +'" data-cid="'+ data.list[li].cid +'" data-time="'+ data.list[li].time +'" data-name="'+ data.list[li].name +'" data-amount="'+ Math.abs(data.list[li].amount) +'">';
-                    html += '<span class="time">'+ data.list[li].time.substr(data.list[li].time.length - 8) + '</span>';
-                    html += '<span class="name">'+ data.list[li].name +'</span> ';
-                    html += category;
-                    html += ' <span class="amount">'+ Math.abs(data.list[li].amount) +'</span>';
-                    html += ' kr.</li>';
                 }
                 $("section.activity ul").html(html);
                 $("section.activity > ul > li").on("click touchend", function(e) {
@@ -531,7 +533,7 @@ function pay(el,amount) {
             el.find("span").first().text(amount);
             state.processing = 1;
             change = -amount;
-            sendPayment(cid,change,'SP','',el);
+            sendPayment(cid,change,'Streckning','',el);
         }
     } else {
         alert("Knappen är inte ett tal!");
