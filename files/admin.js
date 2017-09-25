@@ -94,7 +94,7 @@ function sendEmails(preview) {
 
 // Definiera mailfunktionen
 function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID) {
-    $("#emailList > ul > li#"+emailID).find("span.status").text(" - Skickar..");
+    $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
     var host = "smtp-mail.outlook.com",
         port = "587",
         secure = "tls",
@@ -122,15 +122,19 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID) {
         url: "/files/email.php",
         method: "POST",
         data: dataString,
+        timeout: 10000,
         dataType: "json"
     }).done(function(data) {
-        console.log(data);
-            /*if (textStatus == "success" && data) {
+            if (data) {
                 $("li#"+emailID).find("span.status").text(" - Klar!");
             } else {
+                $("#emailStatus").text("Fel inställningar.");
                 sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
-            }*/
+                $("li#"+emailID).find("span.status").text(" - Försöker igen..");
+            }
     }).fail(function(data) {
-        console.log(data);
+        $("#emailStatus").text("Kunde inte ansluta till servern.");
+        sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
+        $("li#"+emailID).find("span.status").text(" - Försöker igen..");
     });
 }
