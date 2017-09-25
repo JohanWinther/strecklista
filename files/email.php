@@ -61,7 +61,7 @@ $config = [
             'port' => $_POST['port'],
             'secure' => $_POST['secure'], // null, 'ssl', or 'tls'
             'auth' => true, // true if authorization required
-            'user' => $_POST['email'],
+            'user' => $_POST['user'],
             'pass' => $_POST['password'],
         ],
     ],
@@ -78,7 +78,7 @@ require('SMTP.php');
 use PHPlib\SMTP;
 $mail = new SMTP($config);
 $mail->to($_POST['to']);
-$mail->from($_POST['email'], $_POST['name']); // email is required, name is optional
+$mail->from($_POST['email'], $_POST['from']); // email is required, name is optional
 //$mail->reply('ekebba@student.chalmers.se', 'Ebba Ekblom');
 $mail->subject($_POST['subject']);
 $mail->body($_POST['body']);

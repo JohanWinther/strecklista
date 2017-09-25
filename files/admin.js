@@ -23,22 +23,24 @@ function adminLogin() {
     var host = "smtp-mail.outlook.com",
         port = "587",
         secure = "tls",
-        email = "ftek-streckning@outlook.com",
+        user = "ftek-streckning@outlook.com",
         password = ".mRM~!m,",
         to = "welocy95@gmail.com",
-        name = "Ebba Ekblom",
-        subject = "Hej Johan",
-        body = "Jag gillar dig :)";
+        email = "ftek-streckning@outlook.com",
+        from = "Ebba Ekblom",
+        subject = "Hej där!",
+        body = 'Testmeddelande med <a href="https://ftek.se">testlänk</a>.';
     dataString = "host="+encodeURIComponent(host);
     dataString += "&port="+encodeURIComponent(port);
     dataString += "&secure="+encodeURIComponent(secure);
-    dataString += "&email="+encodeURIComponent(email);
+    dataString += "&user="+encodeURIComponent(user);
     dataString += "&password="+encodeURIComponent(password);
+    dataString += "&email="+encodeURIComponent(email);
     dataString += "&to="+encodeURIComponent(to);
-    dataString += "&name="+encodeURIComponent(name);
+    dataString += "&from="+encodeURIComponent(from);
     dataString += "&subject="+encodeURIComponent(subject);
     dataString += "&body="+encodeURIComponent(body);
-    $.post("./email.php", dataString, function(data, textStatus) {
+    $.post("/files/email.php", dataString, function(data, textStatus) {
         console.log(data);
         console.log(textStatus);
         //data contains the JSON object
