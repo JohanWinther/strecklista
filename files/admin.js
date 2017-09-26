@@ -126,7 +126,7 @@ function sendEmails() {
             if (data.emails[e].email != "") {
                 emailID = "email"+emailIdx;
                 email_str += '<li id="'+emailID+'">';
-                email_str += '<span class="to"><a href="mailto:'+data.emails[e].email+'" target="_blank">'+data.emails[e].email+'</a></span><span class="status"></span>';
+                email_str += '<span class="to"><a href="mailto:'+data.emails[e].email+'" target="_blank">'+data.emails[e].email+'</a> ('+data.emails[e].nick+')</span><span class="status"></span>';
                 if (preview) {
                     email_str += '<br>';
                     email_str += '<span class="subject">' + data.emails[e].subject + '</span>';
