@@ -126,7 +126,7 @@ function sendEmails(preview) {
         if (email_str!="") {
             email_str = "";
             if (preview) {
-                $("#emailStatus").text("Förhandsgranskning nedan:");
+                $("#emailStatus").text("Sändningsadress "+mail_user+" ("+mail_name+")");
             } else {
                 $("#emailStatus").text("Klar!");
             }
