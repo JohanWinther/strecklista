@@ -2,6 +2,7 @@
 var email_str = "";
 var emailIdx = 0;
 var emailState = [];
+var preview = false;
 var mail_user = "";
 var mail_pw = "";
 var password = "";
@@ -51,7 +52,8 @@ function adminLogin() {
                     return;
                 }
                 if ($(this).attr("disabled") != "disabled") {
-                    sendEmails(1);
+                    preview = true;
+                    sendEmails();
                 }
             });
             $("#sendEmails").on("click touchend",function (e) {
@@ -62,9 +64,38 @@ function adminLogin() {
                     return;
                 }
                 if ($(this).attr("disabled") != "disabled") {
-                    sendEmails(0);
+                    preview = false;
+                    sendEmails();
                 }
             });
+
+            $(document).ajaxStop(function() {
+                if (email_str!="") {
+                    if (preview) {
+                        $("#emailStatus").text("Sändningsadress "+mail_user+" ("+mail_name+")");
+                        email_str = "";
+                        $("#sendEmails").attr('disabled', false);
+                        $("#previewEmails").attr('disabled', false);
+                        $('html, body').animate({
+                            scrollTop: $("#sendEmails").offset().top
+                        }, 500);
+                    } else {
+                        if (emailState.every(function(el){return el==1})) {
+                            $("#emailStatus").text("Klar!");
+                            email_str = "";
+                            emailState = [];
+                            $("#sendEmails").attr('disabled', false);
+                            $("#previewEmails").attr('disabled', false);
+                            $('html, body').animate({
+                                scrollTop: $("#sendEmails").offset().top
+                            }, 500);
+                        } else {
+                            $("#emailStatus").text("Skickar mail..");
+                        }
+                    }
+                }
+            });
+
         } else {
             $('#loginMessage').text("Fel lösenord.")
             $("#loginBtn").attr('disabled', false);
@@ -76,7 +107,7 @@ function adminLogin() {
     });
 }
 
-function sendEmails(preview) {
+function sendEmails() {
     $("#emailStatus").text("Laddar listan av mail..");
     $("#previewEmails").attr('disabled', true);
     $("#sendEmails").attr('disabled', true);
@@ -86,7 +117,10 @@ function sendEmails(preview) {
         $("#emailList").slideUp(500);
         email_str = "";
         emailIdx = 0;
-        emailState = Array.apply(null, Array(data.emails.length)).map(Number.prototype.valueOf,0);
+        if (!preview) {
+            emailState = Array.apply(null, Array(data.emails.length)).map(Number.prototype.valueOf,0);
+        }
+
         for (e in data.emails) {
             if (data.emails[e].email != "") {
                 emailID = "email"+emailIdx;
@@ -111,7 +145,7 @@ function sendEmails(preview) {
             }
         }
         if (email_str=="") {
-            $("#emailStatus").text("Inga mail skickade.");
+            $("#emailStatus").text("Inga mail.");
         } else {
             $("#emailList").html(email_str);
             $("#emailList").fadeIn(500);
@@ -122,28 +156,6 @@ function sendEmails(preview) {
     })
     .fail(function (data) {
         $("#emailStatus").text("Kunde inte ansluta till servern!");
-    });
-
-    $(document).ajaxStop(function() {
-        if (email_str!="") {
-            if (preview) {
-                $("#emailStatus").text("Sändningsadress "+mail_user+" ("+mail_name+")");
-                email_str = "";
-            } else {
-                if (emailState.every(function(el){return el==1})) {
-                    $("#emailStatus").text("Klar!");
-                    email_str = "";
-                    emailState = [];
-                } else {
-                    $("#emailStatus").text("Skickar mail..");
-                }
-            }
-            $('html, body').animate({
-                scrollTop: $("#sendEmails").offset().top
-            }, 500);
-        }
-        $("#sendEmails").attr('disabled', false);
-        $("#previewEmails").attr('disabled', false);
     });
 }
 
