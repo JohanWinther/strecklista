@@ -39,6 +39,7 @@ function adminLogin() {
                             "Testutskick från "+location.href,
                             "Hej!<br><br>Detta meddelande är ett <b>testutskick</b>.<br><br>Med vänlig hälsning<br><a href='"+location.href+"' target='_blank'>"+location.href+"</a>",
                             "0",0);
+                        $("#adminBox input#email").val("");
                     } else {
                         $("#adminBox input#email").focus();
                     }
@@ -90,7 +91,7 @@ function adminLogin() {
                                 scrollTop: $("#sendEmails").offset().top
                             }, 500);
                         } else {
-                            $("#emailStatus").text("Skickar mail..");
+                            $("#emailStatus").text("Skickar mail (stäng inte sidan!)..");
                         }
                     }
                 }
@@ -150,7 +151,7 @@ function sendEmails() {
             $("#emailList").html(email_str);
             $("#emailList").fadeIn(500);
             if (!preview) {
-                $("#emailStatus").text("Skickar mail..");
+                $("#emailStatus").text("Skickar mail (stäng inte sidan)..");
             }
         }
     })
