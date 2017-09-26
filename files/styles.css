@@ -836,7 +836,6 @@ td.commentRow select {
         right: 0;
         width: 30%;
         max-width: 300px;
-        height: calc(100vh - 4em);
     }
 
     nav ul.menu {
@@ -904,7 +903,7 @@ td.commentRow select {
     div.top-margin {
         height: 3.4em;
     }
-    
+
     nav {
     	position: absolute;
         top: 0.5em;

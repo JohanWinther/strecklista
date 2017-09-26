@@ -66,6 +66,9 @@ function sendPIN(calledByUser) {
             enterCode = "";
         } else {
             // Correct PIN
+            window.onpopstate = function(event){
+                changePage(event.state);
+            };
             createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             swish = data.swish;
@@ -234,7 +237,7 @@ function setTouchEvents() {
         }
     });
 
-    $("a#logo").on("click touchend",function(e) {
+    /*$("a#logo").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
         if (dragging) {
@@ -247,7 +250,7 @@ function setTouchEvents() {
             $("section#list").fadeIn(500);
             $("section.activity").slideDown(500);
         }
-    });
+    });*/
 
     $("nav ul.menu li").on("click touchend",function(e) {
         e.stopPropagation();
@@ -260,22 +263,7 @@ function setTouchEvents() {
         $("section.main").hide();
         $("section.activity").hide();
         $("#action-bar-top").hide();
-        var link = $(this).attr("data-link");
-        if (link == "list") {
-            $("section#list").fadeIn(500);
-            $("section.activity").slideDown(500);
-            if ($("#action-bar-top").attr("data-cid") != "") $("#action-bar-top").fadeIn(500);
-        } else if (link == "stats") {
-            $("section#stats").fadeIn(500);
-        } else if (link == "plus") {
-            $("section#plus").fadeIn(500);
-        } else if (link == "settings") {
-            $("section#settings").fadeIn(500);
-        } else if (link == "admin") {
-            $("section#admin").fadeIn(500);
-        } else if (link == "about") {
-            $("section#about").fadeIn(500);
-        }
+        changePage($(this).attr("data-link"));
     });
 
     $("#favoriteUser").on("change",function(e) {
@@ -385,6 +373,36 @@ function closeMenu() {
     $("div.bar1, div.bar2, div.bar3").removeClass("close");
     $("nav").slideUp(200);
     state.menuIsOpen = 0;
+}
+
+function changePage(link) {
+    if (link == null || link == "list") {
+        $("a#logo").text("Strecklista");
+        window.history.pushState(link, "Strecklista", "/");
+        $("section#list").show();
+        $("section.activity").slideDown(500);
+        if ($("#action-bar-top").attr("data-cid") != "") $("#action-bar-top").fadeIn(500);
+    } else if (link == "stats") {
+        $("a#logo").text("Statistik");
+        window.history.pushState(link, "Statistik", "");
+        $("section#stats").show();
+    } else if (link == "plus") {
+        $("a#logo").text("Plussa");
+        window.history.pushState(link, "Plussa", "");
+        $("section#plus").show();
+    } else if (link == "settings") {
+        $("a#logo").text("Inställningar");
+        window.history.pushState(link, "Inställningar", "");
+        $("section#settings").show();
+    } else if (link == "admin") {
+        $("a#logo").text("Admin");
+        window.history.pushState(link, "Admin", "");
+        $("section#admin").show();
+    } else if (link == "about") {
+        $("a#logo").text("Om appen");
+        window.history.pushState(link, "Om appen", "");
+        $("section#about").show();
+    }
 }
 
 function updateSwishLink(amount, cid) {
