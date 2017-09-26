@@ -139,6 +139,8 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             mail_user = regArray[1]+"@net.chalmers.se";
             email = regArray[1]+"@"+regArray[2]+"chalmers.se";
         }
+        console.log(mail_user);
+        console.log(email);
         // Add all variables to data string
         dataString = "host="+encodeURIComponent(host);
         dataString += "&port="+encodeURIComponent(port);
