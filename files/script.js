@@ -66,7 +66,7 @@ function sendPIN(calledByUser) {
             enterCode = "";
         } else {
             // Correct PIN
-            createCookie("PIN",enterCode,10); // Set PIN as cookie for 10 days
+            createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             swish = data.swish;
             window.title = data.title;
@@ -242,6 +242,7 @@ function setTouchEvents() {
             return;
         }
         if (!state.processing) {
+            closeMenu();
             $("section.main").hide();
             $("section#list").fadeIn(500);
             $("section.activity").slideDown(500);
@@ -292,12 +293,10 @@ function setTouchEvents() {
     $(document).on("click touchend", function(e) {
         e.stopPropagation();
         //e.preventDefault();
+        closeMenu();
         if (dragging) {
             dragging = false;
             return;
-        }
-        if (state.menuIsOpen) {
-            closeMenu();
         }
         if (!state.processing) {
             if (state.current != null) {
@@ -570,7 +569,7 @@ function sendPayment(cid,change,category,comment,self) {
             } else {
                 flashColor(self,"red");
                 if (change<0) {
-                    console.log("Kunde inte strecka "+(-change)+" kr på "+cid+": "+data.message);
+                    alert("Kunde inte strecka "+(-change)+" kr på "+cid+": "+data.message);
                 } else {
                     alert("Kunde inte lägga till "+change+" kr på "+cid+": "+data.message);
                 }
@@ -588,9 +587,9 @@ function sendPayment(cid,change,category,comment,self) {
         if (self.attr("data-action")=="input") self.find("span").first().text("#");
         flashColor(self,"red");
         if (change<0) {
-            console.log("Kunde inte strecka "+(-change)+"kr på "+cid+": Ingen kontakt med servern.");
+            console.log("Kunde inte strecka "+(-change)+"kr på "+cid+": Ingen kontakt med servern. Försök igen!");
         } else {
-            alert("Kunde inte lägga till "+change+"kr på "+cid+":  Ingen kontakt med servern.");
+            alert("Kunde inte lägga till "+change+"kr på "+cid+":  Ingen kontakt med servern. Bekräfta betalningen igen!");
         }
     });
 }

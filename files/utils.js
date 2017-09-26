@@ -1,20 +1,3 @@
-/*var mouseDown = false;
-var fingerDown = false;
-$("html").on('mousedown', function() {
-    mouseDown = true;
-});
-$("html").on('mouseup', function() {
-    mouseDown = false;
-});
-$("html").on('click mousedown touchstart mousemove mouseup touchend touchmove', function(event) {
-    console.log(event.type);
-
-    /*if (event.type == "mouseup") documentClick = true;
-    if (documentClick){
-        console.log("clicked");
-    }
-});*/
-
 var macroURL = "https://script.google.com/macros/s/AKfycbyDpQHQEKC8tSNVhGdn5aaZNo2LklBmh7q7nGf5cD_C/dev";
 
 function createCookie(name,value,days) {

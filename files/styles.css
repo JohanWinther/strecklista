@@ -52,8 +52,12 @@ header {
 
 nav {
 	position: absolute;
-    top: 4em;
+    top: 0.5em;
+    right: 0.5em;
     display: none;
+    box-shadow: 0px 0.5em 1em hsla(0, 0%, 0%, 0.4);
+    width: 60%;
+    z-index: 1500;
 }
 
 nav:hover {
@@ -63,14 +67,13 @@ nav:hover {
 nav ul.menu {
     margin: 0;
     padding: 0;
-    font-size: 1.2em;
-    width: 100vw;
+    font-size: 1.1em;
+    width: 100%;
 }
 
 nav ul.menu > li {
     list-style-type: none;
-    background-color: white;
-    border-bottom: 1px solid hsl(0, 0%, 80%);
+    background-color: hsl(0, 0%, 100%);
 }
 
 nav ul.menu li {
@@ -83,14 +86,6 @@ nav ul.menu > li span {
     height: auto;
     display: block;
     line-height: 1em;
-}
-
-nav ul.menu > li:focus:before, nav ul.menu > li:hover:before {
-    content: '';
-    background-color: hsl(0, 0%, 80%);
-    width: 0.3em;
-    min-height: 3em;
-    position: absolute;
 }
 
 nav ul.menu > li > span {
@@ -847,18 +842,20 @@ td.commentRow select {
     nav ul.menu {
         background-color: hsl(0, 0%, 0%);
         color: hsl(0, 0%, 100%);
-        width: 100%;
-        border-left: 4px solid hsl(0, 0%, 80%);
-        border-bottom: 2px solid hsl(0, 0%, 80%);
-    }
-
-    nav ul.menu > li {
-        border-bottom: 2px solid hsl(0, 0%, 80%);
     }
 
     nav ul.menu > li, nav ul.menu > li span {
         background-color: hsl(0, 0%, 15%);
         color: inherit;
+        border-bottom: 0;
+    }
+
+    nav ul.menu > li:hover:before {
+        content: '';
+        background-color: hsl(0, 0%, 100%);
+        width: 0.3em;
+        min-height: 3em;
+        position: absolute;
     }
 }
 
@@ -896,5 +893,30 @@ td.commentRow select {
         background-image: linear-gradient(0deg, hsla(0, 0%, 80%, 1) 5%, hsla(0, 0%, 80%, 0) 50%);
         transition: 0.5s ease;
         display: block;
+    }
+}
+
+@media (max-height: 420px) {
+    header {
+        font-size: 0.8em;
+    }
+
+    div.top-margin {
+        height: 3.4em;
+    }
+    
+    nav {
+    	position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        height: 95vh;
+        overflow-y: auto;
+        box-shadow: 0px 0.5em 1em hsla(0, 0%, 0%, 0.4);
+        width: 60%;
+    }
+
+    nav ul.menu {
+        font-size: 0.9em;
+        width: 100%;
     }
 }
