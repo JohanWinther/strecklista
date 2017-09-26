@@ -1,0 +1,899 @@
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro:700');
+
+* {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+        user-select: none;
+    }
+
+html {
+    background-color: hsl(0, 0%, 0%);
+}
+
+body {
+    color: hsl(0, 0%, 80%);
+    font-family:Arial, sans-serif;
+    font-weight:bold;
+    height:100%;
+    width:100%;
+    margin:0;
+    padding:0px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+}
+
+header {
+    background: hsl(0, 0%, 15%);
+    width: 100%;
+    height: 4em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /*border-bottom: 4px solid hsl(0, 0%, 80%);*/
+    z-index: 9999;
+    font-size: 1.2em;
+}
+
+#logo {
+	margin: 0.5em 0 0.5em 1em;
+	float: left;
+	width: fit-content;
+    line-height: 3em;
+	height: 3em;
+    color: hsl(0, 0%, 100%);
+	display: block;
+}
+
+nav {
+	position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    display: none;
+    box-shadow: 0px 0.5em 1em hsla(0, 0%, 0%, 0.4);
+    width: 60%;
+    z-index: 1500;
+}
+
+nav:hover {
+    display: block;
+}
+
+nav ul.menu {
+    margin: 0;
+    padding: 0;
+    font-size: 1.1em;
+    width: 100%;
+}
+
+nav ul.menu > li {
+    list-style-type: none;
+    background-color: hsl(0, 0%, 100%);
+}
+
+nav ul.menu li {
+    cursor: pointer;
+}
+
+nav ul.menu > li span {
+    color: #000;
+    padding: 1em;
+    height: auto;
+    display: block;
+    line-height: 1em;
+}
+
+nav ul.menu > li > span {
+    transition: margin-left 0.2s ease-in-out;
+}
+
+nav ul.menu > li:hover > span {
+    margin-left: 0.3em;
+}
+
+
+nav ul.menu > li > li > span {
+    border-bottom: 1px solid hsl(0, 0%, 50%);
+}
+
+div.menu-button {
+    margin: 0.5em;
+    float: right;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0.6em 1.35em;
+    width: 3em;
+    height: 3em;
+    box-sizing: border-box;
+    background-color: hsla(0, 0%, 100%, 0);
+    border-radius: 3em;
+    transition: background-color 0.2s ease-in-out;
+}
+
+div.menu-button:hover {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    box-shadow: 5px 5px 20px hsla(0, 0%, 0%, 0.2);
+}
+
+.bar1, .bar2, .bar3 {
+    margin-left: auto;
+    width: 0.3em;
+    height: 0.3em;
+    background-color: hsl(0, 0%, 100%);
+    margin: 0.25em 0;
+    transition: 0.2s ease-in-out;
+}
+
+.bar1.close {
+    transform: translateY(0.6em) translateX(0.05em) rotate(45deg) scaleX(6);
+    transform-origin: center;
+}
+.bar2.close {
+    opacity: 0;
+}
+.bar3.close {
+    transform: translateY(-0.6em) translateX(0.05em) rotate(-45deg) scaleX(6);
+    transform-origin: center;
+}
+
+div.content {
+    position: absolute;
+    height: auto;
+    width: 100%;
+}
+
+div.top-margin {
+    height: 5em;
+}
+
+section.main {
+    width: 80%;
+    max-width:80%;
+    margin: 1em auto;
+    padding: 1em 2em;
+    text-align: center;
+}
+
+/* Loading icon */
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-ring-big div {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 4px solid #000;
+    border-color: #e6e6e6 transparent #e6e6e6 transparent;
+    animation: lds-dual-ring 1.3s linear infinite;
+    transition: all 0.3s ease-in-out;
+}
+.loading-ring-big {
+    width: 50px;
+    height: 50px;
+}
+
+.loading-ring-button div {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 4px solid #000;
+    border-color: #e6e6e6 transparent #e6e6e6 transparent;
+    animation: lds-dual-ring 1.3s linear infinite;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    color: hsl(0,0%,0%);
+}
+
+.loading-ring-small div {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    border-color: #e6e6e6 transparent #e6e6e6 transparent;
+    animation: lds-dual-ring 1.3s linear infinite;
+    transition: all 0.3s ease-in-out;
+}
+
+.loading-ring-small {
+    width: 25px;
+    height: 25px;
+}
+
+/*------
+# Pincode
+----*/
+
+.cell {
+    width: 100%;
+    text-align: center;
+}
+
+
+#message {
+    color: hsla(0, 100%, 60%, 1);
+    min-height: 1.25em;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    margin-top: 2em;
+}
+
+#message.show {
+    opacity: 1;
+}
+
+#status {
+    height: 2em;
+    width: 50px;
+    text-align: center;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+}
+
+#status.load {opacity: 1}
+
+#numbers {
+    max-width: 300px;
+    padding: 0 20px;
+    margin: 0 auto;
+    position: relative;
+    display: block;
+    transition: all 0.5s ease-out;
+    opacity: 1;
+}
+
+#numbers.load {
+    opacity: 0.3;
+}
+
+#numbers.load button {
+    transform: scale(1);
+    background-color: hsl(0, 0%, 90%);
+}
+
+.cell button {
+    cursor: pointer;
+    width: 2.5em;
+    height: 2.5em;
+    margin-bottom: 0.5em;
+    background-color: hsl(0, 0%, 90%);
+    border: 0;
+    color: #000;
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1.5em;
+    border-radius: 100%;
+    opacity: 1;
+    outline: 0;
+    transition: all 0.1s linear;
+}
+
+.cell button:hover {
+    transform: scale(1.05);
+    background-color: hsl(0, 0%, 100%);
+}
+
+.cell button:active {
+    transform: scale(0.95);
+    background-color: hsl(0, 0%, 60%);
+}
+
+
+#fields {
+    max-width: 12em;
+    margin: 1em auto 2em auto;
+}
+
+#fields .numberfield span {
+    height: 10px;
+    width: 10px;
+    border: 2px solid hsl(0, 0%, 90%);
+    background-color: transparent;
+    border-radius: 100%;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+#fields .numberfield.active span {
+    background-color: hsl(0, 0%, 90%);
+}
+
+#fields .numberfield.load span {
+    background-color: hsla(0, 0%, 90%, 0.3);
+    border-color: hsla(0, 0%, 90%, 0);
+    transition: all .2s ease-in-out;
+}
+
+
+/*------
+# Toast Grid
+----*/
+
+.grid__col--1-of-3,
+.grid__col--2-of-6,
+.grid__col--4-of-12 {
+    width: 33.33333%;
+}
+
+.grid__col--1-of-4,
+.grid__col--2-of-8,
+.grid__col--3-of-12 {
+    width: 25%;
+}
+
+.grid__col {
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: -.25em;
+    min-height: 1px;
+    padding: 0 1em;
+    vertical-align: top;
+}
+
+.grid__col--centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid__col--d-first {
+    float: left;
+}
+
+.grid__col--d-last {
+    float: right;
+}
+
+.grid--no-gutter {
+    margin-left: 0;
+    width: 100%;
+}
+
+.grid--no-gutter .grid__col {
+    padding-left: 0;
+}
+
+.grid--no-gutter .grid__col--span-all {
+    margin-left: 0;
+    width: 100%;
+}
+
+.grid__col--ab {
+    vertical-align: bottom;
+}
+
+.grid__col--am {
+    vertical-align: middle;
+}
+
+/* list */
+
+section.main h1 {
+    text-align: center;
+    font-size: 3em;
+    margin: 0;
+}
+
+section.main h2 {
+    text-align: center;
+    font-size: 2em;
+    margin: 0.5em 0;
+}
+
+section.main h3 {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    margin-top: 1em;
+}
+
+section.main.settings p {
+    margin: 1em 0;
+}
+
+section.main.settings select, section.main.settings input, section.main.settings span.button {
+    border-radius: 0.5em;
+    border: 2px solid hsl(0, 0%, 100%);
+    padding: 0.5em;
+    margin-top: 0.5em;
+    color: hsl(0,0%,100%);
+    width: fit-content;
+}
+
+section.main.settings input {
+    width: 5em;
+}
+
+section.settings#admin input[type="password"] {
+    border-radius: 0.5em 0 0 0.5em;
+}
+section.settings#admin input[type="submit"] {
+    border-radius: 0 0.5em 0.5em 0;
+}
+section.settings#admin input[type="email"] {
+    width: 14em;
+}
+
+ul#emailList li {
+    margin-top: 1em;
+    text-align: left;
+}
+
+section.main.settings a {
+    text-decoration: none;
+    color: hsl(0, 0%, 100%);
+}
+
+ul#emailList li > span.to {
+    font-family: monospace;
+}
+ul#emailList li > span.body {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+
+section.main.settings span.button {
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+
+section.main.settings select > option {
+    background-color: hsl(0, 0%, 0%);
+}
+
+section.main.settings select:hover, section.main input:hover, section.main span.button:hover {
+    border: 2px solid hsl(0, 0%, 100%);
+    color: hsl(0,0%,100%);
+}
+
+section.settings#plus p > * {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+section.main img.QR {
+    border-radius: 1em;
+}
+
+section.settings p {
+    color: hsl(0,0%,80%);
+}
+
+section.settings#plus p > span {
+    display: block;
+}
+
+section.main a.swish {
+    text-decoration: none;
+    color: hsl(0,0%, 100%);
+}
+
+section.main a.swish img {
+    filter: brightness(100);
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 3em;
+    height: 3em;
+}
+
+
+ul.cards {
+    margin: 1em 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+}
+
+ul.cards li {
+    flex-basis: auto;
+    padding: 0;
+    height: fit-content;
+    width: 8em;
+    margin: 0 1em 1em 1em;
+    color: hsl(0, 0%, 80%);
+}
+
+ul.cards li div.profile {
+    margin-bottom: 0.5em;
+    padding: 0;
+    width: 100%;
+    height: 128px;
+    border-radius: 1em;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+div.profile div {
+    z-index: -1;
+    position: relative;
+    width: 125px;
+    height: 125px;
+    text-align: center;
+    font-size: 80px;
+    line-height: 128px;
+    color: hsl(0, 0%, 0%);
+    border-radius: 16px;
+    border: solid 1px hsl(0, 0%, 80%);
+    background-color: hsl(0,0%, 80%);
+}
+
+ul.cards li div.name {
+    margin: 0;
+    height: fit-content;
+    width: 100%;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+section.activity {
+    margin: 0 auto 1em auto;
+    color: hsl(0, 0%, 0%);
+    padding: 3em 1em 1em 1em;
+    background-color: hsl(0, 0%, 80%);
+    border-radius: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url(history.png);
+    background-size: 2em;
+    background-repeat: no-repeat;
+    background-position: center 0.5em;
+}
+
+section.activity > ul > li[data-category="streckade"]:active {
+    background-color: hsla(0, 0%, 0%,0.2);
+    border-radius: 0.25em;
+}
+
+section.activity ul {
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+    width: fit-content;
+}
+
+section.activity ul li span.time {
+    color: hsl(0, 0%, 10%);
+    margin-right: 1em;
+    font-family: monospace;
+    font-size: 1.2em;
+}
+
+div.action-bar {
+    background-color: hsla(0, 0%, 90%, 0.9);
+    max-width: 80vw;
+    position: absolute;
+    z-index: 0;
+    border-radius: 1em;
+    padding: 0.2em;
+    transform-origin: center -3em;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.1s ease-in-out, top 0.3s ease-in-out;
+    font-family: monospace;
+}
+
+div.action-bar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 3em;
+    color: hsl(0, 0%, 100%);
+    width: 100%;
+}
+
+div.action-bar li {
+    width: 60px;
+    height: 60px;
+    background-color: hsl(0,0%,0%);
+    border-radius: 1em;
+    text-align: center;
+    padding: 0;
+    margin: 0.05em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+div.action-bar li span {
+    margin: auto;
+}
+
+div.action-bar-arrow {
+    position: absolute;
+    z-index: 999;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 1em 1em 1em;
+    border-color: transparent transparent hsla(0, 0%, 90%, 0.9) transparent;
+    transform-origin: center -2em;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, left 0.1s ease-in-out,top 0.3s ease-in-out;
+}
+
+div.action-bar.hide {
+    display: none;
+}
+
+div.action-bar-arrow.hide {
+    display: none;
+}
+
+div#action-bar-top {
+    position: initial;
+    max-width: fit-content;
+    width: 80vw;
+    margin: 2em auto;
+    z-index: -1;
+    transform: scale(1);
+    transition: transform 0.5s ease-in-out;
+}
+
+div#action-bar-top > span {
+    color: hsl(0, 0%, 0%);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    line-height: 1.5em;
+    display: block;
+}
+
+p#load-message {display:none;}
+
+div.settings {
+    padding: 2em;
+}
+
+div.settings input {
+    font-size:1em;
+}
+#sparat-text {
+    margin-left:1em;
+    font-size:1em;
+    font-weight:normal;
+}
+
+#comment {width:100%}
+
+td.commentRow {
+    font-weight: normal;
+    text-align: left;
+}
+td.commentRow p {
+    width:100%;
+    font-size: inherit;
+    font-weight: inherit;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+td.commentRow select {
+    font-size: inherit;
+    font-weight: inherit;
+    width:5em;
+}
+
+.cross {
+    margin-right: 0.5em;
+    /* float: right; */
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.confirmBox {
+    margin: auto;
+    overflow: auto;
+    padding-top: 0.5em;
+    float: right;
+}
+
+.left-box-plus {
+    float:left;
+    width:60%;
+    padding:0.5em;
+}
+
+.info {
+    font-weight:normal;
+    font-family:Consolas;
+}
+
+@media (max-width: 480px) {
+    section.main {
+        width: 100%;
+        max-width: 100%;
+        padding:0;
+    }
+
+    section.settings {
+        padding: 0 0.5em;
+        box-sizing: border-box;
+    }
+
+    header {
+        font-size: 0.8em;
+    }
+
+    div.top-margin {
+        height: 3.4em;
+    }
+
+    section.activity {
+        font-size: 0.8em;
+    }
+
+    section.activity > ul > li {
+        margin-bottom: 0.5em;
+    }
+
+    ul.cards li {
+        width: 4em;
+        color: hsl(0, 0%, 80%);
+    }
+
+    ul.cards li div.profile {
+        margin: 0 0 0.5em 0;
+        height: 64px;
+        border-radius: 0.5em;
+    }
+
+    div.profile div {
+        width: 62px;
+        height: 62px;
+        font-size: 40px;
+        line-height: 64px;
+        border-radius: 8px;
+    }
+
+    ul.cards li div.name {
+        text-align: center;
+        font-size: 0.75em;
+    }
+
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    ul.cards li {
+        width: 6em;
+        color: hsl(0, 0%, 80%);
+    }
+
+    ul.cards li div.profile {
+        margin: 0 0 0.5em 0;
+        height: 96px;
+        border-radius: 0.5em;
+    }
+
+    div.profile div {
+        width: 94px;
+        height: 94px;
+        font-size: 60px;
+        line-height: 96px;
+        border-radius: 12px;
+    }
+
+    ul.cards li div.name {
+        text-align: center;
+        font-size: 0.62em;
+    }
+}
+
+@media (min-width: 768px) {
+
+    header {
+        position: fixed;
+    }
+    nav {
+        top: 4em;
+        right: 0;
+        width: 30%;
+        max-width: 300px;
+    }
+
+    nav ul.menu {
+        background-color: hsl(0, 0%, 0%);
+        color: hsl(0, 0%, 100%);
+    }
+
+    nav ul.menu > li, nav ul.menu > li span {
+        background-color: hsl(0, 0%, 15%);
+        color: inherit;
+        border-bottom: 0;
+    }
+
+    nav ul.menu > li:hover:before {
+        content: '';
+        background-color: hsl(0, 0%, 100%);
+        width: 0.3em;
+        min-height: 3em;
+        position: absolute;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    section.activity {
+        max-width: 360px;
+        position: fixed;
+        border-radius: 1em 1em 0 0;
+        bottom: -12em;
+        height: 15em;
+        margin: 0;
+        padding-top: 3em;
+        right: 5%;
+        z-index: 1000;
+        box-shadow: 10px 10px 10px hsla(0, 0%, 0%, 0.4);
+        width: fit-content;
+        transition: bottom 0.3s ease-in-out;
+    }
+    section.activity:focus, section.activity:hover {
+        bottom: 0;
+    }
+
+    section.activity > ul > li[data-category="streckade"]:hover {
+        background-color: hsla(0, 0%, 0%,0.2);
+        border-radius: 0.25em;
+    }
+
+    section.activity > div.overlay {
+        position: absolute;
+        width: 100%;
+        margin-left: -1em;
+        height: 12em;
+        z-index: 1050;
+        background-image: linear-gradient(0deg, hsla(0, 0%, 80%, 1) 5%, hsla(0, 0%, 80%, 0) 50%);
+        transition: 0.5s ease;
+        display: block;
+    }
+}
+
+@media (max-height: 420px) {
+    header {
+        font-size: 0.8em;
+    }
+
+    div.top-margin {
+        height: 3.4em;
+    }
+
+    nav {
+    	position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        height: 95vh;
+        overflow-y: auto;
+        box-shadow: 0px 0.5em 1em hsla(0, 0%, 0%, 0.4);
+        width: 60%;
+    }
+
+    nav ul.menu {
+        font-size: 0.9em;
+        width: 100%;
+    }
+}

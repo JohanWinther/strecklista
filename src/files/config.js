@@ -1,2 +1,0 @@
-var macroURL = "";
-var sheetURL = "";
