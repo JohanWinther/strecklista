@@ -67,7 +67,6 @@ function sendPIN(calledByUser) {
         } else {
             // Correct PIN
             window.onpopstate = function(event){
-                console.log(event);
                 changePage(event.state);
             };
             createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
@@ -260,10 +259,6 @@ function setTouchEvents() {
             dragging = false;
             return;
         }
-        closeMenu();
-        $("section.main").hide();
-        $("section.activity").hide();
-        $("#action-bar-top").hide();
         var link = $(this).attr("data-link");
         changePage(link);
         window.history.pushState(link, "", "");
@@ -379,7 +374,10 @@ function closeMenu() {
 }
 
 function changePage(link) {
-    console.log(link);
+    closeMenu();
+    $("section.main").hide();
+    $("section.activity").hide();
+    $("#action-bar-top").hide();
     if (link == null || link == "list") {
         $("a#logo").text("Strecklista");
         $("section#list").show();
