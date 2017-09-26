@@ -66,6 +66,11 @@ function sendPIN(calledByUser) {
             enterCode = "";
         } else {
             // Correct PIN
+            if (window.history.state != null) {
+                changePage(window.history.state);
+            } else {
+                window.history.replaceState("list","","");
+            }
             window.onpopstate = function(event){
                 changePage(event.state);
             };
@@ -261,7 +266,9 @@ function setTouchEvents() {
         }
         var link = $(this).attr("data-link");
         changePage(link);
-        window.history.pushState(link, "", "");
+        if (window.history.state != link) {
+            window.history.pushState(link, "", "");
+        }
     });
 
     $("#favoriteUser").on("change",function(e) {
