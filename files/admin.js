@@ -85,11 +85,11 @@ function sendEmails(preview) {
                 email_str += '</li>';
                 if (!preview) {
                     // create a closure to preserve the value of "i"
-                    (function(e){
+                    (function(e,emailID){
                         window.setTimeout(function(){
                             sendEmail(mail_user, mail_pw, mail_name, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID, 0);
                         }, e * 2000);
-                    }(e));
+                    }(e,emailID));
                 }
                 emailIdx++;
             }
@@ -123,7 +123,6 @@ function sendEmails(preview) {
 
 // Definiera mailfunktionen
 function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries) {
-    console.log(numberOfTries);
     if (numberOfTries <= 3) {
         if (numberOfTries > 0) {
             $("li#"+emailID).find("span.status").text(" - Försök nr "+numberOfTries+"..");
@@ -146,8 +145,6 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             mail_user = regArray[1]+"@net.chalmers.se";
             email = regArray[1]+"@student.chalmers.se";
         }
-        console.log(mail_user);
-        console.log(email);
         // Add all variables to data string
         dataString = "host="+encodeURIComponent(host);
         dataString += "&port="+encodeURIComponent(port);
@@ -159,14 +156,6 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
         dataString += "&from="+encodeURIComponent(mail_name);
         dataString += "&subject="+encodeURIComponent(subject);
         dataString += "&body="+encodeURIComponent(body);
-        /*$.post("/files/email.php", dataString, function(data, textStatus) {
-            if (textStatus == "success" && data) {
-                $("li#"+emailID).find("span.status").text(" - Klar!");
-            } else {
-                sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID);
-            }
-        }, "json");*/
-
         $.ajax({
             url: "/files/email.php",
             method: "POST",
