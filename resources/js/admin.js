@@ -197,7 +197,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, n
         dataString += "&body="+encodeURIComponent(body);
 
         $.ajax({
-            url: "/files/email.php",
+            url: "/resources/php/email.php",
             method: "POST",
             data: dataString,
             timeout: 10000,

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPlib;
+namespace phpsmtp;
 
 class SMTP {
 

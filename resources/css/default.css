@@ -561,7 +561,7 @@ section.activity {
     border-radius: 0;
     width: 100%;
     box-sizing: border-box;
-    background-image: url(history.png);
+    background-image: url(../images/history.png);
     background-size: 2em;
     background-repeat: no-repeat;
     background-position: center 0.5em;

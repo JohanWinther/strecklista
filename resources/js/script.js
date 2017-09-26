@@ -351,6 +351,36 @@ function setTouchEvents() {
 
 }
 
+function createTable(group,members) {
+    // Skapa table
+    var html = '';
+    // Loopa igenom varje grupp
+    for (g in group) {
+        html += '<h1>'+group[g]+'</h1>';
+        html += '<ul class="cards">';
+        // Loopa igenom varje person
+        for (m in members[g]) {
+            member = members[g][m].split(";");
+            cid = member[0];
+            name = member[1];
+            email = member[2];
+            if (email == "") {
+                email = cid+"@student.chalmers.se";
+            }
+            html += '<li data-cid=' + cid + '><div class="profile" data-cid="'+cid+'" data-email="'+email+'">';
+            html += '<div>'+name.substr(0,1)+'</div>';
+            html += '</div>';
+            html += '<div class="name">';
+            html += name;
+            html += '</div></li>';
+        }
+        html += '</ul>';
+    }
+
+    // Returnera tabell som html
+    return html;
+}
+
 function disableSteps() {
     $("#swish-button").removeAttr("href");
     $("#step2").css("opacity",0.5);
