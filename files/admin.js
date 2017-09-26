@@ -162,8 +162,20 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             mail_user = regArray[1]+"@net.chalmers.se";
             email = regArray[1]+"@student.chalmers.se";
         }
+
+        var postData = {
+            "host":host,
+            "port":port,
+            "secure":secure,
+            "user":mail_user,
+            "password":mail_pw,
+            "email":email,
+            "from":mail_name,
+            "subject":subject,
+            "body":body
+        };
         // Add all variables to data string
-        dataString = "host="+encodeURIComponent(host);
+        /*dataString = "host="+encodeURIComponent(host);
         dataString += "&port="+encodeURIComponent(port);
         dataString += "&secure="+encodeURIComponent(secure);
         dataString += "&user="+encodeURIComponent(mail_user);
@@ -172,13 +184,13 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
         dataString += "&to="+encodeURIComponent(to);
         dataString += "&from="+encodeURIComponent(mail_name);
         dataString += "&subject="+encodeURIComponent(subject);
-        dataString += "&body="+encodeURIComponent(body);
+        dataString += "&body="+encodeURIComponent(body);*/
         $.ajax({
             url: "/files/email.php",
             method: "POST",
-            data: dataString,
+            data: postData,
             timeout: 10000,
-            dataType: "json"
+            dataType: "text"
         }).done(function(data) {
             console.log(data);
             console.log(data.statusText);
