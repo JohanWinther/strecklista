@@ -23,6 +23,7 @@ function adminLogin() {
                 if ($(this).attr("disabled") != "disabled") {
                     var to = $("#adminBox input#email").val();
                     if (to != "") {
+                        $("#emailList").slideUp(500);
                         $("#emailList").html("");
                         sendEmail(
                             mail_user,
@@ -69,6 +70,7 @@ function sendEmails(preview) {
     $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&preview="+preview+"&callback=?")
     .done(function (data) {
         $("#emailList").html("");
+        $("#emailList").slideUp(500);
         email_str = "";
         emailIdx = 0;
         for (e in data.emails) {
@@ -98,6 +100,7 @@ function sendEmails(preview) {
             $("#emailStatus").text("Inga mail skickade.");
         } else {
             $("#emailList").html(email_str);
+            $("#emailList").slideDown(500);
         }
     })
     .fail(function (data) {
@@ -134,8 +137,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
         var secure = "tls";
         var url = location.href; // Application url from where the smtp call was made
 
-        // Check if CID and handle server settings
-        // User is net.chalmers.se and email can be nothing, student, alumn
+        // If CID use net.chalmers.se and email student.chalmers.se
         var email = "";
         var regexp = /(.+)@(.*)chalmers\.se/;
         var regArray = regexp.exec(mail_user);
@@ -167,12 +169,10 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             if (data) {
                 $("li#"+emailID).find("span.status").text(" - Klar!");
             } else {
-                $("#emailStatus").text("Fel inställningar.");
                 sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
             }
         }).fail(function(data) {
             console.log(data);
-            $("#emailStatus").text("Kunde inte ansluta till servern.");
             sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
         });
     } else {
