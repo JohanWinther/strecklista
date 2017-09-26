@@ -67,6 +67,7 @@ function sendPIN(calledByUser) {
         } else {
             // Correct PIN
             window.onpopstate = function(event){
+                console.log(event);
                 changePage(event.state);
             };
             createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
@@ -376,6 +377,7 @@ function closeMenu() {
 }
 
 function changePage(link) {
+    console.log(link);
     if (link == null || link == "list") {
         $("a#logo").text("Strecklista");
         window.history.pushState(link, "Strecklista", "/");
