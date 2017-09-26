@@ -391,6 +391,7 @@ function changePage(link) {
         $("section#list").show();
         $("section.activity").slideDown(500);
         if ($("#action-bar-top").attr("data-cid") != "") $("#action-bar-top").fadeIn(500);
+        updateActivity();
     } else if (link == "stats") {
         document.title = window.title + " – Statistik";
         $("a#logo").text("Statistik");
@@ -487,7 +488,7 @@ function ActionBar(show, data) {
 
 function runActivityFun() {
     setTimeout(function() {
-       updateActivity();
+        if (window.history.state == "list") updateActivity();
        runActivityFun();
    }, 1000*30);
 }
