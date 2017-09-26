@@ -1,6 +1,7 @@
 // Sätt globala variabler (dessa hamnar under window)
 var email_str = "";
 var emailIdx = 0;
+var emailState = [];
 var mail_user = "";
 var mail_pw = "";
 var password = "";
@@ -85,6 +86,7 @@ function sendEmails(preview) {
         $("#emailList").slideUp(500);
         email_str = "";
         emailIdx = 0;
+        emailState = Array.apply(null, Array(data.emails.length)).map(Number.prototype.valueOf,0);
         for (e in data.emails) {
             if (data.emails[e].email != "") {
                 emailID = "email"+emailIdx;
@@ -99,11 +101,11 @@ function sendEmails(preview) {
                 email_str += '</li>';
                 if (!preview) {
                     // create a closure to preserve the value of "i"
-                    (function(e,emailID){
+                    (function(e,emailIdx){
                         window.setTimeout(function(){
-                            sendEmail(mail_user, mail_pw, mail_name, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID, 0);
+                            sendEmail(mail_user, mail_pw, mail_name, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailIdx, 0);
                         }, e * 2000);
-                    }(e,emailID));
+                    }(e,emailIdx));
                 }
                 emailIdx++;
             }
@@ -124,11 +126,17 @@ function sendEmails(preview) {
 
     $(document).ajaxStop(function() {
         if (email_str!="") {
-            email_str = "";
             if (preview) {
                 $("#emailStatus").text("Sändningsadress "+mail_user+" ("+mail_name+")");
+                email_str = "";
             } else {
-                $("#emailStatus").text("Klar!");
+                if (emailState.every(function(el){return el==1})) {
+                    $("#emailStatus").text("Klar!");
+                    email_str = "";
+                    emailState = [];
+                } else {
+                    $("#emailStatus").text("Skickar mail..");
+                }
             }
             $('html, body').animate({
                 scrollTop: $("#sendEmails").offset().top
@@ -140,12 +148,12 @@ function sendEmails(preview) {
 }
 
 // Definiera mailfunktionen
-function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries) {
+function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, numberOfTries) {
     if (numberOfTries <= 3) {
         if (numberOfTries > 0) {
-            $("li#"+emailID).find("span.status").text(" - Försök nr "+numberOfTries+"..");
+            $("li#email"+emailIdx).find("span.status").text(" - Försök nr "+numberOfTries+"..");
         } else {
-            $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
+            $("#emailList > li#email"+emailIdx).find("span.status").text(" - Skickar..");
         }
         var host = "smtp-mail.outlook.com";
         var port = "587";
@@ -183,20 +191,20 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             dataType: "json"
         }).done(function(data) {
             console.log(data);
-            console.log(data.statusText);
             if (data) {
-                $("li#"+emailID).find("span.status").text(" - Klar!");
+                $("li#email"+emailIdx).find("span.status").text(" - Klar!");
+                emailState[emailIdx] = 1;
             } else if (data.statusText == undefined) {
-                sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
+                sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, numberOfTries+1);
             } else {
-                $("li#"+emailID).find("span.status").text(" - Klar!");
+                $("li#"+emailIdx).find("span.status").text(" - Klar!");
+                emailState[emailIdx] = 1;
             }
         }).fail(function(data) {
             console.log(data);
-            console.log(data.statusText);
-            sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
+            sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, numberOfTries+1);
         });
     } else {
-        $("li#"+emailID).find("span.status").text(" - Kunde inte skicka!");
+        $("li#email"+emailIdx).find("span.status").text(" - Kunde inte skicka!");
     }
 }
