@@ -264,7 +264,9 @@ function setTouchEvents() {
         $("section.main").hide();
         $("section.activity").hide();
         $("#action-bar-top").hide();
-        changePage($(this).attr("data-link"));
+        var link = $(this).attr("data-link");
+        changePage(link);
+        window.history.pushState(link, "", "");
     });
 
     $("#favoriteUser").on("change",function(e) {
@@ -380,29 +382,23 @@ function changePage(link) {
     console.log(link);
     if (link == null || link == "list") {
         $("a#logo").text("Strecklista");
-        window.history.pushState(link, "Strecklista", "/");
         $("section#list").show();
         $("section.activity").slideDown(500);
         if ($("#action-bar-top").attr("data-cid") != "") $("#action-bar-top").fadeIn(500);
     } else if (link == "stats") {
         $("a#logo").text("Statistik");
-        window.history.pushState(link, "Statistik", "");
         $("section#stats").show();
     } else if (link == "plus") {
         $("a#logo").text("Plussa");
-        window.history.pushState(link, "Plussa", "");
         $("section#plus").show();
     } else if (link == "settings") {
         $("a#logo").text("Inställningar");
-        window.history.pushState(link, "Inställningar", "");
         $("section#settings").show();
     } else if (link == "admin") {
         $("a#logo").text("Admin");
-        window.history.pushState(link, "Admin", "");
         $("section#admin").show();
     } else if (link == "about") {
         $("a#logo").text("Om appen");
-        window.history.pushState(link, "Om appen", "");
         $("section#about").show();
     }
 }
