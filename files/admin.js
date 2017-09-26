@@ -118,7 +118,11 @@ function sendEmails(preview) {
 function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries) {
     console.log(numberOfTries);
     if (numberOfTries <= 3) {
-        $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
+        if (numberOfTries > 0) {
+            $("li#"+emailID).find("span.status").text(" - Försöker igen..");
+        } else {
+            $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
+        }
         var host = "smtp-mail.outlook.com";
         var port = "587";
         var secure = "tls";
@@ -166,12 +170,10 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             } else {
                 $("#emailStatus").text("Fel inställningar.");
                 sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
-                $("li#"+emailID).find("span.status").text(" - Försöker igen..");
             }
         }).fail(function(data) {
             $("#emailStatus").text("Kunde inte ansluta till servern.");
             sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
-            $("li#"+emailID).find("span.status").text(" - Försöker igen..");
         });
     } else {
         $("li#"+emailID).find("span.status").text(" - Kunde inte skicka!");
