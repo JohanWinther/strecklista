@@ -90,6 +90,7 @@ function sendPIN(calledByUser) {
             var favorite = readCookie("favorite");
             if (favorite != null) {
                 $("#favoriteUser").val(favorite);
+                $("#plusUser").val(favorite);
                 $("div#action-bar-top").attr("data-cid",favorite);
                 $("#action-bar-top > span").text("Strecka på "+$("#favoriteUser option:selected").text());
                 $("div#action-bar-top").fadeIn(500);
@@ -274,6 +275,7 @@ function setTouchEvents() {
         var cid = $(this).val();
         if (cid != "") {
             createCookie("favorite", cid);
+            $("#plusUser").val(cid);
             console.log(cid + " är satt som favorit.");
         } else {
             eraseCookie("favorite");

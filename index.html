@@ -58,76 +58,10 @@
             </ul>
         </div>
 
-
-        <section class="main settings" id="plus" style="display:none">
-            <h2 id="step1">1. Välj belopp och användare</h2>
-            <p id="plusOptions">
-                Plussa
-                <input type="number" min="1" max="5000" step="1" id="amount" value="1"/> kr på
-                <select class="users" id="plusUser">
-                    <option value="">Välj..</option>
-                </select>
-            </p>
-            <h2 id="step2">2. Swisha</h2>
-            <p id="plusSwish">
-                <a class="swish" id="swish-button">
-                    <img src="files/swish.png" alt="Swish" />
-                    Tryck för att öppna Swish
-                </a>
-                <span>Eller skanna koden nedan med Swish om appen är på en annan enhet:</span>
-                <img src="" alt="Swish QR-kod" class="QR" id="swish-QR"/>
-            </p>
-            <h2 id="step3">3. Bekräfta betalning</h2>
-            <p id="plusButtons">
-                <span>Är betalningen genomförd?</span>
-                <span class="button" id="confirmPlus">Ja, skicka in!</span>
-            </p>
-        </section>
-
-
-        <section class="main settings" id="settings" style="display:none">
-            <h2>Favorit</h2>
-            <select class="users" id="favoriteUser">
-                <option value="">Välj..</option>
-            </select>
-        </section>
-
-        <section class="main settings" id="admin" style="display:none">
-            <div id="loginBox">
-                <h2>Logga in</h2>
-                <p>
-                    <input type="password" id="password" placeholder="Lösenord"/>
-                    <input type="submit" value="Logga in" id="loginBtn" onclick="adminLogin()" />
-                </p>
-                <p id="loginMessage"></p>
-            </div>
-            <div id="adminBox" style="display:none">
-                <h2>Streckmail</h2>
-                <h3>Testmail</h3>
-                <p>
-                    <input type="email" id="email" placeholder="Email" name="email" />
-                    <br>
-                    <span class="button" id="sendTestEmail">Skicka testmail</span>
-                </p>
-                <h3>Skicka till användare</h3>
-                <p>
-                    <span>Förhandsgranskningen visar alla mail längst ner på sidan.</span>
-                    <br>
-                    <span class="button" id="previewEmails">Förhandsgranska streckmail</span>
-                    <br>
-                    <span><br>När du klickat på skicka kommer sändningstatus för varje mail att visas nedan.</span>
-                    <br>
-                    <span class="button" id="sendEmails">Skicka streckmail</span>
-                </p>
-                <h3>Status</h3>
-                <p id="emailStatus">Inga mail skickade.</p>
-                <ul id="emailList">
-                </ul>
-            </div>
-        </section>
-
         <section class="main" id="list" style="display:none">
         </section>
+
+
         <section class="main" id="pinput">
             <div class="cell">
                 <div id="status" class="load">
@@ -168,6 +102,100 @@
         </section>
 
 
+        <section class="main settings" id="stats" style="display:none">
+            <h2>Kommer snart!<h2>
+        </section>
+
+        <section class="main settings" id="plus" style="display:none">
+            <h2 id="step1">1. Välj belopp och användare</h2>
+            <p id="plusOptions">
+                Plussa
+                <input type="number" min="1" max="5000" step="1" id="amount" value=""/> kr på
+                <select class="users" id="plusUser">
+                    <option value="">Välj..</option>
+                </select>
+            </p>
+            <h2 id="step2">2. Swisha</h2>
+            <p id="plusSwish">
+                <a class="swish" id="swish-button">
+                    <img src="files/swish.png" alt="Swish" />
+                    Tryck för att öppna Swish
+                </a>
+                <span>Eller skanna koden nedan med Swish om appen är på en annan enhet:</span>
+                <img src="" alt="Swish QR-kod" class="QR" id="swish-QR"/>
+            </p>
+            <h2 id="step3">3. Bekräfta betalning</h2>
+            <p id="plusButtons">
+                <span>Är betalningen genomförd?</span>
+                <span class="button" id="confirmPlus">Ja, skicka in!</span>
+            </p>
+        </section>
+
+
+        <section class="main settings" id="settings" style="display:none">
+            <h2>Favorit</h2>
+            <select class="users" id="favoriteUser">
+                <option value="">Välj..</option>
+            </select>
+        </section>
+
+
+        <section class="main settings" id="admin" style="display:none">
+            <div id="loginBox">
+                <h2>Logga in</h2>
+                <p>
+                    <input type="password" id="password" placeholder="Lösenord"/>
+                    <input type="submit" value="Logga in" id="loginBtn" onclick="adminLogin()" />
+                </p>
+                <p id="loginMessage"></p>
+            </div>
+            <div id="adminBox" style="display:none">
+                <h2>Streckmail</h2>
+                <h3>Testmail</h3>
+                <p>
+                    <input type="email" id="email" placeholder="Email" name="email" />
+                    <br>
+                    <span class="button" id="sendTestEmail">Skicka testmail</span>
+                </p>
+                <h3>Skicka till användare</h3>
+                <p>
+                    <span>Förhandsgranskningen visar alla mail längst ner på sidan.</span>
+                    <br>
+                    <span class="button" id="previewEmails">Förhandsgranska streckmail</span>
+                    <br>
+                    <span><br>När du klickat på skicka kommer sändningstatus för varje mail att visas nedan.</span>
+                    <br>
+                    <span class="button" id="sendEmails">Skicka streckmail</span>
+                </p>
+                <h3>Status</h3>
+                <p id="emailStatus">Inga mail skickade.</p>
+                <ul id="emailList">
+                </ul>
+            </div>
+        </section>
+
+
+        <section class="main settings" id="about" style="display:none">
+            <h1>Hur du använder appen</h1>
+            <h2>Streckning</h2>
+            <p>För att strecka så trycker du på den avändare du vill strecka på. Det kommer dyka upp en ruta med ett antal knappar. Antingen kan du välja ett förbestämt tal eller skriva in själv med #-knappen. Din streckning skickas direkt till databasen och om den går igenom blir knappen tillfälligt grön. Om den blir röd så blev det något fel, och då är det bäst att försöka igen. Om det är aktuellt får du ett meddelande på vad som kan vara fel.</p>
+
+            <p>Om du råkar strecka på fel person eller tryckte på fel knapp så behöver du inte oroa dig. I rutan med historik dyker din streckning strax upp och genom att klicka på din streckning så kan du ångra streckningen. Först måste du dock lämna en kommentar till administratören där du förklarar varför du ångrade den. Tänk på att vara snabb för när den försvinner, antingen på grund av tid eller andra streckningar, så måste du kontakta administratören för att kunna ångra en streckning.</p>
+
+            <p>Det finns inget sätt att lägga till sig själv som ny användare utan det bestäms av administratören.</p>
+
+            <h2>Favorit</h2>
+            <p>Du kan ställa in så att en favoritanvändare sparas för dig under "Inställningar". Detta gör att en egen knappsats för din favorit syns högst upp på strecklistan så att du snabbt kan strecka på användaren. Även andra delar av sidan påverkas av ditt val så att den blir anpassad just för dig!</p>
+
+            <h2>Plussning</h2>
+            <p>För att fylla på ditt saldo navigerar du till fliken "Plussa". Här fyller du först i belopp (max 5000 kr) och sedan vem du vill plussa in på. När detta är gjort så genereras en Swish-länk och en QR-kod. Om du har Swish installerat på denna enhet så kan du klicka på länken och så får du automagiskt din Swishning ifylld. Om du har appen på en annan enhet kan du skanna QR-koden i din Swish-app och den ifylld på det sättet. Genomför sedan betalningen och gå tillbaka till webappen. Nu är det väldigt viktigt att du bekräftar betalningen (om den är genomförd) för annars går det inte plussningen in i systemet. Om du råkade avbryta din betalning är det bara att utföra plussningen på nytt. Om du råkar bekräfta betalningen utan att ha Swishat så ska du kontakta admin så snabbt du kan.</p>
+
+            <h1>Om utvecklaren och appen</h1>
+            <p>Denna webapp har utvecklats av mig, <a href="https://www.linkedin.com/in/johanwinther/" target_"blank">Johan Winther</a>, även känd som "Wello" på Chalmers. Jag satt som PR-chef i F6 15/16 och även Informationansvarig i F-styret 17/18. Denna app skapades bland annat för att jag var trött på att se samma typ av administrativa arbete ske år efter år utan någon som helst effektivisering. Resultatet var denna digitala strecklista som nu utgör ett helautomatiserat system där man inte behöver räkna ett enda streck! Om du har några frågor så kan du <a href="mailto:johan.winther@outlook.com" target_"blank">skicka iväg ett mejl!</a></p>
+
+            <p>Appen och dess källkod finns på <a href="https://github.com/JohanWinther/strecklista" target="_blank">GitHub</a> och du är varmt välkommen att bidra eller bara lämna en kommentar! Där finns det även instruktioner för hur du sätter upp din egna lista.</p>
+        </section>
+
     </div>
 
 
@@ -176,15 +204,6 @@
         <ul>
         </ul>
     </div>
-
-
-    <footer>
-        <ul>
-            <li onclick="alert('PR-chef i F6 15/16')">Skapad av Johan "Wello" Winther</li>
-            <li><a href="https://github.com/JohanWinther/strecklista" target="_blank">GitHub</a></li>
-            <li><a href="mailto:johan.winther@outlook.com">Kontakt</a></li>
-        </ul>
-    </footer>
 
     <script type="text/javascript">
     var actionBar = $("div#action-bar-float");

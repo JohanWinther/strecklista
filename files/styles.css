@@ -140,27 +140,6 @@ div.menu-button:hover {
     transform-origin: center;
 }
 
-footer {
-    padding: 1em;
-    color: hsl(0, 0%, 30%);
-}
-
-footer ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-footer ul li {
-    display: inline;
-    margin-right: 1em;
-}
-
-footer ul li a {
-    text-decoration: none;
-    color: hsl(0, 0%, 0%);
-}
-
 div.content {
     position: absolute;
     height: auto;
@@ -462,7 +441,7 @@ ul#emailList li {
     text-align: left;
 }
 
-ul#emailList a {
+section.main.settings a {
     text-decoration: none;
     color: hsl(0, 0%, 100%);
 }
