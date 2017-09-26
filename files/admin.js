@@ -84,7 +84,12 @@ function sendEmails(preview) {
                 }
                 email_str += '</li>';
                 if (!preview) {
-                    sendEmail(mail_user, mail_pw, mail_name, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID, 0);
+                    // create a closure to preserve the value of "i"
+                    (function(e){
+                        window.setTimeout(function(){
+                            sendEmail(mail_user, mail_pw, mail_name, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID, 0);
+                        }, e * 2000);
+                    }(e));
                 }
                 emailIdx++;
             }
@@ -101,6 +106,7 @@ function sendEmails(preview) {
 
     $(document).ajaxStop(function() {
         if (email_str!="") {
+            email_str = "";
             if (preview) {
                 $("#emailStatus").text("Förhandsgranskning nedan:");
             } else {
