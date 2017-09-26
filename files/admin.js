@@ -23,6 +23,7 @@ function adminLogin() {
                 if ($(this).attr("disabled") != "disabled") {
                     var to = $("#adminBox input#email").val();
                     if (to != "") {
+                        $("#emailList").html("");
                         sendEmail(
                             mail_user,
                             mail_pw,
@@ -83,7 +84,7 @@ function sendEmails(preview) {
                 }
                 email_str += '</li>';
                 if (!preview) {
-                    sendEmail(mail_user, mail_pw, mail_user, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID, 1);
+                    sendEmail(mail_user, mail_pw, mail_name, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailID, 0);
                 }
                 emailIdx++;
             }
@@ -119,7 +120,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
     console.log(numberOfTries);
     if (numberOfTries <= 3) {
         if (numberOfTries > 0) {
-            $("li#"+emailID).find("span.status").text(" - Försöker nr "+numberOfTries+"..");
+            $("li#"+emailID).find("span.status").text(" - Försök nr "+numberOfTries+"..");
         } else {
             $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
         }
@@ -167,6 +168,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             timeout: 10000,
             dataType: "json"
         }).done(function(data) {
+            console.log(data);
             if (data) {
                 $("li#"+emailID).find("span.status").text(" - Klar!");
             } else {
@@ -174,6 +176,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
                 sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
             }
         }).fail(function(data) {
+            console.log(data);
             $("#emailStatus").text("Kunde inte ansluta till servern.");
             sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
         });
