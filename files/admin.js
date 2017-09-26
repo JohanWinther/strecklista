@@ -181,10 +181,13 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             dataType: "json"
         }).done(function(data) {
             console.log(data);
+            console.log(data.statusText);
             if (data) {
                 $("li#"+emailID).find("span.status").text(" - Klar!");
-            } else {
+            } else if (data.statusText == undefined) {
                 sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
+            } else {
+                $("li#"+emailID).find("span.status").text(" - Klar!");
             }
         }).fail(function(data) {
             console.log(data);
