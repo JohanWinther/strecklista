@@ -128,7 +128,6 @@ function setData(data) {
         });
     });
     runActivityFun();
-    updateActivity();
     $("section.activity").slideDown(1000);
     $("#numbers").removeClass("load");
     $("#fields .numberfield").removeClass("load");

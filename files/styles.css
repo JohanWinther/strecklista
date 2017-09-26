@@ -47,7 +47,6 @@ header {
 	height: 3em;
     color: hsl(0, 0%, 100%);
 	display: block;
-    cursor: pointer;
 }
 
 nav {
