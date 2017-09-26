@@ -112,7 +112,7 @@ function sendEmails(preview) {
             $("#emailStatus").text("Inga mail skickade.");
         } else {
             $("#emailList").html(email_str);
-            $("#emailList").slideDown(500);
+            $("#emailList").fadeIn(500);
             if (!preview) {
                 $("#emailStatus").text("Skickar mail..");
             }
