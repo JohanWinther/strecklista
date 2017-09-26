@@ -66,6 +66,8 @@ function sendPIN(calledByUser) {
             enterCode = "";
         } else {
             // Correct PIN
+            window.title = data.title;
+            document.title = window.title + " – Strecklista";
             if (window.history.state != null) {
                 changePage(window.history.state);
             } else {
@@ -77,8 +79,6 @@ function sendPIN(calledByUser) {
             createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
             $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             swish = data.swish;
-            window.title = data.title;
-            $("a#logo").text(data.title);
             setData(data.table);
             if (data.list!="") {
                 var html = '<option value="">Välj..</option>';
@@ -386,23 +386,29 @@ function changePage(link) {
     $("section.activity").hide();
     $("#action-bar-top").hide();
     if (link == null || link == "list") {
+        document.title = window.title + " – Strecklista";
         $("a#logo").text("Strecklista");
         $("section#list").show();
         $("section.activity").slideDown(500);
         if ($("#action-bar-top").attr("data-cid") != "") $("#action-bar-top").fadeIn(500);
     } else if (link == "stats") {
+        document.title = window.title + " – Statistik";
         $("a#logo").text("Statistik");
         $("section#stats").show();
     } else if (link == "plus") {
+        document.title = window.title + " – Plussa";
         $("a#logo").text("Plussa");
         $("section#plus").show();
     } else if (link == "settings") {
+        document.title = window.title + " – Inställningar";
         $("a#logo").text("Inställningar");
         $("section#settings").show();
     } else if (link == "admin") {
+        document.title = window.title + " – Admin";
         $("a#logo").text("Admin");
         $("section#admin").show();
     } else if (link == "about") {
+        document.title = window.title + " – Om appen";
         $("a#logo").text("Om appen");
         $("section#about").show();
     }
