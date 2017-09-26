@@ -173,5 +173,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
             sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, numberOfTries+1);
             $("li#"+emailID).find("span.status").text(" - Försöker igen..");
         });
+    } else {
+        $("li#"+emailID).find("span.status").text(" - Kunde inte skicka!");
     }
 }
