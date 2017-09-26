@@ -106,7 +106,7 @@ function sendEmails(preview) {
                 $("#emailStatus").text("Klar!");
             }
             $('html, body').animate({
-                scrollTop: $("#sendEmails").offset().top;
+                scrollTop: $("#sendEmails").offset().top
             }, 500);
         }
         $("#sendEmails").attr('disabled', false);
