@@ -119,7 +119,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
     console.log(numberOfTries);
     if (numberOfTries <= 3) {
         if (numberOfTries > 0) {
-            $("li#"+emailID).find("span.status").text(" - Försöker igen..");
+            $("li#"+emailID).find("span.status").text(" - Försöker nr "+numberOfTries+"..");
         } else {
             $("#emailList > li#"+emailID).find("span.status").text(" - Skickar..");
         }
@@ -133,11 +133,11 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailID, nu
         var email = "";
         var regexp = /(.+)@(.*)chalmers\.se/;
         var regArray = regexp.exec(mail_user);
-        if (regArray == null || regArray[2] == "net.") {
+        if (regArray == null) {
             email = mail_user;
         } else {
             mail_user = regArray[1]+"@net.chalmers.se";
-            email = regArray[1]+"@"+regArray[2]+"chalmers.se";
+            email = regArray[1]+"@student.chalmers.se";
         }
         console.log(mail_user);
         console.log(email);
