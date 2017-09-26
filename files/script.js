@@ -329,6 +329,10 @@ function setTouchEvents() {
     $("span#confirmPlus").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
+        if (dragging) {
+            dragging = false;
+            return;
+        }
         if($("#step3").css("opacity") == 1) {
             if (!state.processing) {
                 $(this).css("color","hsl(0, 0%, 0%)");
@@ -344,6 +348,10 @@ function setTouchEvents() {
     $("span#adminBox").on("click touchend",function(e) {
         e.stopPropagation();
         e.preventDefault();
+        if (dragging) {
+            dragging = false;
+            return;
+        }
         if ($("#loginBtn").attr("disabled") != "disabled") {
             adminLogin();
         }

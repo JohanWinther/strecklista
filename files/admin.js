@@ -20,6 +20,10 @@ function adminLogin() {
             $("#sendTestEmail").on("click touchend",function (e) {
                 e.stopPropagation();
                 e.preventDefault();
+                if (dragging) {
+                    dragging = false;
+                    return;
+                }
                 if ($(this).attr("disabled") != "disabled") {
                     var to = $("#adminBox input#email").val();
                     if (to != "") {
@@ -41,6 +45,10 @@ function adminLogin() {
             $("#previewEmails").on("click touchend",function (e) {
                 e.stopPropagation();
                 e.preventDefault();
+                if (dragging) {
+                    dragging = false;
+                    return;
+                }
                 if ($(this).attr("disabled") != "disabled") {
                     sendEmails(1);
                 }
@@ -48,6 +56,10 @@ function adminLogin() {
             $("#sendEmails").on("click touchend",function (e) {
                 e.stopPropagation();
                 e.preventDefault();
+                if (dragging) {
+                    dragging = false;
+                    return;
+                }
                 if ($(this).attr("disabled") != "disabled") {
                     sendEmails(0);
                 }
@@ -101,6 +113,9 @@ function sendEmails(preview) {
         } else {
             $("#emailList").html(email_str);
             $("#emailList").slideDown(500);
+            if (!preview) {
+                $("#emailStatus").text("Skickar mail..");
+            }
         }
     })
     .fail(function (data) {
