@@ -75,10 +75,11 @@ function sendPIN(calledByUser) {
                 changePage(event.state);
             };
             createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
-            
+
             if (window.history.state != null) {
                 changePage(window.history.state);
             } else {
+                changePage("list");
                 window.history.replaceState("list","","");
             }
             if (data.list!="") {
@@ -94,7 +95,6 @@ function sendPIN(calledByUser) {
                 $("#plusUser").val(favorite);
                 $("div#action-bar-top").attr("data-cid",favorite);
                 $("#action-bar-top > span").text("Strecka på "+$("#favoriteUser option:selected").text());
-                $("div#action-bar-top").fadeIn(500);
             }
             $("div.menu-button").fadeIn(500);
             $("section#pinput").hide();
