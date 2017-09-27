@@ -470,6 +470,10 @@ section.main.settings select:hover, section.main input:hover, section.main span.
     color: hsl(0,0%,100%);
 }
 
+section.main select[disabled="disabled"], section.main input[disabled="disabled"], section.main span.button[disabled="disabled"] {
+    opacity: 0.5;
+}
+
 section.settings#plus p > * {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
