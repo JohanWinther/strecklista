@@ -66,20 +66,21 @@ function sendPIN(calledByUser) {
             enterCode = "";
         } else {
             // Correct PIN
+            $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
             window.title = data.title;
             document.title = window.title + " – Strecklista";
+            swish = data.swish;
+            setData(data.table);
+            window.onpopstate = function(event){
+                changePage(event.state);
+            };
+            createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
+            
             if (window.history.state != null) {
                 changePage(window.history.state);
             } else {
                 window.history.replaceState("list","","");
             }
-            window.onpopstate = function(event){
-                changePage(event.state);
-            };
-            createCookie("PIN",enterCode,data.days_pin); // Set PIN as cookie
-            $(".loading-ring-big div").css("animation","lds-dual-ring 0.8s ease-in-out infinite");
-            swish = data.swish;
-            setData(data.table);
             if (data.list!="") {
                 var html = '<option value="">Välj..</option>';
                 for (li in data.list) {
@@ -111,7 +112,7 @@ function sendPIN(calledByUser) {
 
 function setData(data) {
     $('section#list').hide();
-    $('section#list').html(createTable(data.groups, data.members)).fadeIn(500);
+    $('section#list').html(createTable(data.groups, data.members));
     $("div.profile").each(function(i,el) {
         var imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-email"))+'?s=128&d=404';
         // Image Does Not Exist
