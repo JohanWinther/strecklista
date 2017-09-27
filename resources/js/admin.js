@@ -87,9 +87,6 @@ function adminLogin() {
                             emailState = [];
                             $("#sendEmails").attr('disabled', false);
                             $("#previewEmails").attr('disabled', false);
-                            $('html, body').animate({
-                                scrollTop: $("#sendEmails").offset().top
-                            }, 500);
                         } else {
                             $("#emailStatus").text("Skickar mail (stäng inte sidan!)..");
                         }
@@ -153,6 +150,9 @@ function sendEmails() {
             if (!preview) {
                 $("#emailStatus").text("Skickar mail (stäng inte sidan)..");
             }
+            $('html, body').animate({
+                scrollTop: $("#sendEmails").offset().top
+            }, 500);
         }
     })
     .fail(function (data) {
