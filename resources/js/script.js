@@ -58,6 +58,7 @@ function sendPIN(calledByUser) {
     .done(function(data) {
         if (data==""){
             // Wrong PIN
+            $("section#pinput").fadeIn(500);
             $("#numbers").removeClass("load");
             $("#fields .numberfield").removeClass("load");
             $("#status").removeClass("load");
