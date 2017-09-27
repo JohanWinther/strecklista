@@ -162,9 +162,9 @@ function sendEmails() {
 
 // Definiera mailfunktionen
 function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, numberOfTries) {
-    if (numberOfTries <= 3) {
+    if (numberOfTries <= 10) {
         if (numberOfTries > 0) {
-            $("li#email"+emailIdx).find("span.status").text(" - Försök nr "+numberOfTries+"..");
+            $("li#email"+emailIdx).find("span.status").text(" - Försök nr "+(numberOfTries+1)+"..");
         } else {
             $("#emailList > li#email"+emailIdx).find("span.status").text(" - Skickar..");
         }
