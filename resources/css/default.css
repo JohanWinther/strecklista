@@ -669,65 +669,6 @@ div#action-bar-top > span {
     display: block;
 }
 
-p#load-message {display:none;}
-
-div.settings {
-    padding: 2em;
-}
-
-div.settings input {
-    font-size:1em;
-}
-#sparat-text {
-    margin-left:1em;
-    font-size:1em;
-    font-weight:normal;
-}
-
-#comment {width:100%}
-
-td.commentRow {
-    font-weight: normal;
-    text-align: left;
-}
-td.commentRow p {
-    width:100%;
-    font-size: inherit;
-    font-weight: inherit;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-}
-td.commentRow select {
-    font-size: inherit;
-    font-weight: inherit;
-    width:5em;
-}
-
-.cross {
-    margin-right: 0.5em;
-    /* float: right; */
-    margin-left: 0.5em;
-    margin-bottom: 0.5em;
-}
-
-.confirmBox {
-    margin: auto;
-    overflow: auto;
-    padding-top: 0.5em;
-    float: right;
-}
-
-.left-box-plus {
-    float:left;
-    width:60%;
-    padding:0.5em;
-}
-
-.info {
-    font-weight:normal;
-    font-family:Consolas;
-}
-
 @media (max-width: 480px) {
     section.main {
         width: 100%;
