@@ -88,6 +88,7 @@ function adminLogin() {
                         $("#emailStatus").text("Sändningsadress "+mail_user+" ("+mail_name+")");
                         email_str = ""; // If another request is made, don't run this again
 
+                        $("#sendTestEmail").attr('disabled', false);
                         $("#sendEmails").attr('disabled', false);
                         $("#previewEmails").attr('disabled', false);
                         $('html, body').animate({
@@ -99,6 +100,7 @@ function adminLogin() {
                             $("#emailStatus").text("Klar!");
                             email_str = "";
                             emailState = [];
+                            $("#sendTestEmail").attr('disabled', false);
                             $("#sendEmails").attr('disabled', false);
                             $("#previewEmails").attr('disabled', false);
                         } else {
@@ -122,6 +124,7 @@ function adminLogin() {
 // Send emails according to email object from server
 function sendEmails() {
     $("#emailStatus").text("Laddar listan av mail..");
+    $("#sendTestEmail").attr('disabled', true);
     $("#previewEmails").attr('disabled', true);
     $("#sendEmails").attr('disabled', true);
 
@@ -175,6 +178,7 @@ function sendEmails() {
     })
     .fail(function (data) {
         $("#emailStatus").text("Kunde inte ansluta till servern!");
+        $("#sendTestEmail").attr('disabled', false);
         $("#previewEmails").attr('disabled', false);
         $("#sendEmails").attr('disabled', false);
     });
