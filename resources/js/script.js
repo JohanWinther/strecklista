@@ -1,5 +1,5 @@
 // Sätt globala variabler (dessa hamnar under window)
-var state = {},
+var state = {};
 var enterCode = "0000";
 var tries = 0;
 var dragging = false;
