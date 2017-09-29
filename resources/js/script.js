@@ -492,8 +492,11 @@ function ActionBar(show, data) {
         actionBar.css("top", data.top + actionBarArrow.borderwidth + data.height);
         var width = parseInt(actionBar.css('width'));
         var left = (data.left + data.width/2 - width/2);
-        if (left <= 0.1*$(window).width() || (left + width) >= 0.9*$(window).width())
-            left = "calc((100vw - "+width+"px)/2)";
+        if (left <= 0.1*$(window).width()) {
+            left = "10vw";
+        } else if ((left + width) >= 0.9*$(window).width()) {
+            left = "calc(90vw - "+width+"px)";
+        }
 
         actionBar.css("left", left);
         actionBar.css("transform", "scale(1)");
@@ -550,7 +553,7 @@ function updateActivity() {
                             category = "hackade in";
                         }
                         html += '<li data-category="'+ category +'" data-cid="'+ data.list[li].cid +'" data-time="'+ data.list[li].time +'" data-name="'+ data.list[li].name +'" data-amount="'+ Math.abs(data.list[li].amount) +'">';
-                        html += '<span class="time">'+ data.list[li].time.substr(data.list[li].time.length - 8) + '</span>';
+                        html += '<span class="time">'+ (data.list[li].time.substr(data.list[li].time.length - 8)).split(".").join(":") + '</span>';
                         html += '<span class="name">'+ data.list[li].name +'</span> ';
                         html += category;
                         html += ' <span class="amount">'+ Math.abs(data.list[li].amount) +'</span>';
@@ -626,7 +629,13 @@ function sendPayment(cid,change,category,comment,self) {
                 } else if (data.current <=10) {
                     console.log(cid+" har endast "+(data.current)+" kr kvar att strecka på!");
                 }
+                if (change < 0) {
+                    $("section.activity ul").prepend('<li><span class="time">Nyss&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="name">Du</span> streckade <span class="amount">'+Math.abs(change)+'</span> kr.</li>');
+                } else {
+                    $("section.activity ul").prepend('<li><span class="time">Nyss&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="name">Du</span> plussade <span class="amount">'+Math.abs(change)+'</span> kr.</li>')
+                }
                 $("section#plus select#plusUser").val("").change();
+
             } else {
                 flashColor(self,"red");
                 if (change<0) {

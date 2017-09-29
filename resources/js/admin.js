@@ -157,6 +157,8 @@ function sendEmails() {
     })
     .fail(function (data) {
         $("#emailStatus").text("Kunde inte ansluta till servern!");
+        $("#previewEmails").attr('disabled', false);
+        $("#sendEmails").attr('disabled', false);
     });
 }
 
