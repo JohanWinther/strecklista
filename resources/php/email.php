@@ -1,5 +1,7 @@
 <?php
 $request = '';
+
+// Function for iterating through object with keys
 if (!function_exists('ex'))
 {
     function ex($object, $coords, $default = null)
@@ -42,6 +44,8 @@ if (!function_exists('ex'))
         return $object ? $object : $default;
     }
 }
+
+// Configuration object
 $config = [
 
     // Debug mode will echo connection status alerts to
@@ -55,7 +59,7 @@ $config = [
     'default' => 'primary',
     'connections' => [
         'primary' => [
-            'host' => $_POST['host'],
+            'host' => $_POST['host'], // From POST request
             'port' => $_POST['port'],
             'secure' => $_POST['secure'], // null, 'ssl', or 'tls'
             'auth' => true, // true if authorization required
@@ -70,7 +74,7 @@ require('../../vendors/php-smtp/SMTP.php');
 use phpsmtp\SMTP;
 $mail = new SMTP($config);
 $mail->to($_POST['to']);
-$mail->from($_POST['email'], $_POST['from']); // email is required, name is optional
+$mail->from($_POST['email'], $_POST['from']); // email is required, name is optional (email doesn't need to be same as user, but for Outlook it is)
 $mail->subject($_POST['subject']);
 $mail->body($_POST['body']);
 $result = $mail->send();

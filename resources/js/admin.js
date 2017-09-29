@@ -1,16 +1,19 @@
-// Sätt globala variabler (dessa hamnar under window)
-var email_str = "";
-var emailIdx = 0;
-var emailState = [];
-var preview = false;
+// Globals
+var email_str = ""; // html of email address list
+var emailIdx = 0; // Index of email in list
+var emailState = []; // Boolean with send status of each email
+var preview = false; // Emails are preview or not
 var mail_user = "";
 var mail_pw = "";
 var password = "";
 
+// User taps login button
 function adminLogin() {
     $("#loginMessage").text("Loggar in..");
     $("#loginBtn").attr('disabled', true);
     password = $("input#password").val();
+
+    // Send request for admin data
     $.getJSON(macroURL+"?prefix=adminLogin&pin="+enterCode+"&password="+encodeURIComponent(password)+"&callback=?")
     .done(function(data) {
         if (data != "") {
@@ -18,18 +21,22 @@ function adminLogin() {
             mail_pw = data.mail_pw;
             mail_name = data.mail_name;
             $("#loginBox").hide();
-            $("#adminBox").fadeIn(500);
-            $("#sendTestEmail").on("click touchend",function (e) {
+            $("#adminBox").fadeIn(500); // Show admin page content
+
+            // Click listener for test email button
+            $("#sendTestEmail").on("click touchend",function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 if (dragging) {
                     dragging = false;
                     return;
                 }
+
+                // Only if button is not disabled
                 if ($(this).attr("disabled") != "disabled") {
-                    var to = $("#adminBox input#email").val();
+                    var to = $("#adminBox input#email").val(); // Set email adress
                     if (to != "") {
-                        $("#emailList").slideUp(500);
+                        $("#emailList").slideUp(500); // Hide email list
                         $("#emailList").html("");
                         sendEmail(
                             mail_user,
@@ -45,7 +52,9 @@ function adminLogin() {
                     }
                 }
             });
-            $("#previewEmails").on("click touchend",function (e) {
+
+            // Click listener for preview emails button
+            $("#previewEmails").on("click touchend",function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 if (dragging) {
@@ -57,7 +66,9 @@ function adminLogin() {
                     sendEmails();
                 }
             });
-            $("#sendEmails").on("click touchend",function (e) {
+
+            // Click listener for send emails button
+            $("#sendEmails").on("click touchend",function(e) {
                 e.stopPropagation();
                 e.preventDefault();
                 if (dragging) {
@@ -70,17 +81,20 @@ function adminLogin() {
                 }
             });
 
+            // When server requests have stopped
             $(document).ajaxStop(function() {
-                if (email_str!="") {
+                if (email_str!="") { // If emails were just loaded
                     if (preview) {
                         $("#emailStatus").text("Sändningsadress "+mail_user+" ("+mail_name+")");
-                        email_str = "";
+                        email_str = ""; // If another request is made, don't run this again
+
                         $("#sendEmails").attr('disabled', false);
                         $("#previewEmails").attr('disabled', false);
                         $('html, body').animate({
-                            scrollTop: $("#sendEmails").offset().top
+                            scrollTop: $("#sendEmails").offset().top // Scroll to emails
                         }, 500);
-                    } else {
+                    } else { // Send emails
+                        // If all emails are sent
                         if (emailState.every(function(el){return el==1})) {
                             $("#emailStatus").text("Klar!");
                             email_str = "";
@@ -105,10 +119,12 @@ function adminLogin() {
     });
 }
 
+// Send emails according to email object from server
 function sendEmails() {
     $("#emailStatus").text("Laddar listan av mail..");
     $("#previewEmails").attr('disabled', true);
     $("#sendEmails").attr('disabled', true);
+
     $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&preview="+preview+"&callback=?")
     .done(function (data) {
         $("#emailList").html("");
@@ -116,27 +132,29 @@ function sendEmails() {
         email_str = "";
         emailIdx = 0;
         if (!preview) {
+            // Create array filled with zeroes of length same as number of emails
             emailState = Array.apply(null, Array(data.emails.length)).map(Number.prototype.valueOf,0);
         }
 
+        // Build html list for all email items
         for (e in data.emails) {
             if (data.emails[e].email != "") {
-                emailID = "email"+emailIdx;
+                emailID = "email"+emailIdx; // Set element id to email#
                 email_str += '<li id="'+emailID+'">';
                 email_str += '<span class="to"><a href="mailto:'+data.emails[e].email+'" target="_blank">'+data.emails[e].email+'</a> ('+data.emails[e].nick+')</span><span class="status"></span>';
-                if (preview) {
+                if (preview) { // Also show subect and message if previewing
                     email_str += '<br>';
                     email_str += '<span class="subject">' + data.emails[e].subject + '</span>';
                     email_str += '<br>';
                     email_str += '<span class="body">' + data.emails[e].body + '</span>';
                 }
                 email_str += '</li>';
-                if (!preview) {
-                    // create a closure to preserve the value of "i"
+                if (!preview) { // If sending
+                    // create a closure to preserve the value of "e" (which would else get changed on next loop)
                     (function(e,emailIdx){
                         window.setTimeout(function(){
                             sendEmail(mail_user, mail_pw, mail_name, data.emails[e].email, data.emails[e].subject, data.emails[e].body, emailIdx, 0);
-                        }, e * 2000);
+                        }, e * 2000); // Send email every 2 seconds
                     }(e,emailIdx));
                 }
                 emailIdx++;
@@ -162,42 +180,34 @@ function sendEmails() {
     });
 }
 
-// Definiera mailfunktionen
+// Send email through request to email.php
 function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, numberOfTries) {
     if (numberOfTries <= 10) {
-        if (numberOfTries > 0) {
-            $("li#email"+emailIdx).find("span.status").text(" - Försök nr "+(numberOfTries+1)+"..");
-        } else {
+        if (numberOfTries == 0) { // First time trying to send
             $("#emailList > li#email"+emailIdx).find("span.status").text(" - Skickar..");
+        } else { // Second time or more trying to send
+            $("li#email"+emailIdx).find("span.status").text(" - Försök nr "+(numberOfTries+1)+"..");
         }
+
+        // SMTP settings for Outlook
         var host = "smtp-mail.outlook.com";
         var port = "587";
         var secure = "tls";
-        var url = location.href; // Application url from where the smtp call was made
+        var url = location.href; // Application url from where the smtp call was made (good to set to not be flagged as spam)
 
-        // If CID use net.chalmers.se and email student.chalmers.se
-        var email = "";
-        var regexp = /(.+)@(.*)chalmers\.se/;
-        var regArray = regexp.exec(mail_user);
-        if (regArray == null) {
-            email = mail_user;
-        } else {
-            mail_user = regArray[1]+"@net.chalmers.se";
-            email = regArray[1]+"@student.chalmers.se";
-        }
-
-        // Add all variables to data string
+        // Add all variables to data string (to be send to php file)
         dataString = "host="+encodeURIComponent(host);
         dataString += "&port="+encodeURIComponent(port);
         dataString += "&secure="+encodeURIComponent(secure);
         dataString += "&user="+encodeURIComponent(mail_user);
         dataString += "&password="+encodeURIComponent(mail_pw);
-        dataString += "&email="+encodeURIComponent(email);
+        dataString += "&email="+encodeURIComponent(mail_user);
         dataString += "&to="+encodeURIComponent(to);
         dataString += "&from="+encodeURIComponent(mail_name);
         dataString += "&subject="+encodeURIComponent(subject);
         dataString += "&body="+encodeURIComponent(body);
 
+        // Send POST request to server
         $.ajax({
             url: "/resources/php/email.php",
             method: "POST",
@@ -205,18 +215,16 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, n
             timeout: 10000,
             dataType: "json"
         }).done(function(data) {
-            console.log(data);
-            if (data) {
+            if (data) { // If successful
                 $("li#email"+emailIdx).find("span.status").text(" - Klar!");
                 emailState[emailIdx] = 1;
-            } else if (data.statusText == undefined) {
+            } else if (data.statusText == undefined) { // If not successful, try again
                 sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, numberOfTries+1);
-            } else {
+            } else { // If statusText is not undefined the email was probably sent, even if it was a "timeout". It's weird but that's how it is.
                 $("li#"+emailIdx).find("span.status").text(" - Klar!");
                 emailState[emailIdx] = 1;
             }
         }).fail(function(data) {
-            console.log(data);
             sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, numberOfTries+1);
         });
     } else {

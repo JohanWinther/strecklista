@@ -34,7 +34,6 @@ header {
     position: fixed;
     top: 0;
     left: 0;
-    /*border-bottom: 4px solid hsl(0, 0%, 80%);*/
     z-index: 9999;
     font-size: 1.2em;
 }
