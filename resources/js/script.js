@@ -83,6 +83,8 @@ function sendPIN(calledByUser) {
                 changePage("list");
                 window.history.replaceState("list","","");
             }
+            $("#status").slideUp(500);
+
             if (data.list!="") {
                 var html = '<option value="">Välj..</option>';
                 for (li in data.list) {
