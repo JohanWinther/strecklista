@@ -10,7 +10,10 @@ state.menuIsOpen = 0;
 
 $(function() {
     // Detta körs när sidan är klar för att manipuleras
-
+    var actionBar = $("div#action-bar-float");
+    var actionBarArrow = $("div.action-bar-arrow");
+    actionBarArrow.borderwidth = parseInt(actionBarArrow.css("border-width").substr(4,2));
+    
     window.scrollTo(0, 0);
     if (macroURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
 
@@ -131,6 +134,10 @@ function setData(data) {
                 $(el).css("background-image", "url("+imgUrl+")");
             }
         });
+    });
+
+    $.getJSON('/resources/data/about.json',function(string){
+        $("section#about").html(string);
     });
     runActivityFun();
     $("section.activity").slideDown(1000);
