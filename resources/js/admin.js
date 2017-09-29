@@ -8,7 +8,6 @@ var mail_pw = "";
 var password = "";
 
 function adminLogin() {
-    $("#status").slideDown(500);
     $("#loginMessage").text("Loggar in..");
     $("#loginBtn").attr('disabled', true);
     password = $("input#password").val();
@@ -103,9 +102,6 @@ function adminLogin() {
     .fail(function(data) {
         $("#loginMessage").text("Kunde inte ansluta till servern!");
         $("#loginBtn").attr('disabled', false);
-    })
-    .always(function(){
-        $("#status").slideUp(500);
     });
 }
 
