@@ -1,19 +1,19 @@
 // Sätt globala variabler (dessa hamnar under window)
 var state = {},
-    enterCode = "0000";
-    tries = 0;
-    dragging = false;
-    swish = "";
+var enterCode = "0000";
+var tries = 0;
+var dragging = false;
+var swish = "";
 state.current = null;
 state.processing = 0;
 state.menuIsOpen = 0;
 
 $(function() {
     // Detta körs när sidan är klar för att manipuleras
-    var actionBar = $("div#action-bar-float");
-    var actionBarArrow = $("div.action-bar-arrow");
+    window.actionBar = $("div#action-bar-float");
+    window.actionBarArrow = $("div.action-bar-arrow");
     actionBarArrow.borderwidth = parseInt(actionBarArrow.css("border-width").substr(4,2));
-    
+
     window.scrollTo(0, 0);
     if (macroURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
 
