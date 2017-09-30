@@ -2,10 +2,6 @@
   "name": "Strecklista",
   "description": "Digital strecklista som webapp för simpel hantering av streckvaror",
   "repository": "https://github.com/JohanWinther/strecklista",
-<<<<<<< HEAD
-=======
-  "logo": "",
->>>>>>> f851e6b792c7c3484cf4ffd90794402d1486b3da
   "keywords": ["strecklista", "payments", "transactions"],
   "env": {
     "scriptURL": {
