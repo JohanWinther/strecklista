@@ -27,7 +27,7 @@ First you will make a database Sheet from a template and enable it for web reque
 2. Make a copy to your own Drive by clicking **Arkiv** -> **Kopiera...**. Give it a good name and place it in an empty folder where you can find it later.
 3. Open the Sheet and then click the menu item **Verktyg** -> **Skriptredigerare...**.
 4. In the new tab click the menu item **Publicera** -> **Implementera som webapp...**.
-5. Another window will open. Select the following settings below and then click **Implementera**. Close the tab and go back to the Sheet.
+5. Select the following settings below and then click **Implementera**. Close the tab and go back to the Sheet.
 ![Settings for web app](https://user-images.githubusercontent.com/28558941/31045184-3c29a8fc-a5de-11e7-8154-4d9814c28fd2.png "Settings for web app")
 
 ## Deploy web app to Heroku
