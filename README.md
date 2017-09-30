@@ -28,7 +28,7 @@ First you will make a database Sheet from a template and enable it for web reque
 3. Open the Sheet and then click the menu item **Verktyg** -> **Skriptredigerare...**.
 4. In the new tab click the menu item **Publicera** -> **Implementera som webapp...**.
 5. Another window will open. Select the following settings below and then click **Implementera**. Close the tab and go back to the Sheet.
-![Settings for web app](https://user-images.githubusercontent.com/28558941/31039466-2801704a-a57e-11e7-8a22-9e065e223bb0.png "Settings for web app")
+![Settings for web app](https://user-images.githubusercontent.com/28558941/31045184-3c29a8fc-a5de-11e7-8154-4d9814c28fd2.png "Settings for web app")
 
 ## Deploy web app to Heroku
 1. Now click the menu item **Admin** -> **Skapa ny webapp (Heroku)**.
@@ -36,5 +36,5 @@ First you will make a database Sheet from a template and enable it for web reque
 3. It will say that the app is not verified. This is OK. Click **Avancerat** and then click **Öppna Strecklista (osäkert)**. Click confirm on any remaining dialog windows.
 4. Finally a press the button that says *Deploy to Heroku*.
 5. After you have signed in a dialog for deploying the app is shown. The name will be the URL of your web app, for example if you choose *min-strecklista* as the name the URL will be <https://min-strecklista.herokuapp.com>. Choose something descriptive, but still memorable and short. Choose *Europe* as region and then click **Deploy app**.
- ![Create new app](https://user-images.githubusercontent.com/28558941/31044962-f0d77900-a5d9-11e7-95e7-ce94697220ba.png "Create new app")
+ ![Create new app](https://user-images.githubusercontent.com/28558941/31045191-5a5c7462-a5de-11e7-9e2f-0e26e141b625.png "Create new app")
 6. Done!
