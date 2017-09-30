@@ -17,8 +17,8 @@ $(function() {
 
     window.scrollTo(0, 0); // Scroll to top
 
-    // MacroURL is read in config.php where it is fetched from the environment variables of the server
-    if (macroURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
+    // scriptURL is read in config.php where it is fetched from the environment variables of the server
+    if (scriptURL=="") $(".cell").html("Back-end är inte konfigurerad.<br>Konsultera installationsguiden.");
 
     // Read cookie and try saved PIN
     var pin = readCookie("PIN");
@@ -62,7 +62,7 @@ $(function() {
 // Send PIN to server and retrieve data if right
 function sendPIN(calledByUser) {
     // Send JSONP request
-    $.getJSON(macroURL+"?prefix=getData&pin="+enterCode+"&callback=?")
+    $.getJSON(scriptURL+"?prefix=getData&pin="+enterCode+"&callback=?")
     .done(function(data) { // If response from server
         if (data==""){
             // Wrong PIN
@@ -154,9 +154,8 @@ function setData(data) {
     });
 
     // Get about data from JSON file
-    $.getJSON('/resources/data/about.json', function(string){
-        $("section#about").html(string);
-    });
+    var request = $.getJSON('/resources/data/about.json');
+    $("section#about").html(request.responseText);
 
     runActivityFun(); // Start activity list updater
     $("section.activity").slideDown(1000);
@@ -602,7 +601,7 @@ function runActivityFun() {
 
 // Update activity list
 function updateActivity() {
-    $.getJSON(macroURL+"?prefix=getActivity&pin="+enterCode+"&callback=?")
+    $.getJSON(scriptURL+"?prefix=getActivity&pin="+enterCode+"&callback=?")
     .done(function(data) {
         $("section.activity > ul > li").unbind(); // Unbind all listeners on previous items to clear memory
         if (data != "") {
@@ -688,7 +687,7 @@ function pay(el,amount) {
 
 // Send transaction to server
 function sendPayment(cid,change,category,comment,self) {
-    $.getJSON(macroURL+"?"+"pin="+enterCode+"&cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?")
+    $.getJSON(scriptURL+"?"+"pin="+enterCode+"&cid="+cid+"&change="+change+"&category="+category+"&comment="+comment+"&prefix=sendPayment&callback=?")
     .done(function (data) {
         state.processing = 0;
 

@@ -14,7 +14,7 @@ function adminLogin() {
     password = $("input#password").val();
 
     // Send request for admin data
-    $.getJSON(macroURL+"?prefix=adminLogin&pin="+enterCode+"&password="+encodeURIComponent(password)+"&callback=?")
+    $.getJSON(scriptURL+"?prefix=adminLogin&pin="+enterCode+"&password="+encodeURIComponent(password)+"&callback=?")
     .done(function(data) {
         if (data != "") {
             mail_user = data.mail_user;
@@ -128,7 +128,7 @@ function sendEmails() {
     $("#previewEmails").attr('disabled', true);
     $("#sendEmails").attr('disabled', true);
 
-    $.getJSON(macroURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&preview="+preview+"&callback=?")
+    $.getJSON(scriptURL+"?prefix=getEmails&pin="+enterCode+"&password="+password+"&preview="+preview+"&callback=?")
     .done(function (data) {
         $("#emailList").html("");
         $("#emailList").slideUp(500);

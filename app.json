@@ -1,0 +1,13 @@
+{
+  "name": "Strecklista",
+  "description": "Digital strecklista som webapp för simpel hantering av streckvaror",
+  "repository": "https://github.com/JohanWinther/strecklista",
+  "logo": "",
+  "keywords": ["strecklista", "payments", "transactions"],
+  "env": {
+    "scriptURL": {
+      "description": "URL of Google sheet script (database server requests)",
+      "required": true
+    }
+  }
+}
