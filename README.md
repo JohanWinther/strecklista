@@ -14,6 +14,9 @@ Digital strecklista som webapp för simpel hantering av streckvaror
 * Google Sheet as database for easy handling (for the admin)
 * No cost at all!
 
+# Demo
+A live demo can be found at <https://strecklista-demo.herokuapp.com>.
+
 # Changelog
 Can be found [here](/CHANGELOG.md) and contains the most important changes starting from release 1.0.0.
 
@@ -41,8 +44,10 @@ First you will make a database Sheet from a template and enable it for web reque
 
 ## Set up database
 There are some database settings which will be described here.
-### General settings
-![Settings page](https://user-images.githubusercontent.com/28558941/31056498-d25ce4b6-a6d2-11e7-838f-e9242273cfd1.png)
+### General settings (tab: *Inställningar*)
+![Settings page](https://user-images.githubusercontent.com/28558941/31056674-c015a2ea-a6d5-11e7-9d9f-3937ca4be129.png)
+
+Here are the general settings for the web app.
 
 * `password` - This is the password for the admin page in the web app.
 * `groups` - A list of all the groups and in what order they should be shown.
@@ -57,7 +62,10 @@ There are some database settings which will be described here.
 * `days_pin` - How many days will pass until the user has to enter the PIN code again. Notice that if you change the PIN code all users will have to immediately enter the new PIN code.
 * `minutes` - How far back the list of transactions will go in minutes. Apart from this limit the maximum number of transactions in this list is 10.
 
-### Acount balance email reminders
+### Users list (tab: *Användare*)
+
+
+### Account balance email reminders (tab: *Streckmail*)
 
 ## Deploy web app to Heroku
 Now you will deploy the web app to Heroku.
@@ -68,12 +76,6 @@ Now you will deploy the web app to Heroku.
 3. After you have signed in at Heroku a dialog for deploying the app is shown. The name you choose will be the URL of your web app. For example if you choose *min-strecklista* the URL will be <https://min-strecklista.herokuapp.com>. Choose something descriptive, but still memorable and short. Now choose *Europe* as region and then click **Deploy app**.
  ![Create new app](https://user-images.githubusercontent.com/28558941/31045191-5a5c7462-a5de-11e7-9e2f-0e26e141b625.png "Create new app")
 4. Your web app should now be live and working!
-
-# Usage
-## User
-
-## Admin
-### Send out balance reminders
 
 # Update to new versions
 In order to update the app you need to first figure out if the version requires a *Sheet update* or not. You can do that by checking the latest version in the [changelog](/CHANGELOG.md).
@@ -95,6 +97,11 @@ First you will update the backup file, then create a new Sheet and finally impor
 3. Follow the steps in [Deploy web app to Heroku](#deploy-web-app-to-Heroku) and set the name as the previous name (to keep the URL).
 
 # Usage
+## User
+User instructions can be found in the actual web app. Check out the [demo](https://strecklista-demo.herokuapp.com)!
+
+## Admin
+### Send out balance reminders
 
 # Contributing
 If you have an idea for a new feature or found a bug please [create a new issue](https://github.com/JohanWinther/strecklista/issues/new).
