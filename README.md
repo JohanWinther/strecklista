@@ -39,9 +39,29 @@ First you will make a database Sheet from a template and enable it for web reque
 5. Select the following settings below and then click **Implementera**.
 ![Settings for web app](https://user-images.githubusercontent.com/28558941/31045184-3c29a8fc-a5de-11e7-8154-4d9814c28fd2.png "Settings for web app")
 
+## Set up database
+There are some database settings which will be described here.
+### General settings
+![Settings page](https://user-images.githubusercontent.com/28558941/31056498-d25ce4b6-a6d2-11e7-838f-e9242273cfd1.png)
+
+* `password` - This is the password for the admin page in the web app.
+* `groups` - A list of all the groups and in what order they should be shown.
+* `buttons` - Which buttons should be shown in the action bar.
+* `mail_user` - Email address and user name for Microsoft account which will be used to send out [account balance reminders](#account-balance-email-reminders).
+* `mail_pw` - Password for the account above.
+* `title` - Title of the web app (shown as title of browser tab).
+* `pin` - PIN code for accessing the web app. Set to 0000 to make it accessible by everyone.
+* `swish` - Mobile number for Swish account
+* `mail_name` - Name of admin. Will be shown in various parts of the app.
+* `negative` - Global flag for allowing transactions if it results in a negative balance. There is also a flag for every user that overrides this option if it is set to *Nej*. This means that you can allow only certain people to have a negative balance.
+* `days_pin` - How many days will pass until the user has to enter the PIN code again. Notice that if you change the PIN code all users will have to immediately enter the new PIN code.
+* `minutes` - How far back the list of transactions will go in minutes. Apart from this limit the maximum number of transactions in this list is 10.
+
+### Acount balance email reminders
+
 ## Deploy web app to Heroku
 Now you will deploy the web app to Heroku.
-1. Open your Google Sheet and click the menu item **Admin** -> **Skapa ny webapp (Heroku)**.
+1. In your Google Sheet and click the menu item **Admin** -> **Skapa ny webapp (Heroku)**.
    1. If it says *Behörighet krävs* click **Fortsätt** and then select your Google account.
    2. It will say that the app is not verified. This is OK. Click **Avancerat** and then click **Öppna Strecklista (osäkert)**. Choose confirm on any remaining dialog windows.
 2. Finally press the button that says *Deploy to Heroku*.
@@ -49,8 +69,11 @@ Now you will deploy the web app to Heroku.
  ![Create new app](https://user-images.githubusercontent.com/28558941/31045191-5a5c7462-a5de-11e7-9e2f-0e26e141b625.png "Create new app")
 4. Your web app should now be live and working!
 
-## Database settings
-There are some database settings which will be described here.
+# Usage
+## User
+
+## Admin
+### Send out balance reminders
 
 # Update to new versions
 In order to update the app you need to first figure out if the version requires a *Sheet update* or not. You can do that by checking the latest version in the [changelog](/CHANGELOG.md).
@@ -71,11 +94,15 @@ First you will update the backup file, then create a new Sheet and finally impor
 2. Go to **Settings**, scroll down and click **Delete app...** and follow the instructions to delete the app. **Don't worry**, all your data is safe.
 3. Follow the steps in [Deploy web app to Heroku](#deploy-web-app-to-Heroku) and set the name as the previous name (to keep the URL).
 
+# Usage
+
 # Contributing
 If you have an idea for a new feature or found a bug please [create a new issue](https://github.com/JohanWinther/strecklista/issues/new).
+
 A valid issue should
 * Have an appropriate label
 * Describe the idea/issue
 * Back up the idea/issue with good enough arguments
 * State your intentions, e.g. are you going to code it yourself and make a pull request or want someone else to do it
+
 If the issue is well recieved, you can create a fork and start coding. A bad issue will lower the chances of approval for your pull request!
