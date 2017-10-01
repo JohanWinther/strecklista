@@ -14,6 +14,9 @@ Digital strecklista som webapp för simpel hantering av streckvaror
 * Google Sheet as database for easy handling (for the admin)
 * No cost at all!
 
+# Changelog
+Can be found [here](/CHANGELOG.md) and contains the most important changes starting from release 1.0.0.
+
 # Installation
 ## Requirements
 * Google account (with Sheets language set as Swedish)
@@ -44,7 +47,10 @@ Now you will deploy the web app to Heroku.
 2. Finally press the button that says *Deploy to Heroku*.
 3. After you have signed in at Heroku a dialog for deploying the app is shown. The name you choose will be the URL of your web app. For example if you choose *min-strecklista* the URL will be <https://min-strecklista.herokuapp.com>. Choose something descriptive, but still memorable and short. Now choose *Europe* as region and then click **Deploy app**.
  ![Create new app](https://user-images.githubusercontent.com/28558941/31045191-5a5c7462-a5de-11e7-9e2f-0e26e141b625.png "Create new app")
-4. Your web app should now be live!
+4. Your web app should now be live and working!
+
+## Database settings
+There are some database settings which will be described here.
 
 # Update to new versions
 In order to update the app you need to first figure out if the version requires a *Sheet update* or not. You can do that by checking the latest version in the [changelog](/CHANGELOG.md).
@@ -65,5 +71,11 @@ First you will update the backup file, then create a new Sheet and finally impor
 2. Go to **Settings**, scroll down and click **Delete app...** and follow the instructions to delete the app. **Don't worry**, all your data is safe.
 3. Follow the steps in [Deploy web app to Heroku](#deploy-web-app-to-Heroku) and set the name as the previous name (to keep the URL).
 
-# Changelog
-Can be found [here](/CHANGELOG.md) and contains the most important changes starting from release 1.0.0.
+# Contributing
+If you have an idea for a new feature or found a bug please [create a new issue](https://github.com/JohanWinther/strecklista/issues/new).
+A valid issue should
+* Have an appropriate label
+* Describe the idea/issue
+* Back up the idea/issue with good enough arguments
+* State your intentions, e.g. are you going to code it yourself and make a pull request or want someone else to do it
+If the issue is well recieved, you can create a fork and start coding. A bad issue will lower the chances of approval for your pull request!
