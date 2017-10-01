@@ -22,7 +22,10 @@ Digital strecklista som webapp för simpel hantering av streckvaror
 * Some knowledge of Google Sheets / Excel
 
 ## General information
-The application is comprised of 2 parts: one database server (Google Sheets) and one web app server (Heroku). The web app is accessed via a web browser and sends server requests to the database. Installation of the app will then be in 2 steps, first the database and then the web app.
+The application is comprised of two parts:
+* Database server (Google Sheets)
+* Web app server (Heroku)
+Installation of the app will then be in two steps, first the database and then the web app.
 
 ## Create database server (Google Sheet)
 First you will make a database Sheet from a template and enable it for web requests.
