@@ -80,6 +80,21 @@ Here you you put all the users and their information. There are 10 possible fiel
 To add a user, add the desired number of rows and input the users' information. After you are done, you can click sort at the top of the columns.
 
 ### Account balance email reminders (tab: *Streckmail*)
+Here you can set up all the rules for account balance email reminders. You have the following fields:
+1. *Namn på regel* - The name of the rule (short description for yourself).
+2. *Senast skickad* - The last time this rule was sent out.
+3. *till följande adresser* - Which addresses were used the last send out.
+4. *Skicka ut* - Use this rule when sending.
+5. *Skicka till CID* - Send to cid@student.chalmers.se instead of email.
+6. *Villkor* - The condition (boolean) if the user is eligible for the rule. Javascript syntax.
+   * This field can use the variables `cid`, `saldo`, `rights`, `group`, `nick`, `name`, `email`, `tel`.
+7. *Exkludera CID* - If a certain user (CID) should never be selected by the rule.
+8. *Ämnesrad* - Email subject line.
+9. *Meddelande* - Email body text (can be HTML-formatted).
+
+The last two lines can use the variables `cid`, `saldo`, `rights`, `group`, `nick`, `name`, `email`, `tel`, `mail_name`, `swish` but in the form `%var%`. For example if the subject line is *Hello %nick%!* then when the email is sent out `%nick%` will be replaced with that user's nickname.
+
+The actual interface for sending these emails is located in the app (in the admin page). When logged in, you can first send a test email to an address of your choice to see that the app has access to the Outlook account. There is also a button for fetching a preview of all the emails that will be sent. Finally the last button is for actually sending the emails.
 
 ## Deploy web app to Heroku
 Now you will deploy the web app to Heroku.
@@ -110,11 +125,7 @@ First you will update the backup file, then create a new Sheet and finally impor
 4. You may need to clear your cache before the web app will show up for you.
 
 # Usage
-## User
 User instructions can be found in the actual web app. Check out the [demo](https://strecklista-demo.herokuapp.com)!
-
-## Admin
-### Send out balance reminders
 
 # Contributing
 If you have an idea for a new feature or found a bug please [create a new issue](https://github.com/JohanWinther/strecklista/issues/new).
