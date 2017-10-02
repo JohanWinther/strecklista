@@ -100,7 +100,7 @@ function sendPIN(calledByUser) {
             if (data.list!="") {
                 var html = '<option value="">Välj..</option>';
                 for (li in data.list) {
-                    html += '<option value="'+data.list[li][0]+'">'+data.list[li][2]+'</option>';
+                    html += '<option value="'+data.list[li].cid+'">'+data.list[li].nick+'</option>';
                 }
                 $("section.settings select.users").html(html);
             }
