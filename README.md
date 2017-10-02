@@ -15,7 +15,7 @@ Digital strecklista som webapp för simpel hantering av streckvaror
 * No cost at all!
 
 # Demo
-A live demo can be found at <https://strecklista-demo.herokuapp.com>.
+A live demo can be found at <a href="https://strecklista-demo.herokuapp.com" target="_blank">https://strecklista-demo.herokuapp.com</a>.
 
 # Changelog
 Can be found [here](/CHANGELOG.md) and contains the most important changes starting from release 1.0.0.
