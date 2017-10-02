@@ -39,6 +39,8 @@ First you will make a database Sheet from a template and enable it for web reque
 2. Make a copy to your own Drive by clicking **Arkiv** -> **Kopiera...**. Give it a good name and place it in an empty folder where you can find it later.
 3. Open the Sheet and then click the menu item **Verktyg** -> **Skriptredigerare...**.
 4. In the new tab click the menu item **Publicera** -> **Implementera som webapp...**.
+   * Grant any permissions it asks for. This is needed for the app to work!
+   * In the window where it says the app is not safe click **Avancerat** and then click **Öppna Strecklista (osäkert)**.
 5. Select the following settings below and then click **Implementera**.
 ![Settings for web app](https://user-images.githubusercontent.com/28558941/31045184-3c29a8fc-a5de-11e7-8154-4d9814c28fd2.png "Settings for web app")
 
@@ -70,8 +72,6 @@ Here are the general settings for the web app.
 ## Deploy web app to Heroku
 Now you will deploy the web app to Heroku.
 1. In your Google Sheet and click the menu item **Admin** -> **Skapa ny webapp (Heroku)**.
-   1. If it says *Behörighet krävs* click **Fortsätt** and then select your Google account.
-   2. It will say that the app is not verified. This is OK. Click **Avancerat** and then click **Öppna Strecklista (osäkert)**. Choose confirm on any remaining dialog windows.
 2. Finally press the button that says *Deploy to Heroku*.
 3. After you have signed in at Heroku a dialog for deploying the app is shown. The name you choose will be the URL of your web app. For example if you choose *min-strecklista* the URL will be <https://min-strecklista.herokuapp.com>. Choose something descriptive, but still memorable and short. Now choose *Europe* as region and then click **Deploy app**.
  ![Create new app](https://user-images.githubusercontent.com/28558941/31045191-5a5c7462-a5de-11e7-9e2f-0e26e141b625.png "Create new app")
