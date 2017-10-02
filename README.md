@@ -107,6 +107,7 @@ First you will update the backup file, then create a new Sheet and finally impor
 1. Go to [Heroku](https://dashboard.heroku.com) and navigate to your app.
 2. Go to **Settings**, scroll down and click **Delete app...** and follow the instructions to delete the app. **Don't worry**, all your data is safe.
 3. Follow the steps in [Deploy web app to Heroku](#deploy-web-app-to-Heroku) and set the name as the previous name (to keep the URL).
+4. You may need to clear your cache before the web app will show up for you.
 
 # Usage
 ## User
