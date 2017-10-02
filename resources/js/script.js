@@ -154,8 +154,7 @@ function setData(data) {
     });
 
     // Get about data from JSON file
-    var request = $.getJSON('/resources/data/about.json');
-    $("section#about").html(request.responseText);
+    $("section#about").load('/resources/data/about.json');
 
     runActivityFun(); // Start activity list updater
     $("section.activity").slideDown(1000);
