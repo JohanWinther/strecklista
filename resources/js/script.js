@@ -154,7 +154,7 @@ function setData(data) {
     });
 
     // Get about data from JSON file
-    $("section#about").load('/resources/data/about.json');
+    $("section#about").load('/resources/data/about.html');
 
     runActivityFun(); // Start activity list updater
     $("section.activity").slideDown(1000);
