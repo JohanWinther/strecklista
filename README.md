@@ -15,7 +15,7 @@ Digital strecklista som webapp för simpel hantering av streckvaror
 * No cost at all!
 
 # Demo
-A live demo can be found at <a href="https://strecklista-demo.herokuapp.com" target="_blank">https://strecklista-demo.herokuapp.com</a>.
+A live demo can be found at <https://strecklista-demo.herokuapp.com>.
 
 # Changelog
 Can be found [here](/CHANGELOG.md) and contains the most important changes starting from release 1.0.0.
@@ -52,7 +52,7 @@ There are some database settings which will be described here.
 Here are the general settings for the web app.
 
 * `password` - This is the password for the admin page in the web app.
-* `groups` - A list of all the groups and in what order they should be shown.
+* `groups` - A list of all the groups and in what order they should be shown. Note that users that are in hidden groups can still be selected in the favourite and plus menues.
 * `buttons` - Which buttons should be shown in the action bar.
 * `mail_user` - Email address and user name for Microsoft account which will be used to send out [account balance reminders](#account-balance-email-reminders).
 * `mail_pw` - Password for the account above.
@@ -65,7 +65,19 @@ Here are the general settings for the web app.
 * `minutes` - How far back the list of transactions will go in minutes. Apart from this limit the maximum number of transactions in this list is 10.
 
 ### Users list (tab: *Användare*)
+Here you you put all the users and their information. There are 10 possible fields:
+1. *CID* - Unique identifier. If the user has no real CID, just write a non-existing one (and make sure to only send reminders to the user's registered email).
+2. *Namn* - Full name.
+3. *Smeknamn* - Nickname that will be shown in the app.
+4. *Grupp* - Which group the user will be in.
+5. *Sortering* - Which place the user should be in its group.
+6. *Får strecka* - Has right to pay. If not, they will not show up in the app. ("Ja" or none)
+7. *Strecka med skuld* - Has the rights to pay with debt. ("Ja" or none)
+8. *E-mail* - The email address which will be used to send out reminders.
+9. *Mobile* - Mobile number. Will not be used in the app but is good for the admin to know (for Swish).
+10. *Saldo* - Account balance.
 
+To add a user, add the desired number of rows and input the users' information. After you are done, you can click sort at the top of the columns.
 
 ### Account balance email reminders (tab: *Streckmail*)
 
