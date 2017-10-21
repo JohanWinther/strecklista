@@ -136,7 +136,7 @@ function setData(data) {
 
     // Find pictures for every user
     $("div.profile").each(function(i,el) { // Do this for every user
-        var imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-email"))+'?s=128&d=404'; // Set url to Gravatar of user
+        var imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-email"))+'?r=pg&s=128&d=404'; // Set url to Gravatar of user
 
         // See if image exists
         $.ajax({
@@ -147,7 +147,7 @@ function setData(data) {
                 $(el).css("background-image", "url("+imgUrl+")"); // Set image if it exists
             },
             error:function(){
-                imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-cid")+"@student.chalmers.se")+'?s=128&d=blank'; // Else use CID-email
+                imgUrl = 'https://s.gravatar.com/avatar/'+MD5($(el).attr("data-cid")+"@student.chalmers.se")+'?r=pg&s=128&d=blank'; // Else use CID-email
                 $(el).css("background-image", "url("+imgUrl+")");
             }
         });
