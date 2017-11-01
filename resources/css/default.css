@@ -567,6 +567,7 @@ section.activity {
     background-color: hsl(0, 0%, 80%);
     border-radius: 0;
     width: 100%;
+    height: 15em;
     box-sizing: border-box;
     background-image: url(../images/history.png);
     background-size: 2em;
@@ -791,7 +792,6 @@ div#action-bar-top > span {
         position: fixed;
         border-radius: 1em 1em 0 0;
         bottom: -12em;
-        height: 15em;
         margin: 0;
         padding-top: 3em;
         right: 5%;

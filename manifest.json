@@ -1,0 +1,21 @@
+{
+    "name": "Strecklista",
+    "short_name": "Strecklista",
+    "icons": [
+        {
+            "src": "./resources/images/android-chrome-192x192.png?v=lkdAw7ydvr",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./resources/images/android-chrome-512x512.png?v=lkdAw7ydvr",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/"
+}
