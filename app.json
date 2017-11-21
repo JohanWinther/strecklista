@@ -1,12 +1,21 @@
 {
-  "name": "Strecklista",
-  "description": "Digital strecklista som webapp för simpel hantering av streckvaror",
-  "repository": "https://github.com/JohanWinther/strecklista",
-  "keywords": ["strecklista", "payments", "transactions"],
-  "env": {
-    "scriptURL": {
-      "description": "URL of Google sheet script (database server requests)",
-      "required": true
-    }
-  }
+    "name": "Strecklista",
+    "description": "Digital strecklista som webapp för simpel hantering av streckvaror",
+    "repository": "https://github.com/JohanWinther/strecklista",
+    "keywords": ["strecklista", "payments", "transactions"],
+    "success_url": "/",
+    "env": {
+        "scriptURL": {
+            "description": "URL of Google sheet script (database server requests)",
+            "required": true
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "https://github.com/JohanWinther/heroku-buildpack-polymer-php/"
+        },
+        {
+            "url": "heroku/php"
+        }
+    ]
 }

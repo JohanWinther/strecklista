@@ -1,197 +1,115 @@
-<!doctype html>
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 
-<html lang="sv">
-<head>
+<!doctype html>
+<html lang="en">
+  <head>
     <meta charset="utf-8">
+    <meta name="generator" content="Polymer Starter Kit">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
     <title>Strecklista</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="./resources/images/apple-touch-icon.png?v=lkdAw7ydvr">
-    <link rel="icon" type="image/png" sizes="32x32" href="./resources/images/favicon-32x32.png?v=lkdAw7ydvr">
-    <link rel="icon" type="image/png" sizes="194x194" href="./resources/images/favicon-194x194.png?v=lkdAw7ydvr">
-    <link rel="icon" type="image/png" sizes="192x192" href="./resources/images/android-chrome-192x192.png?v=lkdAw7ydvr">
-    <link rel="icon" type="image/png" sizes="16x16" href="./resources/images/favicon-16x16.png?v=lkdAw7ydvr">
-    <link rel="manifest" href="/manifest.json?v=lkdAw7ydvr">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=lkdAw7ydvr" color="#000000">
-    <link rel="shortcut icon" href="/favicon.ico?v=lkdAw7ydvr">
+    <meta name="description" content="Digital strecklista som webapp för simpel hantering av streckvaror">
+
+    <!--
+      The `<base>` tag below is present to support two advanced deployment options:
+      1) Differential serving. 2) Serving from a non-root path.
+
+      Instead of manually editing the `<base>` tag yourself, you should generally either:
+      a) Add a `basePath` property to the build configuration in your `polymer.json`.
+      b) Use the `--base-path` command-line option for `polymer build`.
+
+      Note: If you intend to serve from a non-root path, see [polymer-root-path] below.
+    -->
+    <base href="/">
+
+    <link rel="icon" href="resources/images/favicon.ico?v=lkdAw7ydvr">
+    <link rel="icon" type="image/png" sizes="32x32" href="resources/images/manifest/favicon-32x32.png?v=lkdAw7ydvr">
+    <link rel="icon" type="image/png" sizes="194x194" href="resources/images/manifest/favicon-194x194.png?v=lkdAw7ydvr">
+    <link rel="icon" type="image/png" sizes="192x192" href="resources/images/manifest/android-chrome-192x192.png?v=lkdAw7ydvr">
+    <link rel="icon" type="image/png" sizes="16x16" href="resources/images/manifest/favicon-16x16.png?v=lkdAw7ydvr">
+    <link rel="shortcut icon" href="resources/images/favicon.ico?v=lkdAw7ydvr">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="manifest.json?v=lkdAw7ydvr">
+
+    <!-- See https://goo.gl/qRE0vM -->
     <meta name="theme-color" content="#000000">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no">
-    <link rel="stylesheet" href="resources/css/default.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="resources/php/config.php" type="text/javascript"></script>
-    <script src="resources/js/utils.js" type="text/javascript"></script>
-    <script src="resources/js/script.js" type="text/javascript"></script>
-    <script src="resources/js/admin.js" type="text/javascript"></script>
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-    <![endif]-->
-</head>
-
-<body>
-    <header>
-        <a id="logo">Strecklista</a>
-        <nav>
-            <ul class="menu">
-                <li data-link="list"><span>Strecklista</span></li>
-                <li data-link="stats"><span>Statistik</span></li>
-                <li data-link="plus"><span>Plussa</span></li>
-                <li data-link="settings"><span>Inställningar</span></li>
-                <li data-link="admin"><span>Admin</span></li>
-                <li data-link="about"><span>Om appen</span></li>
-            </ul>
-        </nav>
-        <div class="menu-button" style="display:none">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
-    </header>
-    <div class="content">
-        <div class="top-margin"></div>
 
 
-        <section class="activity" style="display:none">
-            <ul>
-                <li><span class="time">Inga senaste transaktioner.</span></li>
-            </ul>
-        </section>
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Strecklista">
 
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Strecklista">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=lkdAw7ydvr" color="#000000">
 
-        <div id="action-bar-top" class="action-bar" data-cid style="display:none">
-            <span></span>
-            <ul>
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="resources/images/manifest/apple-touch-icon.png">
 
-            </ul>
-        </div>
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="resources/images/manifest/mstile-150x150.png">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-tap-highlight" content="no">
 
-        <section class="main" id="list" style="display:none">
-        </section>
+    <script>
+      /**
+      * [polymer-root-path]
+      *
+      * By default, we set `Polymer.rootPath` to the server root path (`/`).
+      * Leave this line unchanged if you intend to serve your app from the root
+      * path (e.g., with URLs like `my.domain/` and `my.domain/view1`).
+      *
+      * If you intend to serve your app from a non-root path (e.g., with URLs
+      * like `my.domain/my-app/` and `my.domain/my-app/view1`), edit this line
+      * to indicate the path from which you'll be serving, including leading
+      * and trailing slashes (e.g., `/my-app/`).
+      */
+      window.Polymer = {rootPath: '/'};
 
-        <div id="status" class="load">
-            <div class="loading-ring-big">
-                <div></div>
-            </div>
-        </div>
-        <section class="main" id="pinput" style="display:none">
-            <div class="cell">
-                <div id="message">
-                </div>
-                <div id="fields">
-                    <div class="grid">
-                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                        <div class="grid__col grid__col--1-of-4 numberfield"><span></span></div>
-                    </div>
-                </div>
-                <div id="numbers">
-                    <div class="grid">
-                        <div class="grid__col grid__col--1-of-3"><button>1</button></div>
-                        <div class="grid__col grid__col--1-of-3"><button>2</button></div>
-                        <div class="grid__col grid__col--1-of-3"><button>3</button></div>
+      // Load and register pre-caching Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('service-worker.js', {
+            scope: Polymer.rootPath,
+          });
+        });
+      }
+    </script>
 
-                        <div class="grid__col grid__col--1-of-3"><button>4</button></div>
-                        <div class="grid__col grid__col--1-of-3"><button>5</button></div>
-                        <div class="grid__col grid__col--1-of-3"><button>6</button></div>
+    <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-                        <div class="grid__col grid__col--1-of-3"><button>7</button></div>
-                        <div class="grid__col grid__col--1-of-3"><button>8</button></div>
-                        <div class="grid__col grid__col--1-of-3"><button>9</button></div>
+    <!-- Load your application shell -->
+    <link rel="import" href="src/my-app.html">
 
-                        <div class="grid__col grid__col--1-of-3"></div>
-                        <div class="grid__col grid__col--1-of-3"><button>0</button></div>
-                        <div class="grid__col grid__col--1-of-3"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <section class="main settings" id="stats" style="display:none">
-            <h2>Kommer snart!<h2>
-        </section>
-
-        <section class="main settings" id="plus" style="display:none">
-            <h2 id="step1">1. Välj belopp och användare</h2>
-            <p id="plusOptions">
-                Plussa
-                <input type="number" min="1" max="5000" step="1" id="amount" value=""/> kr på
-                <select class="users" id="plusUser">
-                    <option value="">Välj..</option>
-                </select>
-            </p>
-            <h2 id="step2">2. Swisha</h2>
-            <p id="plusSwish">
-                <a class="swish" id="swish-button">
-                    <img src="resources/images/swish.png" alt="Swish" />
-                    Tryck för att öppna Swish
-                </a>
-                <span>Eller skanna koden nedan med Swish om appen är på en annan enhet:</span>
-                <img src="" alt="Swish QR-kod" class="QR" id="swish-QR"/>
-            </p>
-            <h2 id="step3">3. Bekräfta betalning</h2>
-            <p id="plusButtons">
-                <span>Är betalningen genomförd?</span>
-                <span class="button" id="confirmPlus">Ja, skicka in!</span>
-            </p>
-        </section>
-
-
-        <section class="main settings" id="settings" style="display:none">
-            <h2>Favorit</h2>
-            <select class="users" id="favoriteUser">
-                <option value="">Välj..</option>
-            </select>
-        </section>
-
-
-        <section class="main settings" id="admin" style="display:none">
-            <div id="loginBox">
-                <h2>Logga in</h2>
-                <p>
-                    <input type="password" id="password" placeholder="Lösenord"/>
-                    <input type="submit" value="Logga in" id="loginBtn" />
-                </p>
-                <p id="loginMessage"></p>
-            </div>
-            <div id="adminBox" style="display:none">
-                <h2>Streckmail</h2>
-                <h3>Testmail</h3>
-                <p>
-                    <input type="email" id="email" placeholder="Email" name="email" />
-                    <br>
-                    <span class="button" id="sendTestEmail">Skicka testmail</span>
-                </p>
-                <h3>Skicka till användare</h3>
-                <p>
-                    <span>Förhandsgranskningen visar alla mail längst ner på sidan.</span>
-                    <br>
-                    <span class="button" id="previewEmails">Förhandsgranska streckmail</span>
-                    <br>
-                    <span><br>När du klickat på skicka kommer sändningstatus för varje mail att visas nedan.</span>
-                    <br>
-                    <span class="button" id="sendEmails">Skicka streckmail</span>
-                </p>
-                <h3>Status</h3>
-                <p id="emailStatus">Inga mail skickade.</p>
-                <ul id="emailList">
-                </ul>
-            </div>
-        </section>
-
-
-        <section class="main settings" id="about" style="display:none">
-            <p><a href="https://github.com/JohanWinther/strecklista" target="_blank">GitHub</a></p>
-        </section>
-
-        <section class="main bottom"></section>
-    </div>
-
-
-    <div class="action-bar-arrow" style="transform: scale(0)"></div>
-    <div id="action-bar-float" class="action-bar" data-cid style="transform: scale(0)">
-        <ul>
-        </ul>
-    </div>
-
-</body>
+    <!-- Add any global styles for body, document, etc. -->
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: hsl(0, 0%, 0%);
+      }
+    </style>
+  </head>
+  <body>
+    <my-app></my-app>
+    <noscript>
+      Please enable JavaScript to view this website.
+    </noscript>
+    <!-- Built with love using Polymer Starter Kit -->
+  </body>
 </html>
