@@ -1,6 +1,6 @@
 {
   "name": "strecklista",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.0",
@@ -11,5 +11,28 @@
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",
     "test:integration": "polymer build # test that psk builds without error with the CLI"
+  },
+  "description": "Digital strecklista som webapp för simpel hantering av streckvaror",
+  "version": "0.1.0",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohanWinther/strecklista.git"
+  },
+  "keywords": [
+    "strecklista",
+    "transactions",
+    "heroku"
+  ],
+  "author": "Johan Winther",
+  "bugs": {
+    "url": "https://github.com/JohanWinther/strecklista/issues"
+  },
+  "homepage": "https://github.com/JohanWinther/strecklista#readme",
+  "dependencies": {
+    "express": "^4.16.2"
   }
 }

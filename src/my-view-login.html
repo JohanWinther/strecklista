@@ -11,29 +11,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="my-view3">
+<dom-module id="my-view-login">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
 
         padding: 10px;
-      }
+    }
     </style>
 
     <div class="card">
-      <div class="circle">3</div>
-      <h1>View Three</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
+        <paper-shadow class="card" z="2">Login
+
+            <paper-input-decorator label="Mail">
+                <input id="Mail" is="core-input" name="Mail"/>
+            </paper-input-decorator>
+
+            <paper-input-decorator label="Mots de passe">
+                <input id="password" is="core-input" name="j_password" type="password"/>
+            </paper-input-decorator>
+
+            <paper-button raised id="register" class="register">S'enregistrer</paper-button>
+
+            <paper-fab mini icon="done" class="button" title="done"></paper-fab>
+
+        </paper-shadow>
     </div>
-  </template>
+</template>
 
   <script>
-    class MyView3 extends Polymer.Element {
-      static get is() { return 'my-view3'; }
+    class MyViewLogin extends Polymer.Element {
+      static get is() { return 'my-view-login'; }
     }
 
-    window.customElements.define(MyView3.is, MyView3);
+    window.customElements.define(MyViewLogin.is, MyViewLogin);
   </script>
 </dom-module>
