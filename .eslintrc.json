@@ -1,21 +1,12 @@
 {
-  "extends": ["eslint:recommended", "google"],
-  "parserOptions": {
-    "ecmaVersion": 6
-  },
+  "extends": "eslint:recommended",
   "env": {
-    "browser": true
+    "es6": true,
+    "node": true
   },
-  "plugins": [
-    "html"
-  ],
   "rules": {
-    "brace-style": "off",
-    "new-cap": ["error", { "capIsNewExceptions": ["Polymer"] }],
-    "no-var": "off",
-    "require-jsdoc": "off"
-  },
-  "globals": {
-    "Polymer": true
+    "quotes": ["error", "double", { "allowTemplateLiterals": true, "avoidEscape": true}],
+    "no-console": 0,
+    "htmlhint": 0
   }
 }
