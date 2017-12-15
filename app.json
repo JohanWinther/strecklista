@@ -18,10 +18,10 @@
     },
     "buildpacks": [
         {
-            "url": "https://github.com/numerai/heroku-buildpack-polymer/"
+            "url": "heroku/nodejs"
         },
         {
-            "url": "heroku/nodejs"
+            "url": "https://github.com/JohanWinther/heroku-buildpack-polymer-node"
         }
     ]
 }
