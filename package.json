@@ -7,6 +7,9 @@
     "eslint-plugin-html": "^2.0.0"
   },
   "scripts": {
+    "build": "polymer build",
+    "start": "node server.js",
+    "devel": "nodemon server.js",
     "lint": "npm run lint:javascript && polymer lint",
     "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
     "test": "polymer test",

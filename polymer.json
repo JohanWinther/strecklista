@@ -1,23 +1,20 @@
 {
     "entrypoint": "index.html",
-    "shell": "src/my-app.html",
+    "shell": "client/my-app.html",
     "fragments": [
-        "src/my-view1.html",
-        "src/my-view2.html",
-        "src/my-view-login.html",
-        "src/my-view404.html"
+        "client/my-view1.html",
+        "client/my-view2.html",
+        "client/my-login.html",
+        "client/my-view404.html"
     ],
     "sources": [
-        "src/**/*",
+        "client/**/*",
         "resources/images/**/*"
     ],
     "extraDependencies": [
         "manifest.json",
-        "index.php",
-        "composer.json",
-        "composer.lock",
         "browserconfig.xml",
-        "bower_components/webcomponentsjs/*.js"
+        "client/bower_components/webcomponentsjs/*.js"
     ],
     "lint": {
         "rules": ["polymer-2"]
