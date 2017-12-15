@@ -22,7 +22,11 @@ app.get('*', function(req, res){
     res.sendFile("index.html", {root: '.'});
 });
 
+// set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 8080;
+
 // Tell the app to listen for requests on port 3000
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log('App is up and running in ' + app.get('env') + ' mode!');
 });
