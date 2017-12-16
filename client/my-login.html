@@ -8,29 +8,31 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-login">
   <template>
     <style include="shared-styles">
-      :host {
-        display: block;
+    :host {
+      display: block;
 
-        padding: 10px;
+      padding: 10px;
     }
     </style>
 
     <div class="card">
-        Login
+      Login
     </div>
-</template>
-
+  </template>
+  
   <script>
-    class MyViewLogin extends Polymer.Element {
-      static get is() { return 'my-login'; }
+  class MyViewLogin extends Polymer.Element {
+    static get is() {
+      return "my-login";
     }
+  }
 
-    window.customElements.define(MyViewLogin.is, MyViewLogin);
+  window.customElements.define(MyViewLogin.is, MyViewLogin);
   </script>
 </dom-module>

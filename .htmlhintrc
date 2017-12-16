@@ -7,7 +7,7 @@
   "attr-value-not-empty": false,
   "doctype-first": false,
   "doctype-html5": true,
-  "head-script-disabled": true,
+  "head-script-disabled": false,
   "href-abs-or-rel": false,
   "id-class-ad-disabled": true,
   "id-class-value": "dash",
@@ -21,5 +21,5 @@
   "tag-pair": true,
   "tag-self-close": false,
   "tagname-lowercase": true,
-  "title-require": true
+  "title-require": false
 }

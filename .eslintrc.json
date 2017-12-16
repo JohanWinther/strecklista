@@ -1,12 +1,22 @@
 {
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:polymer/polymer-2"],
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "env": {
     "es6": true,
     "node": true
   },
+  "plugins": [
+    "html",
+    "polymer"
+  ],
+  "settings": {
+    "html/report-bad-indent": "warn"
+  },
   "rules": {
     "quotes": ["error", "double", { "allowTemplateLiterals": true, "avoidEscape": true}],
-    "no-console": 0,
-    "htmlhint": 0
+    "no-console": "off",
+    "linebreak-style": "off"
   }
 }

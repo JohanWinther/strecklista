@@ -16,25 +16,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <title>my-view1</title>
 
-    <script src="../client/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../client/bower_components/web-component-tester/browser.js"></script>
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
 
     <!-- Import the element to test -->
     <link rel="import" href="../client/my-view1.html">
   </head>
   <body>
-    <test-fixture id="BasicView">
+    <test-fixture id="basic-view">
       <template>
         <my-view1></my-view1>
       </template>
     </test-fixture>
 
     <script>
-      suite('my-view1 tests', function() {
-        test('Number in circle should be 1', function() {
-          var myView = fixture('BasicView');
-          var circle = myView.shadowRoot.querySelector('.circle');
-          assert.equal(circle.textContent, '1');
+      suite("my-view1 tests", function() {
+        test("Number in circle should be 1", function() {
+          let myView = fixture("basic-view");
+          let circle = myView.shadowRoot.querySelector(".circle");
+          assert.equal(circle.textContent, "1");
         });
       });
     </script>
