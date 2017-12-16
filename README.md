@@ -1,4 +1,4 @@
-# Strecklista
+# Strecklista [![Build Status](https://travis-ci.org/JohanWinther/strecklista.svg?branch=polymer)](https://travis-ci.org/JohanWinther/strecklista)
 Digital strecklista som webapp för simpel hantering av streckvaror
 
 ## App Features
