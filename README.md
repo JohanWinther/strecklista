@@ -1,6 +1,9 @@
 # Strecklista
 Digital strecklista som webapp för simpel hantering av streckvaror
 
+## New version
+Since Google Sheets can only support roughly 10,000 rows a new version with a real database is coming at the end of this summer (2018).
+
 ## App Features
 * PIN-protected (no tedious personal logins)
 * Save user as favourite to show at the top of the users list
