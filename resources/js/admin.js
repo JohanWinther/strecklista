@@ -193,8 +193,8 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, n
             $("li#email"+emailIdx).find("span.status").text(" - Försök nr "+(numberOfTries+1)+"..");
         }
 
-        // SMTP settings for Outlook
-        var host = "smtp-mail.outlook.com";
+        // SMTP settings for SendGrid
+        var host = "smtp.sendgrid.net";
         var port = "587";
         var secure = "tls";
         var url = location.href; // Application url from where the smtp call was made (good to set to not be flagged as spam)
@@ -203,7 +203,7 @@ function sendEmail(mail_user, mail_pw, mail_name, to, subject, body, emailIdx, n
         dataString = "host="+encodeURIComponent(host);
         dataString += "&port="+encodeURIComponent(port);
         dataString += "&secure="+encodeURIComponent(secure);
-        dataString += "&user="+encodeURIComponent(mail_user);
+        dataString += "&user="+encodeURIComponent('apikey'); // SendGrid username
         dataString += "&password="+encodeURIComponent(mail_pw);
         dataString += "&email="+encodeURIComponent(mail_user);
         dataString += "&to="+encodeURIComponent(to);
