@@ -26,7 +26,6 @@ As I have graduated I have decided to stop updating this. Feel free to contact E
   - [Technical Features](#technical-features)
 - [Table of Contents](#table-of-contents)
 - [Demo](#demo)
-- [Changelog](#changelog)
 - [Installation](#installation)
   - [Requirements](#requirements)
   - [General information](#general-information)
@@ -45,9 +44,6 @@ As I have graduated I have decided to stop updating this. Feel free to contact E
 
 # Demo
 A live demo can be found at <https://strecklista-demo.herokuapp.com> and its corresponding [database Sheet](https://docs.google.com/spreadsheets/d/1L3xxRci9SKkAjwZNqysVsuVmVnPoQoQTkBLj_gVM6l8/edit?usp=sharing).
-
-# Changelog
-Can be found [here](/CHANGELOG.md) and contains the most important changes starting from release 1.0.0.
 
 # Installation
 ## Requirements
