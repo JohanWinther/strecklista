@@ -14,6 +14,9 @@ $(function() {
     window.actionBar = $("div#action-bar-float"); // Define action bar
     window.actionBarArrow = $("div.action-bar-arrow"); // Define action bar arrow
     actionBarArrow.borderwidth = parseInt(actionBarArrow.css("border-width").substr(4,2)); // Set width of arrow
+    if (isNaN(actionBarArrow.borderwidth)) {
+        actionBarArrow.borderwidth = 16 // Default size of 1em in pixels
+    }
 
     window.scrollTo(0, 0); // Scroll to top
 
